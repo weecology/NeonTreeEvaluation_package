@@ -1,0 +1,43 @@
+#' Compute evaluation statistics for one plot
+#'
+#' @param submission A five column dataframe in the order plot_name, xmin, xmax, ymin, ymax. Each row is a predicted bounding box.
+#' @param show Logical. Plot the overlayed annotations for each plot?
+#' @param project_boxes Logical. Should the boxes be projected into utm coordinates? This is needed if the box coordinates are given from the image origin (top left is 0,0)
+#' @param compute_PR Logical. Should the summarize precision and recall be computed? If not, return the IoU overlap for each ground truth box
+#' @return If computer_PR=T, the recall and precision scores for the plot, if False, the
+#' @export
+#'
+evaluate_plot<-function(submission, show=TRUE,project_boxes=TRUE, compute_PR=TRUE){
+
+  #find ground truth file
+  plot_name <- unique(submission$plot_name)
+  if(!length(plot_name)==1){
+    stop(paste("There are",length(plot_name),"plot names. Please submit one plot of annotations to this function"))
+  }
+
+  ground_truth<-load_ground_truth(plot_name,show = FALSE)
+  if(is.null(ground_truth)){
+    return(data.frame(NULL))
+  }
+
+  #Read RGB image as projected raster
+  siteID = stringr::str_match(plot_name,"(\\w+)_")[,2]
+
+  path_to_rgb<-paste(system.file("extdata","evaluation/RGB/",package="NeonTreeEvaluation"),"/",plot_name,".tif",sep="")
+  print(plot_name)
+  rgb<-raster::stack(path_to_rgb)
+
+  #project boxes
+  predictions <- boxes_to_spatial_polygons(submission,rgb,project_boxes = project_boxes)
+
+  if(show){
+    raster::plotRGB(rgb)
+    sp::plot(ground_truth,border="black",add=T)
+    sp::plot(predictions,border="red",add=T)
+  }
+
+  #Create spatial polygons objects
+  result<-compute_precision_recall(ground_truth,predictions, summarize=compute_PR)
+  return(result)
+}
+
