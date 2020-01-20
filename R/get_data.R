@@ -16,7 +16,7 @@ get_data<-function(plot_name, sensor){
     path<-get_hyperspectral(plot_name)
   }
   if(sensor=="annotations"){
-    path<-get_annotationsl(plot_name)
+    path<-get_annotations(plot_name)
   }
   return(path)
 }

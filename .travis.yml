@@ -1,0 +1,28 @@
+# R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
+
+language: R
+sudo: false
+cache: packages
+
+warnings_are_errors: false
+
+addons:
+  apt:
+    packages:
+      - gdal-bin
+      - proj-bin
+      - libgdal-dev
+      - libgdal1-dev
+      - libproj-dev
+      - libgeos-dev
+      - r-cran-ncdf4
+      - r-cran-rgl
+      - libv8-3.14-dev
+      - libprotobuf-dev
+      - protobuf-compiler
+      - libudunits2-dev
+      - libnetcdf-dev
+      - libjq-dev
+
+before_install:
+  - R -e 'install.packages("rgdal", repos="http://R-Forge.R-project.org")'

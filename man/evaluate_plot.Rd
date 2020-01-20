@@ -4,7 +4,8 @@
 \alias{evaluate_plot}
 \title{Compute evaluation statistics for one plot}
 \usage{
-evaluate_plot(submission, show = TRUE, project_boxes = TRUE)
+evaluate_plot(submission, show = TRUE, project_boxes = TRUE,
+  compute_PR = TRUE)
 }
 \arguments{
 \item{submission}{A five column dataframe in the order plot_name, xmin, xmax, ymin, ymax. Each row is a predicted bounding box.}
@@ -12,9 +13,11 @@ evaluate_plot(submission, show = TRUE, project_boxes = TRUE)
 \item{show}{Logical. Plot the overlayed annotations for each plot?}
 
 \item{project_boxes}{Logical. Should the boxes be projected into utm coordinates? This is needed if the box coordinates are given from the image origin (top left is 0,0)}
+
+\item{compute_PR}{Logical. Should the summarize precision and recall be computed? If not, return the IoU overlap for each ground truth box}
 }
 \value{
-recall and precision scores for the plot
+If computer_PR=T, the recall and precision scores for the plot, if False, the
 }
 \description{
 Compute evaluation statistics for one plot

@@ -6,20 +6,15 @@
 #' @param plot_result generate a ggplot of results
 #' @return Summary recall and precision
 #' @export
-#'
+
 summary_statistics<-function(results, method="all",plot_result=T, threshold=0.5){
   #Summary precision and recall across all images
   if(method=="all"){
     true_positives = results$IoU > threshold
 
     #number of ground truth
-    n<-results %>% group_by(plot_name) %>% distinct(total_ground, total_prediction)
-    total_ground = sum(n$total_ground)
-    total_prediction = sum(n$total_prediction)
-    recall <- round(sum(true_positives,na.rm=T)/total_ground,3)
-    precision <- round(sum(true_positives,na.rm=T)/total_prediction,3)
+    statistic<-results %>% group_by(plot_name) %>% do(PR(.,threshold=threshold)) %>% ungroup() %>% summarize(precision=mean(precision),recall=mean(recall))
 
-    statistic <- data.frame(recall, precision)
   }
 
   if(method=="site"){
@@ -30,21 +25,8 @@ summary_statistics<-function(results, method="all",plot_result=T, threshold=0.5)
     results[stringr::str_detect(results$plot_name,"2018_SJER"),"Site"]<-"SJER"
     results[stringr::str_detect(results$plot_name,"2018_TEAK"),"Site"]<-"TEAK"
 
-    #calculate statitics by site
     #number of ground truth by site
-    PR<-function(results){
-      true_positives = results$IoU > threshold
-
-      n<-results %>% group_by(plot_name) %>% distinct(total_ground, total_prediction)
-      total_ground = sum(n$total_ground)
-      total_prediction = sum(n$total_prediction)
-      recall <- round(sum(true_positives,na.rm=T)/total_ground,3)
-      precision <- round(sum(true_positives,na.rm=T)/total_prediction,3)
-      statistic <-  data.frame(recall, precision)
-      return(statistic)
-    }
-
-    statistic<-results %>% group_by(Site) %>% do(PR(.))
+    statistic<-results %>% group_by(Site) %>% do(PR(.,threshold=threshold))
 
     if(plot_result){
       df<-reshape2::melt(statistic,id.vars=c("Site"))
