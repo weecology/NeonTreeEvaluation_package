@@ -4,7 +4,8 @@
 \alias{summary_statistics}
 \title{Summary statistics for benchmark evaluation}
 \usage{
-summary_statistics(results, method = "all", plot_result = T)
+summary_statistics(results, method = "all", plot_result = T,
+  threshold = 0.5)
 }
 \arguments{
 \item{results}{A dataframe returned from \code{evaluate_plot}}

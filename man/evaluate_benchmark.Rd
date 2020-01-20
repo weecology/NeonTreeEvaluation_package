@@ -5,7 +5,8 @@
 \title{Evaluate submission for all plots
 \code{summary_statistics} returns a helpful summary of a set of plot evaluations}
 \usage{
-evaluate_benchmark(submission, project_boxes = FALSE, show = T)
+evaluate_benchmark(submission, project_boxes = FALSE, show = T,
+  compute_PR = F)
 }
 \arguments{
 \item{submission}{A five column dataframe in the order plot_name, xmin, xmax, ymin, ymax. Each row is a predicted bounding box.}
@@ -13,6 +14,8 @@ evaluate_benchmark(submission, project_boxes = FALSE, show = T)
 \item{project_boxes}{Logical. Should the boxes be projected into utm coordinates? This is needed if the box coordinates are given from the image origin (top left is 0,0)}
 
 \item{show}{Logical. Plot the overlayed annotations for each plot?}
+
+\item{compute_PR}{Logical. Should the summarize precision and recall be computed? If not, return the IoU overlap for each ground truth box}
 }
 \value{
 A raster with the canopy height estimated for each grid cell.
