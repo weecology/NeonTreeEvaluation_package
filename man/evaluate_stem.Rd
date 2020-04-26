@@ -4,10 +4,11 @@
 \alias{evaluate_stem}
 \title{Evaluate predictions against NEON field data}
 \usage{
-evaluate_stem(plot_prediction, project_boxes = FALSE, show = T,
-  stem_dat = NULL)
+evaluate_stem(plot_prediction, stem_dat, project_boxes = FALSE, show = T)
 }
 \arguments{
+\item{stem_dat}{Object. A sf object with utm coordinates}
+
 \item{project_boxes}{Logical. Should the boxes be projected into utm coordinates? This is needed if the box coordinates are given from the image origin (top left is 0,0)}
 
 \item{show}{Logical. Plot the overlayed annotations for each plot?}
