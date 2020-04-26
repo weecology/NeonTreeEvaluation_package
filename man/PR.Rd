@@ -4,7 +4,7 @@
 \alias{PR}
 \title{Precision and recall for a set of results}
 \usage{
-PR(results)
+PR(results, threshold)
 }
 \arguments{
 \item{results}{A dataframe returned from \code{evaluate_plot}}

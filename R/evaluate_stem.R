@@ -2,17 +2,11 @@
 #' @param submission A five column dataframe in the order plot_name, xmin, xmax, ymin, ymax. Each row is a predicted bounding box.
 #' @param show Logical. Plot the overlayed annotations for each plot?
 #' @param project_boxes Logical. Should the boxes be projected into utm coordinates? This is needed if the box coordinates are given from the image origin (top left is 0,0)
+#' @param stem_dat Object. A sf object with utm coordinates
 #' @details For each plot in the submission, this function will check if there are field collected stem data and score whether each stem is within a predicted tree bounding box
 #' @return The recall scores for each image
-#'
-evaluate_stem<-function(plot_prediction,project_boxes=FALSE, show=T, stem_dat=NULL){
-
-  #If user hasn't read in stem dat, read it from package contents, faster to preload it.
-  if(!exists("stem_dat")){
-    #read field data as simple feature
-    path <- system.file("extdata/field_data.csv",package = "NeonTreeEvaluation")
-    stem_dat<-sf::st_read(path, options=c("X_POSSIBLE_NAMES=easting","Y_POSSIBLE_NAMES=northing"))
-  }
+#' @export
+evaluate_stem<-function(plot_prediction,stem_dat, project_boxes=FALSE, show=T){
 
   #point in poylgon
   plot_data<-stem_dat %>% filter(plotID %in% unique(plot_prediction$plot_name)) %>%  group_by(individualID) %>% arrange(eventID) %>% slice(1) %>% filter(!is.na(easting))
@@ -34,12 +28,19 @@ evaluate_stem<-function(plot_prediction,project_boxes=FALSE, show=T, stem_dat=NU
   predictions<-sf::st_as_sf(predictions)
 
   #unique by individual ID
-  sf::st_crs(plot_data)<-raster::crs(rgb)
+
+  #Blan has a zone error
+  if(str_detect(unique(plot_data$siteID),"BLAN")){
+    sf::st_crs(plot_data)<-32618
+    } else{
+    sf::st_crs(plot_data)<-raster::crs(rgb)
+    plot_data<-st_transform(plot_data,rgb@crs)
+  }
 
   if(show){
     raster::plotRGB(rgb)
     plot(sf::st_geometry(predictions),add=T,col=NA)
-    plot(plot_data,add=T,cex=2,pch=16)
+    plot(plot_data,add=T,cex=1,pch=16)
   }
 
   #select order

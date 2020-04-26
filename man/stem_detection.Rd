@@ -4,7 +4,8 @@
 \alias{stem_detection}
 \title{Evaluate predictions against NEON field data}
 \usage{
-stem_detection(submission, project_boxes = FALSE, show = T)
+stem_detection(submission, project_boxes = FALSE, show = T,
+  field_data = NA)
 }
 \arguments{
 \item{submission}{A five column dataframe in the order plot_name, xmin, xmax, ymin, ymax. Each row is a predicted bounding box.}
@@ -12,6 +13,8 @@ stem_detection(submission, project_boxes = FALSE, show = T)
 \item{project_boxes}{Logical. Should the boxes be projected into utm coordinates? This is needed if the box coordinates are given from the image origin (top left is 0,0)}
 
 \item{show}{Logical. Plot the overlayed annotations for each plot?}
+
+\item{field_data}{a csv file with spatial coordinates "easting" and "northing" corresponding to utm locations of each point}
 }
 \value{
 The average stem recall scores for each image in the submission
