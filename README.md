@@ -1,13 +1,26 @@
-<!-- README.md is generated from README.Rmd. Please edit that file -->
-
-NeonTreeEvaluation
-==================
-
 [![Travis-CI Build
 Status](https://travis-ci.org/Weecology/NeonTreeEvaluation_package.svg?branch=master)](https://travis-ci.org/Weecology/NeonTreeEvaluation_package)
 
-The goal of NeonTreeEvaluation is to automate testing against the NEON
-Tree Detection Benchmark
+A multi-sensor benchmark dataset for detecting individual trees in airborne RGB, Hyperspectral and LIDAR point clouds
+=====================================================================================================================
+
+Individual tree detection is a central task in forestry and ecology. Few
+papers analyze proposed methods across a wide geographic area. This
+limits the utility of tools and inhibits comparisons across methods.
+This benchmark dataset is the first dataset to have consistant
+annotation approach across a variety of ecosystems.
+
+This repo is the accomponaying R package for reproducible evaluation
+against the dataset. The package contains a static version of the
+annotations used for evaluation.
+
+Installation
+============
+
+``` r
+library(devtools)
+install_github("https://github.com/weecology/NeonTreeEvaluation_package.git")
+```
 
 Submission Format
 =================
@@ -50,22 +63,14 @@ evaluate_plot(df,show = T)
 #> 181 Levels: 2018_SJER_3_252000_4104000_image_628 ...
 ```
 
-![](README-unnamed-chunk-3-1.png)
+![](README-unnamed-chunk-4-1.png)
 
     #>   recall precision
     #> 1      1         1
 
-A multi-sensor benchmark dataset for detecting individual trees in airborne RGB, Hyperspectral and LIDAR point clouds
-=====================================================================================================================
-
-Individual tree detection is a central task in forestry and ecology. Few
-papers analyze proposed methods across a wide geographic area. This
-limits the utility of tools and inhibits comparisons across methods.
-This benchmark dataset is the first dataset to have consistant
-annotation approach across a variety of ecosystems.
-
 If you would prefer not to clone this repo, a static version of the
-benchmark is here: \[insert url later\]
+benchmark is here:
+<a href="https://zenodo.org/record/3723357#.XqT_HlNKjOQ" class="uri">https://zenodo.org/record/3723357#.XqT_HlNKjOQ</a>
 
 Mantainer: Ben Weinstein - University of Florida.
 
@@ -79,9 +84,8 @@ For more complete information see:
 
 <a href="https://github.com/weecology/NeonTreeEvaluation" class="uri">https://github.com/weecology/NeonTreeEvaluation</a>
 
-and
-
-s \# Sensor Data
+Sensor Data
+===========
 
 RGB
 ---
@@ -105,7 +109,7 @@ plotRGB(rgb)
 plot(xml_polygons,add=T)
 ```
 
-![](README-unnamed-chunk-4-1.png)
+![](README-unnamed-chunk-5-1.png)
 
 Lidar
 =====
@@ -143,7 +147,7 @@ f<-g[[c(52,88,117)]]
 plotRGB(f,stretch="lin")
 ```
 
-![](README-unnamed-chunk-6-1.png)
+![](README-unnamed-chunk-7-1.png)
 
 Performance
 ===========
