@@ -70,7 +70,7 @@ evaluate_plot(df,show = T)
 
 If you would prefer not to clone this repo, a static version of the
 benchmark is here:
-<a href="https://zenodo.org/record/3723357#.XqT_HlNKjOQ" class="uri">https://zenodo.org/record/3723357#.XqT_HlNKjOQ</a>
+<a href="https://zenodo.org/record/3723357" class="uri">https://zenodo.org/record/3723357</a>
 
 Mantainer: Ben Weinstein - University of Florida.
 
