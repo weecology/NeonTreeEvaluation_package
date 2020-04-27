@@ -48,7 +48,8 @@ img<-stack(rgb)
 ```{r}
 #View one plot's annotations as polygons, project into UTM
 #copy project utm zone (epsg), xml has no native projection metadata
-ground_truth <- boxes_to_spatial_polygons(xml,img)
+annotations<-xml_parse(xml)
+ground_truth <- boxes_to_spatial_polygons(annotations,img)
 
 plotRGB(img)
 plot(ground_truth,add=T)
@@ -59,7 +60,8 @@ plot(ground_truth,add=T)
 Now let's load the corresponding LiDAR point cloud for this evaluation plot.
 
 ```{r}
-point_cloud<-readLAS(system.file("extdata","evaluation/LiDAR/SJER_052.laz",package="NeonTreeEvaluation"))
+point_cloud_path<-get_data("SJER_052","lidar")
+point_cloud<-readLAS(point_cloud_path)
 ```
 Tree annotations are stored in the UserData column. Each tree has a unique numeric ID
 
@@ -94,8 +96,8 @@ plot(point_cloud,color="treeID")
 
 ```{r}
 predictions<-tree_hulls(point_cloud,"bbox")
-plotRGB(rgb)
-plot(predictions,add=T)
+plotRGB(img)
+plot(predictions,add=T,border="red")
 ```
 
 ## Evaluate against benchmark annotations
