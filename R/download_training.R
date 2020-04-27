@@ -2,7 +2,7 @@
 #' @description The benchmark dataset contains both evaluation and training data for future use. While the annotations and evaluation data are modest in size, the training data is over 20GB and cannot be included directly in the package.
 #' To download the data, the download_data funtion pulls the training tiles from the Zenodo archive and places them alongside the evalution data by default
 #'
-zenodo_url <- function(concept_rec_id = NULL, rec_version = "latest",
+zenodo_url <- function(concept_rec_id = 3459803, rec_version = "latest",
                        rec_id = NULL, arg_checks = TRUE){
   check_args(arg_checks = arg_checks)
   if(is.null(rec_id)){

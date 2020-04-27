@@ -2,20 +2,18 @@
 % Please edit documentation in R/get_data.R
 \name{get_data}
 \alias{get_data}
-\title{Retrieve benchmark data
-\code{get_data} is a set of utility functions for finding the path of benchmark data on disk}
+\title{Retrieve benchmark data}
 \usage{
-get_data(plot_name, sensor)
+get_data(plot_name, type)
 }
 \arguments{
 \item{plot_name}{A plot name}
 
-\item{sensor}{Which plot object should be returned: "rgb","lidar","hyperspectral","annotations"}
+\item{type}{Which data object should be returned: "rgb" for camera imagery,"lidar" for 3D point clouds,"hyperspectral" for 426 band raster,"annotations" for dataframe of bounding box ground truth}
 }
 \value{
 path to object on disk
 }
 \description{
-Retrieve benchmark data
 \code{get_data} is a set of utility functions for finding the path of benchmark data on disk
 }
