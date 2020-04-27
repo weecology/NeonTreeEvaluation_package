@@ -30,4 +30,4 @@ before_install:
   - R -e 'install.packages("rgdal", repos="http://R-Forge.R-project.org")'
   - R -e 'install.packages("Rcpp")'
   - R -e 'install.packages("rlang")'
-  - R -e 'install.packages("tidyverse")'
+  - R -e 'install.packages(c("tidyverse","crayon"))'
