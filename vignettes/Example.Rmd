@@ -36,17 +36,21 @@ Let's load the RGB data and look at a set of ground truth annotations
 
 ```{r}
 #Read RGB image as projected raster
+rgb<-get_data("SJER_052","rgb")
+xml<-get_data("SJER_052","annotations")
+```
 
-rgb<-stack(system.file("extdata","evaluation/RGB/SJER_052.tif",package="NeonTreeEvaluation"))
+Load and view RGB data
+```{r}
+img<-stack(rgb)
+```
 
-#Path to dataset
-xmls<-xml_parse(system.file("extdata","annotations/SJER_052.xml",package="NeonTreeEvaluation"))
-
+```{r}
 #View one plot's annotations as polygons, project into UTM
 #copy project utm zone (epsg), xml has no native projection metadata
-ground_truth <- boxes_to_spatial_polygons(xmls,rgb)
+ground_truth <- boxes_to_spatial_polygons(xml,img)
 
-plotRGB(rgb)
+plotRGB(img)
 plot(ground_truth,add=T)
 ```
 

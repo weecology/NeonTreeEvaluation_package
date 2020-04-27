@@ -1,21 +1,27 @@
 #' Retrieve benchmark data
+#'
 #' \code{get_data} is a set of utility functions for finding the path of benchmark data on disk
 #' @param plot_name A plot name
-#' @param sensor Which plot object should be returned: "rgb","lidar","hyperspectral","annotations"
+#' @param type Which data object should be returned: "rgb" for camera imagery,"lidar" for 3D point clouds,"hyperspectral" for 426 band raster,"annotations" for dataframe of bounding box ground truth
 #' @return path to object on disk
 #' @export
 
-get_data<-function(plot_name, sensor){
-  if(sensor=="rgb"){
+get_data<-function(plot_name, type){
+
+  if(!type %in% c("rgb","lidar","hyperspectral","annotations")){
+    stop(paste("No type option", type, "Available type arguments:'rgb','lidar','hyperspectral','annotations'"))
+  }
+
+  if(type=="rgb"){
     path<-get_rgb(plot_name)
   }
-  if(sensor=="lidar"){
+  if(type=="lidar"){
     path<-get_lidar(plot_name)
   }
-  if(sensor=="hyperspectral"){
+  if(type=="hyperspectral"){
     path<-get_hyperspectral(plot_name)
   }
-  if(sensor=="annotations"){
+  if(type=="annotations"){
     path<-get_annotations(plot_name)
   }
   return(path)
