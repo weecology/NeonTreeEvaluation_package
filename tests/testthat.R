@@ -12,4 +12,6 @@ expect_true(file.exists(get_data("SJER_052","annotations")))
 #get data error on bad type arguments
 expect_error(get_data("SJER_052","RGB"))
 
-
+#expected results from submission
+df<-submission %>% filter(plot_name=="SJER_052")
+result<-evaluate_plot(df,show = F,project_boxes = T)

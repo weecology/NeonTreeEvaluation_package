@@ -28,4 +28,4 @@ addons:
 
 before_install:
   - R -e 'install.packages("rgdal", repos="http://R-Forge.R-project.org")'
-  - R -e 'install.packages("Rcpp", repos="http://R-Forge.R-project.org")'
+  - R -e 'install.packages("Rcpp")'

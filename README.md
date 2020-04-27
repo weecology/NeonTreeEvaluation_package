@@ -4,6 +4,8 @@ Status](https://travis-ci.org/Weecology/NeonTreeEvaluation_package.svg?branch=ma
 A multi-sensor benchmark dataset for detecting individual trees in airborne RGB, Hyperspectral and LIDAR point clouds
 =====================================================================================================================
 
+Mantainer: Ben Weinstein - University of Florida.
+
 Individual tree detection is a central task in forestry and ecology. Few
 papers analyze proposed methods across a wide geographic area. This
 limits the utility of tools and inhibits comparisons across methods.
@@ -56,9 +58,11 @@ head(submission)
 Precision and recall scores for a single hand-annotated plot
 ------------------------------------------------------------
 
+This submission has bounding boxes in image coordinates.
+
 ``` r
 df<-submission %>% filter(plot_name=="SJER_052")
-evaluate_plot(df,show = T)
+evaluate_plot(df,show = T,project_boxes = T)
 #> [1] SJER_052
 #> 181 Levels: 2018_SJER_3_252000_4104000_image_628 ...
 ```
@@ -70,22 +74,26 @@ evaluate_plot(df,show = T)
 
 If you would prefer not to clone this repo, a static version of the
 benchmark is here:
-<a href="https://zenodo.org/record/3723357" class="uri">https://zenodo.org/record/3723357</a>
+<a href="https://zenodo.org/record/3723357#.XqT_HlNKjOQ" class="uri">https://zenodo.org/record/3723357#.XqT_HlNKjOQ</a>
 
-Mantainer: Ben Weinstein - University of Florida.
+### For the entire benchmark
 
-Description: The NeonTreeEvaluation dataset is a set of bounding boxes
-drawn on RGB imagery from the National Ecological Observation Network
-(NEON). NEON is a set of 45 sites
+``` r
+evaluate_benchmark(submission,project_boxes = T)
+```
+
+Sensor Data
+===========
+
+The NeonTreeEvaluation dataset is a set of bounding boxes drawn on RGB
+imagery from the National Ecological Observation Network (NEON). NEON is
+a set of 45 sites
 (e.g. [TEAK](https://www.neonscience.org/field-sites/field-sites-map/TEAK))
 that cover the dominant ecosystems in the US.
 
 For more complete information see:
 
 <a href="https://github.com/weecology/NeonTreeEvaluation" class="uri">https://github.com/weecology/NeonTreeEvaluation</a>
-
-Sensor Data
-===========
 
 RGB
 ---
@@ -109,10 +117,10 @@ plotRGB(rgb)
 plot(xml_polygons,add=T)
 ```
 
-![](www/README-unnamed-chunk-5-1.png)
+![](www/README-unnamed-chunk-6-1.png)
 
 Lidar
-=====
+-----
 
 To access the draped lidar hand annotations, use the “label” column.
 Each tree has a unique integer.
@@ -132,7 +140,7 @@ annotations were made in the RGB and then draped on to the point cloud,
 there will naturally be some erroneous points at the borders of trees.
 
 Hyperspectral
-=============
+-------------
 
 Hyperspectral surface reflectance (NEON ID: DP1.30006.001) is a 426 band
 raster covering visible and near infared spectrum.
@@ -147,20 +155,19 @@ f<-g[[c(52,88,117)]]
 plotRGB(f,stretch="lin")
 ```
 
-![](www/README-unnamed-chunk-7-1.png)
+![](www/README-unnamed-chunk-8-1.png)
 
-Performance
-===========
+Submission
+==========
 
-To submit to this benchmark, please see the evaluation vignette.
+To submit to this benchmark, please see the evaluation vignette. Please
+submit a pull request, or contact the mantainer if you use these data in
+analysis and would like the results to be shown here.
 
-Cited
------
+Citation
+--------
 
 <sup>1</sup> Weinstein, Ben G., et al. “Individual tree-crown detection
 in RGB imagery using semi-supervised deep learning neural networks.”
 Remote Sensing 11.11 (2019): 1309.
 <a href="https://www.mdpi.com/2072-4292/11/11/1309" class="uri">https://www.mdpi.com/2072-4292/11/11/1309</a>
-
-Please submit a pull request, or contact the mantainer if you use these
-data in analysis and would like the results to be shown here.
