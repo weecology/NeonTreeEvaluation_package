@@ -3,7 +3,7 @@
 \name{evaluate_benchmark}
 \alias{evaluate_benchmark}
 \title{Evaluate submission for all plots
-\code{summary_statistics} returns a helpful summary of a set of plot evaluations}
+Run evaluation on all plots in a dataframe.}
 \usage{
 evaluate_benchmark(submission, project_boxes = FALSE, show = T,
   compute_PR = F)
@@ -18,12 +18,12 @@ evaluate_benchmark(submission, project_boxes = FALSE, show = T,
 \item{compute_PR}{Logical. Should the summarize precision and recall be computed? If not, return the IoU overlap for each ground truth box}
 }
 \value{
-A raster with the canopy height estimated for each grid cell.
+If compute_PR is True, a dataframe of precision-recall scores or each plot. If False, a dataframe with the IoU scores for each prediction for all plots.
 }
 \description{
 Evaluate submission for all plots
-\code{summary_statistics} returns a helpful summary of a set of plot evaluations
+Run evaluation on all plots in a dataframe.
 }
 \details{
-This function first looks which plot_names match the benchmark dataset. Plots with no predictions, or which are not included, are ignored.
+This function is a wrapper for \code{evaluate_plot}. It first looks which plot_names match the benchmark dataset. Plots with no predictions, or which are not included, are ignored.
 }

@@ -1,9 +1,8 @@
 #' Evaluate submission for all plots
-#' \code{summary_statistics} returns a helpful summary of a set of plot evaluations
 #' @inheritParams evaluate_plot
 #' @details
-#' This function first looks which plot_names match the benchmark dataset. Plots with no predictions, or which are not included, are ignored.
-#' @return A raster with the canopy height estimated for each grid cell.
+#' This function is a wrapper for \code{evaluate_plot}. It first looks which plot_names match the benchmark dataset. Plots with no predictions, or which are not included, are ignored.
+#' @return If compute_PR is True, a dataframe of precision-recall scores or each plot. If False, a dataframe with the IoU scores for each prediction for all plots.
 #' @export
 #'
 

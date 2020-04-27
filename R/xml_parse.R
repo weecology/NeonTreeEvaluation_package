@@ -1,13 +1,14 @@
-#' Parse xml tree annotations from an XML file
-#'
-#' @param path_to_xml "Character" filename of the .xml file
+#' Parse xml tree annotations from an Pascal VOC XML file
+#' @details
+#' This utility function creates a dataframe from xml annotations from RectLabel or Labelme exported as the standard pascal voc format for object detection.
+#' @param path "Character" filename of the .xml file
 #' @return a dataframe of tree annotations in the format xmin, xmax, ymin, ymax
 #' @export
 #' @import xml2
 #'
 #Parse xml file to dataframe
-xml_parse<-function(path_to_xml){
-  pg <- read_xml(path_to_xml)
+xml_parse<-function(path){
+  pg <- read_xml(path)
 
   # get all the <record>s
   recs <- xml_find_all(pg, "//name")

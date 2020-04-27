@@ -63,7 +63,7 @@ evaluate_plot(df,show = T)
 #> 181 Levels: 2018_SJER_3_252000_4104000_image_628 ...
 ```
 
-![](README-unnamed-chunk-4-1.png)
+![](www/README-unnamed-chunk-4-1.png)
 
     #>   recall precision
     #> 1      1         1
@@ -95,7 +95,7 @@ library(raster)
 library(NeonTreeEvaluation)
 
 #Read RGB image as projected raster
-rgb_path<-get_data(plot_name = "SJER_021",sensor="rgb")
+rgb_path<-get_data(plot_name = "SJER_021",type="rgb")
 rgb<-stack(rgb_path)
 
 #Path to dataset
@@ -109,7 +109,7 @@ plotRGB(rgb)
 plot(xml_polygons,add=T)
 ```
 
-![](README-unnamed-chunk-5-1.png)
+![](www/README-unnamed-chunk-5-1.png)
 
 Lidar
 =====
@@ -119,7 +119,7 @@ Each tree has a unique integer.
 
 ``` r
 library(lidR)
-path<-get_data("TEAK_052",sensor="lidar")
+path<-get_data("TEAK_052",type="lidar")
 r<-readLAS(path)
 trees<-lasfilter(r,!label==0)
 plot(trees,color="label")
@@ -138,7 +138,7 @@ Hyperspectral surface reflectance (NEON ID: DP1.30006.001) is a 426 band
 raster covering visible and near infared spectrum.
 
 ``` r
-path<-get_data("MLBS_071",sensor="hyperspectral")
+path<-get_data("MLBS_071",type="hyperspectral")
 g<-stack(path)
 nlayers(g)
 #> [1] 426
@@ -147,7 +147,7 @@ f<-g[[c(52,88,117)]]
 plotRGB(f,stretch="lin")
 ```
 
-![](README-unnamed-chunk-7-1.png)
+![](www/README-unnamed-chunk-7-1.png)
 
 Performance
 ===========

@@ -42,16 +42,24 @@ head(submission)
 
 # Evaluation
 
-For each plot compute the precision and recall based on intersection-over-union of 0.5 between the ground truth bounding boxes and the predicted boxes. 
+For each plot compute the precision and recall based on intersection-over-union of 0.5 between the ground truth bounding boxes and the predicted boxes. The loop through all matching plot_names and produce evaluation scores
 
 ```{r,eval=FALSE}
-results<-submission %>% filter(plot_name %in% sample(plot_name,5)) %>% group_by(plot_name) %>% do(evaluate_plot(.))
+results<-evaluate_benchmark(submission = submission)
 ```
+
+There are several options that need to be considered. see ?evaluate_benchmark. For example, `project_boxes` asks whether the predicted boxes should be projected in universal-transverse mercator projection (UTM) from the image coordinate system. For example,
+
+```{r}
+head(submission)
+```
+
+These boxes are in the image coorinate system. The xmin of the first box is 299.53 (pixels) from the top left. The images are projected and have units in meters. Therefore we need to transform the image coordinates to the geograpgic coordinates for the boxes to overlap. 
 
 For the sake of computation in this small vignette, let's select just 5 images.
 
 ```{r,include=FALSE}
-results<-submission %>% filter(plot_name %in% sample(plot_name,5)) %>% group_by(plot_name) %>% do(evaluate_plot(.))
+results<-submission %>% filter(plot_name %in% sample(plot_name,5)) %>% group_by(plot_name) %>% do(evaluate_plot(.,project_boxes = T))
 ```
 
 ```{r}

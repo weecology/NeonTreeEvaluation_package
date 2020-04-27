@@ -3,8 +3,8 @@
 #' @param submission A five column dataframe in the order plot_name, xmin, xmax, ymin, ymax. Each row is a predicted bounding box.
 #' @param show Logical. Plot the overlayed annotations for each plot?
 #' @param project_boxes Logical. Should the boxes be projected into utm coordinates? This is needed if the box coordinates are given from the image origin (top left is 0,0)
-#' @param compute_PR Logical. Should the summarize precision and recall be computed? If not, return the IoU overlap for each ground truth box
-#' @return If computer_PR=T, the recall and precision scores for the plot, if False, the
+#' @param compute_PR Logical. Should the grand summary precision and recall be computed?
+#' @return If computer_PR=T, the recall and precision scores for the plot, if False, the intersection-over-union scores for each prediction.
 #' @export
 #'
 evaluate_plot<-function(submission, show=TRUE,project_boxes=TRUE, compute_PR=TRUE){
