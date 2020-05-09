@@ -2,19 +2,23 @@
 % Please edit documentation in R/xml_parse.R
 \name{xml_parse}
 \alias{xml_parse}
-\title{Parse xml tree annotations from an Pascal VOC XML file}
+\title{Parse crown annotations from an Pascal VOC XML file}
 \usage{
 xml_parse(path)
 }
 \arguments{
-\item{path}{"Character" filename of the .xml file}
+\item{path}{Filename of the .xml file.}
 }
 \value{
-a dataframe of tree annotations in the format xmin, xmax, ymin, ymax
+A dataframe of bounding box annotations in the format xmin, xmax, ymin, ymax.
 }
 \description{
-Parse xml tree annotations from an Pascal VOC XML file
+Parse crown annotations from an Pascal VOC XML file
 }
 \details{
-This utility function creates a dataframe from xml annotations from RectLabel or Labelme exported as the standard pascal voc format for object detection.
+This utility function creates a dataframe from xml annotations from RectLabel or Labelme exported as the standard pascal voc format for object detection. This function is used for the evaluation of the image annotations and is not often called by users.
+}
+\examples{
+xml<-get_data("SJER_052","annotations")
+xml_parse(xml)
 }

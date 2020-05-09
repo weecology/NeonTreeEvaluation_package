@@ -2,15 +2,15 @@
 % Please edit documentation in R/boxes_to_spatial_polygons.R
 \name{boxes_to_spatial_polygons}
 \alias{boxes_to_spatial_polygons}
-\title{Convert xml annotations into projected bounding boxes.
+\title{Convert xml crown annotations into projected bounding boxes.
 In order to plot the annotations, they need to be projected and overlayed on RGB boxes}
 \usage{
 boxes_to_spatial_polygons(boxes, raster_object, project_boxes = TRUE)
 }
 \arguments{
-\item{boxes}{a boxesframe with xmin, xmax, ymin, ymax columns. Each row is a tree bounding box}
+\item{boxes}{A data frame with xmin, xmax, ymin, ymax columns. Each row is a crown bounding box.}
 
-\item{raster_object}{a rgb raster::stack to overlay annotations}
+\item{raster_object}{A RGB raster to overlay annotations}
 
 \item{project_boxes}{inherited from \code{\link{evaluate_plot}}, whether boxes need to be projected to utm from image coordinates (origin 0,0 top left)}
 }
@@ -18,6 +18,6 @@ boxes_to_spatial_polygons(boxes, raster_object, project_boxes = TRUE)
 SpatialPolygons object of annotations
 }
 \description{
-Convert xml annotations into projected bounding boxes.
+Convert xml crown annotations into projected bounding boxes.
 In order to plot the annotations, they need to be projected and overlayed on RGB boxes
 }

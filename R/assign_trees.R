@@ -6,7 +6,6 @@
 #' @return A data frame with the crown ID matched to the prediction ID.
 #' @examples
 #'
-#' @export
 assign_trees<-function(ground_truth,predictions){
 
   #Find overlap among polygons

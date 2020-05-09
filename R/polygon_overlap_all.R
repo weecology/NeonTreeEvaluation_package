@@ -3,7 +3,6 @@
 #' @param ground_truth A ground truth polygon
 #' @param predictions prediction polygons
 #' @return A data frame with the crown ID, the prediction ID and the area of overlap.
-#' @export
 
 polygon_overlap_all<-function(ground_truth,predictions){
   results<-list()

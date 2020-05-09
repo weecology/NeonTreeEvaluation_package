@@ -2,7 +2,7 @@
 % Please edit documentation in R/IoU.R
 \name{IoU}
 \alias{IoU}
-\title{Intersection over Union of two polygons}
+\title{Intersection-over-union of two polygons}
 \usage{
 IoU(x, y)
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/PR.R
 \name{PR}
 \alias{PR}
-\title{Precision and recall for a set of results}
+\title{Precision and recall for a set of prediction results}
 \usage{
 PR(results, threshold)
 }

@@ -4,7 +4,6 @@
 #' @param boxes a boxesframe with xmin, xmax, ymin, ymax columns. Each row is a tree bounding box
 #' @param raster_object a rgb raster::stack to overlay annotations. This needs a utm CRS
 #' @return SpatialPolygons object of annotations
-#' @export
 #'
 #boxes is a xml object returned by the parser above, raster_object is the projected RGB image
 project<-function(boxes,raster_object){

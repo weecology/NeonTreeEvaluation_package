@@ -2,7 +2,6 @@
 #'
 #' @param siteID NEON site abbreviation (e.g. "HARV")
 #' @return a dataframe of tree annotations in the format xmin, xmax, ymin, ymax
-#' @export
 #'
 readTreeXML<-function(siteID){
   path<-paste(system.file("extdata","annotations/",package="NeonTreeEvaluation"))

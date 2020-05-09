@@ -5,7 +5,7 @@
 #' @param ground_truth A SpatialPolygonDataFrame of ground truth polygons
 #' @param prediction A SpatialPolygonDataFrame of ground truth polygons
 #' @return dataframe of the jaccard overlap among polygon pairs
-#' @export
+
 calc_jaccard<-function(assignment,ground_truth,predictions){
   jaccard_stat<-list()
   for(i in 1:nrow(predictions)){

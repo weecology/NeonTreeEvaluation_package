@@ -13,6 +13,6 @@ test_that("dataframe to polygons",{
   #is s4 class
   expect_s4_class(ground_truth,"SpatialPolygonsDataFrame")
   #correct size
-  expect_equal(dim(ground_truth)[1],10)
+  expect_equal(dim(ground_truth)[1],9)
 })
 

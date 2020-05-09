@@ -1,8 +1,9 @@
 #' Load and overlay ground truth annotations for single plot evaluation
 #'
-#' @param plot_name The name of plot as given by the filename (e.g "SJER_021.tif" -> SJER_021)
-#' @param show Logical. Whether to show a plot of the ground truth data overlayed on the RGB image
-#' @return SpatialPolygonsDataFrame of ground truth boxes
+#' load_ground_truth is a wrapper function to get a plot annotation from file, project into geographic coordinates and potentially overlay on RGB data
+#' @param plot_name The name of plot as given by the filename (e.g "SJER_021.tif" -> SJER_021).
+#' @param show Logical. Whether to plot  the ground truth data overlayed on the RGB image.
+#' @return A SpatialPolygonsDataFrame of ground truth boxes.
 #' @export
 #'
 load_ground_truth<-function(plot_name,show=TRUE){

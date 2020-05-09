@@ -2,21 +2,23 @@
 % Please edit documentation in R/summary_statistics.R
 \name{summary_statistics}
 \alias{summary_statistics}
-\title{Summary statistics for benchmark evaluation}
+\title{Summary statistics for evaluated crowns}
 \usage{
-summary_statistics(results, method = "all", plot_result = T,
+summary_statistics(results, by_site = FALSE, plot_result = T,
   threshold = 0.5)
 }
 \arguments{
-\item{results}{A dataframe returned from \code{evaluate_plot}}
+\item{results}{A data frame of matched predictions and ground truth returned from \code{evaluate_plot}}
 
-\item{method}{"all" for averaging recall across images, or "site" to average per geographic site}
+\item{by_site}{Logical. Should average recall and precision be calculated for each geographic site seperately? Defaults to FALSE, such that a single summary is returned for all sites.}
 
-\item{plot_result}{generate a ggplot of results}
+\item{plot_result}{Logical. Generate a ggplot of results as a side effect?}
+
+\item{threshold}{Float. Intersection-over-union threshold to consider a prediction a true positive.}
 }
 \value{
-Summary recall and precision
+A data frame of averaged recall and precision scores
 }
 \description{
-\code{summary_statistics} returns a helpful summary of a set of plot evaluations
+\code{summary_statistics} returns a standardized summary of plot evaluations. The mean recall and precision can be calculated either for the entire dataset, or for each of the 22 geographic sites.
 }

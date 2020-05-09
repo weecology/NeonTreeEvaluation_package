@@ -2,7 +2,6 @@
 #'
 #' @param fil "Character" filename of the .xml file
 #' @return a dataframe of tree annotations in the format xmin, xmax, ymin, ymax
-#' @export
 #'
 extract_coordinates<-function(x){
   b<-bbox(x)

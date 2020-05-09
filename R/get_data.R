@@ -1,9 +1,9 @@
-#' Retrieve benchmark data
+#' Retrieve sensor or annotation data from package contents
 #'
 #' \code{get_data} is a set of utility functions for finding the path of benchmark data on disk
-#' @param plot_name A plot name
-#' @param type Which data object should be returned: "rgb" for camera imagery,"lidar" for 3D point clouds,"hyperspectral" for 426 band raster,"annotations" for dataframe of bounding box ground truth
-#' @return path to object on disk
+#' @param plot_name A plot name.
+#' @param type Which data object should be returned: "rgb" for camera imagery,"lidar" for 3D point clouds,"hyperspectral" for 426 band raster,"annotations" for dataframe of bounding box ground truth.
+#' @return The filename of the object.
 #' @export
 
 get_data<-function(plot_name, type){

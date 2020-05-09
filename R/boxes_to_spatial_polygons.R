@@ -1,13 +1,12 @@
-#' Convert xml annotations into projected bounding boxes.
+#' Convert xml crown annotations into projected bounding boxes.
 #' In order to plot the annotations, they need to be projected and overlayed on RGB boxes
 #'
-#' @param boxes a boxesframe with xmin, xmax, ymin, ymax columns. Each row is a tree bounding box
-#' @param raster_object a rgb raster::stack to overlay annotations
+#' @param boxes A data frame with xmin, xmax, ymin, ymax columns. Each row is a crown bounding box.
+#' @param raster_object A RGB raster to overlay annotations
 #' @param project_boxes inherited from \code{\link{evaluate_plot}}, whether boxes need to be projected to utm from image coordinates (origin 0,0 top left)
 #' @return SpatialPolygons object of annotations
 #' @export
-#'
-#'
+
 #boxes is a xml object returned by the parser above, raster_object is the projected RGB image
 boxes_to_spatial_polygons<-function(boxes,raster_object,project_boxes=TRUE){
 

@@ -8,16 +8,16 @@ compute_precision_recall(ground_truth, predictions, threshold = 0.5,
   summarize = T)
 }
 \arguments{
-\item{ground_truth}{SpatialPolygonDataFrame of ground truth polygons}
+\item{ground_truth}{A SpatialPolygonDataFrame of ground truth polygons.}
 
-\item{predictions}{SpatialPolygonDataFrame of prediction polygons}
+\item{predictions}{A SpatialPolygonDataFrame of prediction polygons.}
 
-\item{threshold}{Intersection over Union threshold. default is 0.5}
+\item{threshold}{The intersection-over-union threshold for a prediction overlap with a ground truth to be considered a true positive. Default=0.5}
 
-\item{summarize}{Logical. If true, return the precision and recall for this dataset, if false, just return IoU overlap. Potentially to be used alongside other plots. over Union threshold. default is 0.5}
+\item{summarize}{Logical. If true, return the precision and recall for this dataset, if false, return a data frame of matched crowns and the IoU overlap with ground truth.}
 }
 \value{
-recall and precision scores for the plot
+The recall and precision scores for the plot.
 }
 \description{
 Compute precision and recall statistics between predicted tree boxes and ground truth data

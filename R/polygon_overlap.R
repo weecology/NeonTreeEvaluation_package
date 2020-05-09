@@ -4,7 +4,6 @@
 #' @param pol A ground truth polygon
 #' @param prediction prediction polygons
 #' @return A data frame with the crown ID, the prediction ID and the area of overlap.
-#' @export
 
 polygon_overlap<-function(pol,predictions){
   overlap_area<-c()

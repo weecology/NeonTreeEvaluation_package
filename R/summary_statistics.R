@@ -1,23 +1,22 @@
-#' Summary statistics for benchmark evaluation
+#' Summary statistics for evaluated crowns
 #'
-#' \code{summary_statistics} returns a helpful summary of a set of plot evaluations
-#' @param results A dataframe returned from \code{evaluate_plot}
-#' @param method "all" for averaging recall across images, or "site" to average per geographic site
-#' @param plot_result generate a ggplot of results
-#' @return Summary recall and precision
+#' \code{summary_statistics} returns a standardized summary of plot evaluations. The mean recall and precision can be calculated either for the entire dataset, or for each of the 22 geographic sites.
+#' @param results A data frame of matched predictions and ground truth returned from \code{evaluate_plot}
+#' @param by_site Logical. Should average recall and precision be calculated for each geographic site seperately? Defaults to FALSE, such that a single summary is returned for all sites.
+#' @param plot_result Logical. Generate a ggplot of results as a side effect?
+#' @param threshold Float. Intersection-over-union threshold to consider a prediction a true positive.
+#' @return A data frame of averaged recall and precision scores
 #' @export
 
-summary_statistics<-function(results, method="all",plot_result=T, threshold=0.5){
-  #Summary precision and recall across all images
-  if(method=="all"){
+summary_statistics<-function(results, by_site=FALSE,plot_result=T, threshold=0.5){
+  #Summary precision and recalls across all images
+  if(!by_site){
     true_positives = results$IoU > threshold
 
     #number of ground truth
     statistic<-results %>% group_by(plot_name) %>% do(PR(.,threshold=threshold)) %>% ungroup() %>% summarize(precision=mean(precision),recall=mean(recall))
 
-  }
-
-  if(method=="site"){
+  } else{
     #Infer site
     results<-results %>% mutate(Site=str_match(plot_name,"(\\w+)_")[,2])
 

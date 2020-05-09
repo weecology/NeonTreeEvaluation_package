@@ -1,4 +1,4 @@
-#' Precision and recall for a set of results
+#' Precision and recall for a set of prediction results
 #'
 #' \code{PR} is an internal function not called by the user for summary statistics
 #' @param results A dataframe returned from \code{evaluate_plot}

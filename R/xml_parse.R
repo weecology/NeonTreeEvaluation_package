@@ -1,9 +1,9 @@
-#' Parse xml tree annotations from an Pascal VOC XML file
+#' Parse crown annotations from an Pascal VOC XML file
 #' @details
-#' This utility function creates a dataframe from xml annotations from RectLabel or Labelme exported as the standard pascal voc format for object detection.
-#' @param path "Character" filename of the .xml file
-#' @return a dataframe of tree annotations in the format xmin, xmax, ymin, ymax
-#' @example
+#' This utility function creates a dataframe from xml annotations from RectLabel or Labelme exported as the standard pascal voc format for object detection. This function is used for the evaluation of the image annotations and is not often called by users.
+#' @param path Filename of the .xml file.
+#' @return A dataframe of bounding box annotations in the format xmin, xmax, ymin, ymax.
+#' @examples
 #' xml<-get_data("SJER_052","annotations")
 #' xml_parse(xml)
 #' @export

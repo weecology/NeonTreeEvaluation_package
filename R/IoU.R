@@ -1,10 +1,10 @@
-#' Intersection over Union of two polygons
+#' Intersection-over-union of two polygons
 #'
 #' \code{IoU} finds the jaccard statistic for two input polygons
 #' @param x A SpatialPolygonDataFrame of length 1
 #' @param y A SpatialPolygonDataFrame of length 1
 #' @return a numeric value indiciating the jaccard overlap
-#' @export
+
 IoU<-function(x,y){
 
   #find area of overlap

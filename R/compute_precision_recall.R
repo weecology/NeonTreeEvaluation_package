@@ -1,10 +1,10 @@
 #' Compute precision and recall statistics between predicted tree boxes and ground truth data
 #' @details The numeric identity of the crown is stored in a column named crown_ID. An error will be raised if this column does not exist.
-#' @param ground_truth SpatialPolygonDataFrame of ground truth polygons
-#' @param predictions SpatialPolygonDataFrame of prediction polygons
-#' @param threshold Intersection over Union threshold. default is 0.5
-#' @param summarize Logical. If true, return the precision and recall for this dataset, if false, just return IoU overlap. Potentially to be used alongside other plots. over Union threshold. default is 0.5
-#' @return recall and precision scores for the plot
+#' @param ground_truth A SpatialPolygonDataFrame of ground truth polygons.
+#' @param predictions A SpatialPolygonDataFrame of prediction polygons.
+#' @param threshold The intersection-over-union threshold for a prediction overlap with a ground truth to be considered a true positive. Default=0.5
+#' @param summarize Logical. If true, return the precision and recall for this dataset, if false, return a data frame of matched crowns and the IoU overlap with ground truth.
+#' @return The recall and precision scores for the plot.
 #' @export
 #'
 compute_precision_recall<-function(ground_truth,predictions,threshold=0.5, summarize=T){
