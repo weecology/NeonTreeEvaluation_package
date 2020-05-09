@@ -50,15 +50,16 @@ The plot column should be named the same as the files in the dataset (e.g. SJER_
 
 # Example
 
+The package contains a sample submission file. 
 ```{r}
 library(raster)
 library(dplyr)
 library(NeonTreeEvaluation)
-submission<-read.csv(system.file("extdata", "Weinstein2019.csv",package = "NeonTreeEvaluation"))
+data("submission")
 head(submission)
 ```
 
-## Precision and recall scores for a single hand-annotated plot
+## Precision and recall scores for a single image-annotated plot
 
 This submission has bounding boxes in image coordinates. 
 ```{r}
@@ -71,16 +72,14 @@ If you would prefer not to clone this repo, a static version of the benchmark is
 ### For the entire benchmark
 
 ```{r,eval=F}
-evaluate_benchmark(submission,project_boxes = T)
+evaluate_image_crowns(submission,project_boxes = T)
 ```
 
 # Sensor Data
 
 The NeonTreeEvaluation dataset is a set of bounding boxes drawn on RGB imagery from the National Ecological Observation Network (NEON). NEON is a set of 45 sites (e.g. [TEAK](https://www.neonscience.org/field-sites/field-sites-map/TEAK)) that cover the dominant ecosystems in the US.
 
-For more complete information see:
-
-https://github.com/weecology/NeonTreeEvaluation
+For more complete information see the data vignette.
 
 ## RGB
 
