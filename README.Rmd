@@ -69,7 +69,7 @@ evaluate_plot(df,show = T,project_boxes = T)
 
 If you would prefer not to clone this repo, a static version of the benchmark is here: https://zenodo.org/record/3723357#.XqT_HlNKjOQ
 
-### For the entire benchmark
+### For the entire image-annotated benchmark
 
 ```{r,eval=F}
 evaluate_image_crowns(submission,project_boxes = T)
