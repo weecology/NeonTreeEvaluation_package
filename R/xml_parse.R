@@ -4,13 +4,13 @@
 #' @param path Filename of the .xml file.
 #' @return A dataframe of bounding box annotations in the format xmin, xmax, ymin, ymax.
 #' @examples
-#' xml<-get_data("SJER_052","annotations")
+#' xml <- get_data("SJER_052", "annotations")
 #' xml_parse(xml)
 #' @export
 #' @import xml2
 #'
-#Parse xml file to dataframe
-xml_parse<-function(path){
+# Parse xml file to dataframe
+xml_parse <- function(path) {
   pg <- read_xml(path)
 
   # get all the <record>s
@@ -43,11 +43,11 @@ xml_parse<-function(path){
   recs <- xml_find_all(pg, "//filename")
   filename <- trimws(xml_text(recs))
 
-  df<-data.frame(filename=filename,xmin=as.numeric(xmin),xmax=as.numeric(xmax),ymin=as.numeric(ymin),ymax=as.numeric(ymax),name=names)
+  df <- data.frame(filename = filename, xmin = as.numeric(xmin), xmax = as.numeric(xmax), ymin = as.numeric(ymin), ymax = as.numeric(ymax), name = names)
 
-  #characters not factors
-  df$filename<-as.character(df$filename)
-  df$name<-as.character(df$name)
+  # characters not factors
+  df$filename <- as.character(df$filename)
+  df$name <- as.character(df$name)
 
   return(df)
 }

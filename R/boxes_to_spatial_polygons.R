@@ -7,27 +7,30 @@
 #' @return SpatialPolygons object of annotations
 #' @export
 
-#boxes is a xml object returned by the parser above, raster_object is the projected RGB image
-boxes_to_spatial_polygons<-function(boxes,raster_object,project_boxes=TRUE){
-
-  if(project_boxes){
-    boxes<-project(boxes,raster_object)
+# boxes is a xml object returned by the parser above, raster_object is the projected RGB image
+boxes_to_spatial_polygons <- function(boxes, raster_object, project_boxes = TRUE) {
+  if (project_boxes) {
+    boxes <- project(boxes, raster_object)
   }
 
-  projected_polygons<-list()
-  for(x in 1:nrow(boxes)){
-    e<-raster::extent(c(boxes$xmin[x],
-                       boxes$xmax[x],
-                       boxes$ymin[x],
-                       boxes$ymax[x]))
-    projected_polygons[[x]]<-as(e, 'SpatialPolygons')
-    projected_polygons[[x]]@polygons[[1]]@ID<-as.character(x)
+  projected_polygons <- list()
+  for (x in 1:nrow(boxes)) {
+    e <- raster::extent(c(
+      boxes$xmin[x],
+      boxes$xmax[x],
+      boxes$ymin[x],
+      boxes$ymax[x]
+    ))
+    projected_polygons[[x]] <- as(e, "SpatialPolygons")
+    projected_polygons[[x]]@polygons[[1]]@ID <- as.character(x)
   }
 
-  projected_polygons <- as(sp::SpatialPolygons(lapply(projected_polygons,
-                                                  function(x) slot(x, "polygons")[[1]])),"SpatialPolygonsDataFrame")
+  projected_polygons <- as(sp::SpatialPolygons(lapply(
+    projected_polygons,
+    function(x) slot(x, "polygons")[[1]]
+  )), "SpatialPolygonsDataFrame")
 
-  projected_polygons@data$crown_id=1:nrow(projected_polygons)
-  sp::proj4string(projected_polygons)<-raster::projection(raster_object)
+  projected_polygons@data$crown_id <- 1:nrow(projected_polygons)
+  sp::proj4string(projected_polygons) <- raster::projection(raster_object)
   return(projected_polygons)
 }

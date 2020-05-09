@@ -6,10 +6,12 @@
 #' @details For each plot in the submission, this function will check if there are field collected stem data and score whether each stem is within a predicted tree bounding box
 #' @return The average stem recall scores for each image in the submission
 
-stem_detection<-function(submission,project_boxes=FALSE, show=T, field_data=NA){
-  if (!is.na(field_data)){
-    path <- system.file("extdata/field_data.csv",package = "NeonTreeEvaluation")
-    field_data<-sf::st_read(path, options=c("X_POSSIBLE_NAMES=easting","Y_POSSIBLE_NAMES=northing"))
+stem_detection <- function(submission, project_boxes = FALSE, show = T, field_data = NA) {
+  if (!is.na(field_data)) {
+    path <- system.file("extdata/field_data.csv", package = "NeonTreeEvaluation")
+    field_data <- sf::st_read(path, options = c("X_POSSIBLE_NAMES=easting", "Y_POSSIBLE_NAMES=northing"))
   }
-  results<-submission %>% group_by(plot_name) %>% do(evaluate_stem(.,project_boxes=project_boxes,show=show,stem_dat=field_data))
+  results <- submission %>%
+    group_by(plot_name) %>%
+    do(evaluate_stem(., project_boxes = project_boxes, show = show, stem_dat = field_data))
 }

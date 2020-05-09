@@ -7,37 +7,36 @@
 #' @return If compute_PR=T, the recall and precision scores for the plot, if False, the intersection-over-union scores for each prediction.
 #' @export
 #'
-evaluate_plot<-function(submission, show=TRUE,project_boxes=TRUE, compute_PR=TRUE){
+evaluate_plot <- function(submission, show = TRUE, project_boxes = TRUE, compute_PR = TRUE) {
 
-  #find ground truth file
+  # find ground truth file
   plot_name <- unique(submission$plot_name)
-  if(!length(plot_name)==1){
-    stop(paste("There are",length(plot_name),"plot names. Please submit one plot of annotations to this function"))
+  if (!length(plot_name) == 1) {
+    stop(paste("There are", length(plot_name), "plot names. Please submit one plot of annotations to this function"))
   }
 
-  ground_truth<-load_ground_truth(plot_name,show = FALSE)
-  if(is.null(ground_truth)){
+  ground_truth <- load_ground_truth(plot_name, show = FALSE)
+  if (is.null(ground_truth)) {
     return(data.frame(NULL))
   }
 
-  #Read RGB image as projected raster
-  siteID = stringr::str_match(plot_name,"(\\w+)_")[,2]
+  # Read RGB image as projected raster
+  siteID <- stringr::str_match(plot_name, "(\\w+)_")[, 2]
 
-  path_to_rgb<-paste(system.file("extdata","evaluation/RGB/",package="NeonTreeEvaluation"),"/",plot_name,".tif",sep="")
+  path_to_rgb <- paste(system.file("extdata", "evaluation/RGB/", package = "NeonTreeEvaluation"), "/", plot_name, ".tif", sep = "")
   print(plot_name)
-  rgb<-raster::stack(path_to_rgb)
+  rgb <- raster::stack(path_to_rgb)
 
-  #project boxes
-  predictions <- boxes_to_spatial_polygons(submission,rgb,project_boxes = project_boxes)
+  # project boxes
+  predictions <- boxes_to_spatial_polygons(submission, rgb, project_boxes = project_boxes)
 
-  if(show){
+  if (show) {
     raster::plotRGB(rgb)
-    sp::plot(ground_truth,border="black",add=T)
-    sp::plot(predictions,border="red",add=T)
+    sp::plot(ground_truth, border = "black", add = T)
+    sp::plot(predictions, border = "red", add = T)
   }
 
-  #Create spatial polygons objects
-  result<-compute_precision_recall(ground_truth,predictions, summarize=compute_PR)
+  # Create spatial polygons objects
+  result <- compute_precision_recall(ground_truth, predictions, summarize = compute_PR)
   return(result)
 }
-

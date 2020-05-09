@@ -7,27 +7,26 @@
 #' @return The recall and precision scores for the plot.
 #' @export
 #'
-compute_precision_recall<-function(ground_truth,predictions,threshold=0.5, summarize=T){
+compute_precision_recall <- function(ground_truth, predictions, threshold = 0.5, summarize = T) {
 
-  #check for
-  if(!"crown_id" %in% colnames(predictions@data)){
+  # check for
+  if (!"crown_id" %in% colnames(predictions@data)) {
     stop("Crown IDs need to be stored in a numeric index named 'crown_id'")
   }
 
-  assignment<-assign_trees(ground_truth=ground_truth,predictions=predictions)
-  statdf<-calc_jaccard(assignment=assignment,ground_truth = ground_truth, predictions=predictions)
+  assignment <- assign_trees(ground_truth = ground_truth, predictions = predictions)
+  statdf <- calc_jaccard(assignment = assignment, ground_truth = ground_truth, predictions = predictions)
 
-  if(summarize){
-    true_positives = statdf$IoU > threshold
-    recall <- round(sum(true_positives,na.rm=T)/nrow(ground_truth),3)
-    precision <- round(sum(true_positives,na.rm=T)/nrow(predictions),3)
-    return(data.frame(recall,precision))
-  } else{
-    #append total ground truth and prediction for images to take cumulative sum
-    statdf$total_ground = nrow(ground_truth)
-    statdf$total_prediction = nrow(predictions)
+  if (summarize) {
+    true_positives <- statdf$IoU > threshold
+    recall <- round(sum(true_positives, na.rm = T) / nrow(ground_truth), 3)
+    precision <- round(sum(true_positives, na.rm = T) / nrow(predictions), 3)
+    return(data.frame(recall, precision))
+  } else {
+    # append total ground truth and prediction for images to take cumulative sum
+    statdf$total_ground <- nrow(ground_truth)
+    statdf$total_prediction <- nrow(predictions)
 
     return(statdf)
   }
 }
-

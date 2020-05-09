@@ -8,7 +8,9 @@
 #' @export
 #'
 
-evaluate_image_crowns<-function(submission,project_boxes=FALSE, show=T,compute_PR=F){
-  results<-submission %>% group_by(plot_name)  %>% do(evaluate_plot(.,project_boxes=project_boxes,show=show,compute_PR=compute_PR))
+evaluate_image_crowns <- function(submission, project_boxes = FALSE, show = T, compute_PR = F) {
+  results <- submission %>%
+    group_by(plot_name) %>%
+    do(evaluate_plot(., project_boxes = project_boxes, show = show, compute_PR = compute_PR))
   return(results)
 }
