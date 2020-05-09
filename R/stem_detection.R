@@ -5,7 +5,6 @@
 #' @param field_data a csv file with spatial coordinates "easting" and "northing" corresponding to utm locations of each point
 #' @details For each plot in the submission, this function will check if there are field collected stem data and score whether each stem is within a predicted tree bounding box
 #' @return The average stem recall scores for each image in the submission
-#' @export
 
 stem_detection<-function(submission,project_boxes=FALSE, show=T, field_data=NA){
   if (!is.na(field_data)){

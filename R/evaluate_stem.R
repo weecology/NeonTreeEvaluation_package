@@ -5,7 +5,7 @@
 #' @param stem_dat Object. A sf object with utm coordinates
 #' @details For each plot in the submission, this function will check if there are field collected stem data and score whether each stem is within a predicted tree bounding box
 #' @return The recall scores for each image
-#' @export
+
 evaluate_stem<-function(plot_prediction,stem_dat, project_boxes=FALSE, show=T){
 
   #point in poylgon

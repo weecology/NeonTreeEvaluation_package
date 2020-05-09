@@ -32,7 +32,11 @@ This repo is the accomponaying R package for reproducible evaluation against the
 library(devtools)
 install_github("https://github.com/weecology/NeonTreeEvaluation_package.git")
 ```
-    
+
+# Getting Started
+
+The package contains two vignettes. The 'Data' vignette describes each datatype and how to interact with it in R. The 'Evaluation' vignette shows how to submit predictions to the benchmark.  
+
 # Submission Format
 
 The format of the submission is as follows

@@ -2,16 +2,19 @@
 % Please edit documentation in R/xml_parse.R
 \name{xml_parse}
 \alias{xml_parse}
-\title{Parse xml tree annotations from an XML file}
+\title{Parse xml tree annotations from an Pascal VOC XML file}
 \usage{
-xml_parse(path_to_xml)
+xml_parse(path)
 }
 \arguments{
-\item{path_to_xml}{"Character" filename of the .xml file}
+\item{path}{"Character" filename of the .xml file}
 }
 \value{
 a dataframe of tree annotations in the format xmin, xmax, ymin, ymax
 }
 \description{
-Parse xml tree annotations from an XML file
+Parse xml tree annotations from an Pascal VOC XML file
+}
+\details{
+This utility function creates a dataframe from xml annotations from RectLabel or Labelme exported as the standard pascal voc format for object detection.
 }

@@ -4,8 +4,8 @@
 \alias{zenodo_url}
 \title{Download training data tiles for the NeonTreeEvaluation Benchmark}
 \usage{
-zenodo_url(concept_rec_id = NULL, rec_version = "latest", rec_id = NULL,
-  arg_checks = TRUE)
+zenodo_url(concept_rec_id = 3459803, rec_version = "latest",
+  rec_id = NULL, arg_checks = TRUE)
 }
 \description{
 The benchmark dataset contains both evaluation and training data for future use. While the annotations and evaluation data are modest in size, the training data is over 20GB and cannot be included directly in the package.
