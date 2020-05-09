@@ -1,0 +1,115 @@
+---
+title: "Working with data in the NeonTreeEvaluation Benchmark"
+author: "Ben Weinstein"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{example}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+The goal of this vignette is to provide a small demonstration of how to work with the annotated data and visualize each sensor type. For an example of evaluating a novel submission to the benchmark see the Evaluation vignette. 
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+How to read and view xml annotations from the NEONTreeEvaluation benchmark dataset
+
+```{r, include=FALSE}
+library(knitr)
+opts_chunk$set(warning = FALSE,message = FALSE)
+```
+
+```{r}
+library(raster)
+library(dplyr)
+library(lidR)
+library(NeonTreeEvaluation)
+```
+
+The NEON airborne observatory platform uses fixed-wing aircraft to survey sites during leaf-on-conditions from May-October. Aircraft are flown around 1000m above ground. Data chosen for this benchmark were collected during flights from 2018 and 2019. The current dataset includes at least two 40m x 40m evaluation plots for 22 sites with every visible tree annotated with a bounding box (n = 6,619 trees, n = 202 images).
+
+## Find data
+
+The get_data function allows users to find the sensor or annotation data for a particular plot in the dataset without having to know where the package is installed on a users computer.
+
+For example, if I wanted the path to the RGB and LiDAR data for plot SJER_052.
+
+```{r}
+rgb_path<-get_data("SJER_052","rgb")
+rgb_path
+lidar_path<-get_data("SJER_052","lidar")
+```
+## Annotations
+
+For each training and evaluation site, we manually hand-annotated images using the program RectLabel. For each visible tree, we created a bounding box (xmin, ymin, xmax, ymax) that covered the tree crown. The coordinates of this box are relative to the top left corner of each image. 
+
+Annotations are stored as xml json files
+
+```{r}
+xml<-get_data("SJER_052","annotations")
+xml
+```
+and can be read using the xml_parse function
+
+```{r}
+xml_parse(xml)
+```
+
+## Orthorectified Camera Mosaic (‘RGB’ NEON ID: DP3.30010.001)
+
+The RGB data consist of images taken with a D8900 camera with a format of 8,984 x 6,732 pixels. Individual images are color rectified, orthorectified and mosaiced to create a single raster image with a pixel size of 0.1 m^2. Mosaic tiles are provided as 1km^2 geoTIFF files and are named based on the utm coordinate at the northwest origin. RGB data have high spatial resolution and individual trees are often visible based on the crown boundary, as well as color differences among individuals due to taxonomy and health status. 
+
+```{r}
+rgb<-get_data("SJER_052","rgb")
+img<-stack(rgb)
+```
+
+To compare the image to the annotations, it is easier to overlay the bounding boxes in geographic coordinates. This package has a projection utility (boxes_to_spatial_polygonss) using the RGB image.
+
+```{r}
+#View one plot's annotations as polygons, project into UTM
+#copy project utm zone (epsg), xml has no native projection metadata
+annotations<-xml_parse(xml)
+ground_truth <- boxes_to_spatial_polygons(annotations,img)
+
+plotRGB(img)
+plot(ground_truth,add=T)
+```
+
+## Classified LiDAR Point Cloud (NEON ID: DP1.30003.001)
+The LiDAR data are 3D coordinates (4-6 points/m2) that provide high resolution information about tree crown shape and height. LiDAR data is stored as 1km^2 .laz files (Figure 2). These files contain the x,y,z coordinates for each return, as well as metadata on return intensity and point classification. The LiDAR data has been normalized with respect to classified ground points to standardize height measurements. Tree crowns are often apparent due to gaps among neighboring trees or differences in height among overlapping crowns. 
+
+
+Now let's load the corresponding LiDAR point cloud for this evaluation plot.
+
+```{r}
+point_cloud_path<-get_data("SJER_052","lidar")
+point_cloud<-readLAS(point_cloud_path)
+```
+Tree annotations are stored in the UserData column. Each tree has a unique numeric ID
+
+```{r}
+plot(point_cloud)
+plot(point_cloud,color="label")
+tree_only<-lasfilter(point_cloud,!point_cloud@data$label==0)
+plot(tree_only,color="label")
+```
+
+## Hyperspectral surface reflectance (NEON ID: DP1.30006.001)
+NEON’s pushbroom style instrument collects visible and infrared spectrum from between approximately 420-2500 nm with a spectral sampling interval of 5nm for a total of 426 bands. NEON provides the orthorectified images with a pixel size of 1 m2 in 1 km2 tiles that align with the RGB and LiDAR file naming convention. Hyperspectral data, especially in the infrared spectrum, is often used for differentiating tree species (e.g. Maschler et al. 2018). In forests with high species diversity, these data may be used to delineate crown boundaries among neighboring trees.
+
+```{r}
+path<-get_data("MLBS_071",type="hyperspectral")
+g<-stack(path)
+nlayers(g)
+#> [1] 426
+#Grab a three band combination to view as false color
+f<-g[[c(52,88,117)]]
+plotRGB(f,stretch="lin")
+```
