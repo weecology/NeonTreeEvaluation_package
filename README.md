@@ -24,6 +24,13 @@ library(devtools)
 install_github("https://github.com/weecology/NeonTreeEvaluation_package.git")
 ```
 
+Getting Started
+===============
+
+The package contains two vignettes. The ‘Data’ vignette describes each
+datatype and how to interact with it in R. The ‘Evaluation’ vignette
+shows how to submit predictions to the benchmark.
+
 Submission Format
 =================
 
@@ -40,11 +47,13 @@ The plot column should be named the same as the files in the dataset
 Example
 =======
 
+The package contains a sample submission file.
+
 ``` r
 library(raster)
 library(dplyr)
 library(NeonTreeEvaluation)
-submission<-read.csv(system.file("extdata", "Weinstein2019.csv",package = "NeonTreeEvaluation"))
+data("submission")
 head(submission)
 #>   plot_name       xmin       ymin     xmax      ymax
 #> 1  BLAN_005 299.532560  13.216835 396.9573 123.17089
@@ -55,8 +64,8 @@ head(submission)
 #> 6  BLAN_005 173.360230 341.138150 255.3800 400.00000
 ```
 
-Precision and recall scores for a single hand-annotated plot
-------------------------------------------------------------
+Precision and recall scores for a single image-annotated plot
+-------------------------------------------------------------
 
 This submission has bounding boxes in image coordinates.
 
@@ -76,10 +85,10 @@ If you would prefer not to clone this repo, a static version of the
 benchmark is here:
 <a href="https://zenodo.org/record/3723357#.XqT_HlNKjOQ" class="uri">https://zenodo.org/record/3723357#.XqT_HlNKjOQ</a>
 
-### For the entire benchmark
+### For the entire image-annotated benchmark
 
 ``` r
-evaluate_benchmark(submission,project_boxes = T)
+evaluate_image_crowns(submission,project_boxes = T)
 ```
 
 Sensor Data
@@ -91,9 +100,7 @@ a set of 45 sites
 (e.g. [TEAK](https://www.neonscience.org/field-sites/field-sites-map/TEAK))
 that cover the dominant ecosystems in the US.
 
-For more complete information see:
-
-<a href="https://github.com/weecology/NeonTreeEvaluation" class="uri">https://github.com/weecology/NeonTreeEvaluation</a>
+For more complete information see the data vignette.
 
 RGB
 ---
@@ -106,12 +113,12 @@ library(NeonTreeEvaluation)
 rgb_path<-get_data(plot_name = "SJER_021",type="rgb")
 rgb<-stack(rgb_path)
 
-#Path to dataset
-xmls<-readTreeXML(siteID="SJER")
-
+#Find path and parse
+xmls<-get_data("SJER_021",type="annotations")
+annotations<-xml_parse(xmls)
 #View one plot's annotations as polygons, project into UTM
 #copy project utm zone (epsg), xml has no native projection metadata
-xml_polygons <- boxes_to_spatial_polygons(xmls[xmls$filename %in% "SJER_021.tif",],rgb)
+xml_polygons <- boxes_to_spatial_polygons(annotations,rgb)
 
 plotRGB(rgb)
 plot(xml_polygons,add=T)

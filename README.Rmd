@@ -91,12 +91,12 @@ library(NeonTreeEvaluation)
 rgb_path<-get_data(plot_name = "SJER_021",type="rgb")
 rgb<-stack(rgb_path)
 
-#Path to dataset
-xmls<-readTreeXML(siteID="SJER")
-
+#Find path and parse
+xmls<-get_data("SJER_021",type="annotations")
+annotations<-xml_parse(xmls)
 #View one plot's annotations as polygons, project into UTM
 #copy project utm zone (epsg), xml has no native projection metadata
-xml_polygons <- boxes_to_spatial_polygons(xmls[xmls$filename %in% "SJER_021.tif",],rgb)
+xml_polygons <- boxes_to_spatial_polygons(annotations,rgb)
 
 plotRGB(rgb)
 plot(xml_polygons,add=T)

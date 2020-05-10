@@ -26,5 +26,5 @@ addons:
       - libcgal-dev
       - libglu1-mesa-dev
 
-before_install:
-  - R -e 'install.packages("rgdal", repos="http://R-Forge.R-project.org")'
+#before_install:
+#  - R -e 'install.packages("rgdal", repos="http://R-Forge.R-project.org")'
