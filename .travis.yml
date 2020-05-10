@@ -1,7 +1,7 @@
 # R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
 
 language: R
-	- oldrel
+	- r-release
 sudo: false
 
 warnings_are_errors: false
@@ -25,6 +25,3 @@ addons:
       - libjq-dev
       - libcgal-dev
       - libglu1-mesa-dev
-
-#before_install:
-#  - R -e 'install.packages("rgdal", repos="http://R-Forge.R-project.org")'

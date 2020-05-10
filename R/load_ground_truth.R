@@ -13,7 +13,7 @@ load_ground_truth <- function(plot_name, show = TRUE) {
 
   path_to_xml <- paste(system.file("extdata", "annotations", package = "NeonTreeEvaluation"), "/", plot_name, ".xml", sep = "")
   if (!file.exists(path_to_xml)) {
-    print(paste("There are no annotations for file", path_to_xml, "skipping..."))
+    message(paste("There are no annotations for file", path_to_xml, "skipping..."))
     return(NULL)
   }
   xmls <- xml_parse(path_to_xml)
@@ -24,7 +24,7 @@ load_ground_truth <- function(plot_name, show = TRUE) {
   if (file.exists(path_to_rgb)) {
     rgb <- raster::stack(path_to_rgb)
   } else {
-    paste(path_to_rgb, "does not exist in current benchmark, skipping")
+    warning(path_to_rgb, "does not exist in current benchmark, skipping")
     return(NULL)
   }
 
