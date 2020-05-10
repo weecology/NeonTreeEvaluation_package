@@ -4,6 +4,8 @@
 #' @param plot_name A plot name.
 #' @param type Which data object should be returned: "rgb" for camera imagery,"lidar" for 3D point clouds,"hyperspectral" for 426 band raster,"annotations" for dataframe of bounding box ground truth.
 #' @return The filename of the object.
+#' @examples
+#' path <- get_data("SJER_052", "lidar")
 #' @export
 
 get_data <- function(plot_name, type) {

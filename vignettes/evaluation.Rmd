@@ -39,7 +39,7 @@ library(lidR)
 ```
 
 ```{r}
-submission<-read.csv(system.file("extdata", "Weinstein2019.csv",package = "NeonTreeEvaluation"))
+data("submission")
 head(submission)
 ```
 
