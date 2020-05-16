@@ -10,7 +10,7 @@ Individual tree detection is a central task in forestry and ecology. Few
 papers analyze proposed methods across a wide geographic area. This
 limits the utility of tools and inhibits comparisons across methods.
 This benchmark dataset is the first dataset to have consistant
-annotation approach across a variety of ecosystems.
+annotation approach across a variety of ecosystems. For the purposes of this benchmark, a 'tree' is a vertical vegetiation that has height of more than 3m.
 
 This repo is the accomponaying R package for reproducible evaluation
 against the dataset. The package contains a static version of the
