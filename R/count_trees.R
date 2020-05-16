@@ -34,7 +34,7 @@ count_trees<-function(field_data,spdf,show=F){
   #Crop
   centroids_to_include = sf::st_crop(prediction_centroids,e)
   cropped_prediction<-spdf[spdf$crown_id %in% centroids_to_include$crown_id,]
-  if(length(cropped_prediction)==0){next}
+  if(length(cropped_prediction)==0){return(NULL)}
 
   #View
   if(show){

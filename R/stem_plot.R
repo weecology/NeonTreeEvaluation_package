@@ -16,7 +16,7 @@ stem_plot<-function(df,field, projectbox=T){
   spdf<-boxes_to_spatial_polygons(df,r,project_boxes = projectbox)
 
   #load field data
-  field_data<-field %>% droplevels() %>% filter(plotID == plot_name) %>% st_as_sf(.,coords=c("itcEasting","itcNorthing"),crs=projection(spdf))
+  field_data<-field %>% droplevels() %>% filter(plotID == plot_name) %>% sf::st_as_sf(.,coords=c("itcEasting","itcNorthing"),crs=projection(spdf))
 
   #Was the plot completely sampled?
   plotType<-unique(projected_field$plotType)

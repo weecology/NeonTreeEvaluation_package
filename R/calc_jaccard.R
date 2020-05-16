@@ -19,7 +19,10 @@ calc_jaccard <- function(assignment, ground_truth, predictions) {
     } else {
       x <- ground_truth[ground_truth$crown_id == polygon_assignment, ]
       # find interesection over union
-      jaccard_stat[[i]] <- data.frame(crown_id = as.character(polygon_assignment), prediction_id = as.character(polygon_row$crown_id), IoU = IoU(x, y))
+      d<-data.frame(crown_id = polygon_assignment, prediction_id = polygon_row$crown_id, IoU = IoU(x, y))
+      d$crown_id<-as.character(d$crown_id)
+      d$prediction_id<-as.character(d$prediction_id)
+      jaccard_stat[[i]] <- d
     }
   }
 

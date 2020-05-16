@@ -30,9 +30,10 @@ evaluate_field_stems<-function(submission,project=TRUE){
 
   #Which plots to evaluate
   plots_to_evaluate<-unique(as.character(submission$plot_name[submission$plot_name %in% field$plotID]))
-  results<-submission %>% filter(plot_name %in% plots_to_evaluate) %>% group_by(plot_name) %>% do(stem_plot(df=.,field=field,projectbox = project))%>% dplyr::select(plot_name,submission=rs,field)
+  results<-submission %>% filter(plot_name %in% plots_to_evaluate) %>% group_by(plot_name) %>% do(stem_plot(df=.,field=field,projectbox = project))%>%
+    dplyr::ungroup() %>% dplyr::select(plot_name,rs,field) %>% dplyr::rename("submission"="rs")
 
-  p<-ggplot(results,aes(x=field,y=rs)) + geom_point() + stat_smooth(method="lm") + geom_abline(linetype="dashed") + labs(x="Field Stems",y="Remotely Sensed Crowns")
+  p<-ggplot(results,aes(x=field,y=submission)) + geom_point() + stat_smooth(method="lm") + geom_abline(linetype="dashed") + labs(x="Field Stems",y="Remotely Sensed Crowns")
   print(p)
 
   return(results)
