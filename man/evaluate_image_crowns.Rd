@@ -5,8 +5,8 @@
 \title{Compute evaluation metrics for the hand-annotated images
 This is the main function in the package. Submit a set of predictions to be evaluated against the image-annotated ground truth.}
 \usage{
-evaluate_image_crowns(submission, project_boxes = FALSE, show = T,
-  compute_PR = F)
+evaluate_image_crowns(submission, project_boxes = FALSE, show = TRUE,
+  summarize = F)
 }
 \arguments{
 \item{submission}{A five column dataframe in the order plot_name, xmin, xmax, ymin, ymax. Each row is a predicted bounding box.}
@@ -15,10 +15,10 @@ evaluate_image_crowns(submission, project_boxes = FALSE, show = T,
 
 \item{show}{Logical. Plot the overlayed annotations for each plot?}
 
-\item{compute_PR}{Logical. Should the average precision and recall be computed?}
+\item{summarize}{Whether to compute summary statistics (TRUE) or return raw matching data (False), see \code{summary_statistics}}
 }
 \value{
-If compute_PR is True, a data frame of precision-recall scores or each plot. If False, a dataframe with the intersection-over-union scores for each prediction.
+If summarize is True, a set of summary measures from \code{summary_statistics} If False, a dataframe with the intersection-over-union scores for each prediction.
 }
 \description{
 Compute evaluation metrics for the hand-annotated images

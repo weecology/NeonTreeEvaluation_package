@@ -15,3 +15,8 @@ A raster with the canopy height estimated for each grid cell.
 \description{
 \code{canopy_model} returns a canopy height raster from a lidR point cloud
 }
+\examples{
+path <- get_data("SJER_052", "lidar")
+las<-readLAS(path)
+plot(canopy_model(las))
+}

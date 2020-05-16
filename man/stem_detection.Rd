@@ -4,7 +4,7 @@
 \alias{stem_detection}
 \title{Evaluate predictions against NEON field data}
 \usage{
-stem_detection(submission, project_boxes = FALSE, show = T,
+stem_detection(submission, project_boxes = FALSE, show = TRUE,
   field_data = NA)
 }
 \arguments{

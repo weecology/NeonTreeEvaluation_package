@@ -36,7 +36,7 @@ load_ground_truth <- function(plot_name, show = TRUE) {
 
   if (show) {
     raster::plotRGB(rgb)
-    raster::plot(ground_truth, add = T)
+    raster::plot(ground_truth, add = TRUE)
   }
   return(ground_truth)
 }

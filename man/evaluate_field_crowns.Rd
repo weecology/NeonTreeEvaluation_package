@@ -4,7 +4,10 @@
 \alias{evaluate_field_crowns}
 \title{Compute intersection-over-union scores from the field collected crowns}
 \usage{
-evaluate_field_crowns()
+evaluate_field_crowns(submission)
+}
+\arguments{
+\item{submission}{A five column dataframe in the order plot_name, xmin, xmax, ymin, ymax. Each row is a predicted bounding box.}
 }
 \value{
 A data frame with the crown ID matched to the prediction ID.
@@ -13,7 +16,7 @@ A data frame with the crown ID matched to the prediction ID.
 \code{evaluate_field_crowns} implements the matching and scoring algorithm on crowns that were drawn on a tablet while physically standing in the field.
 }
 \details{
-For details on the protocol for field-based crown deliniation see Graves et al. (2018).
+For details on the protocol for field-based crown delineation see Graves et al. (2018).
 }
 \examples{
 

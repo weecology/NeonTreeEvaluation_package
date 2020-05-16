@@ -1,10 +1,10 @@
 Package: NeonTreeEvaluation
 Type: Package
-Title: Evaluate Individual Tree Segmentation Methods against Benchmark
+Title: Evaluate Individual Tree Segmentation Algorithms against Benchmark Data
 Version: 0.1.0
 Author: Ben Weinstein, University of Florida
 Maintainer: <ben.weinstein@weecology.org>
-Description: Airborne tree detection is a central task in remote sensing of forested landscapes. This packages provides access to 1) hand-annotated bounding boxes from 19 geographic sites, 2) Download links training tiles, 3) Evaluation scripts to standard reporting metrics 
+Description: A benchmark dataset and evaluation routine for individual tree crown detection.  
 License: MIT
 Encoding: UTF-8
 LazyData: true

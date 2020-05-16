@@ -4,7 +4,7 @@
 \alias{evaluate_stem}
 \title{Evaluate predictions against NEON field data}
 \usage{
-evaluate_stem(plot_prediction, stem_dat, project_boxes = FALSE, show = T)
+evaluate_stem(plot_prediction, stem_dat, project_boxes = FALSE, show = TRUE)
 }
 \arguments{
 \item{stem_dat}{Object. A sf object with utm coordinates}

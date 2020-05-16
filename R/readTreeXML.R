@@ -5,7 +5,7 @@
 #'
 readTreeXML <- function(siteID) {
   path <- paste(system.file("extdata", "annotations/", package = "NeonTreeEvaluation"))
-  f <- list.files(path, pattern = siteID, full.names = T, recursive = T)
+  f <- list.files(path, pattern = siteID, full.names = TRUE, recursive = TRUE)
   dat <- dplyr::bind_rows(lapply(f, xml_parse))
   return(dat)
 }

@@ -7,7 +7,7 @@
 #' @return The recall and precision scores for the plot.
 #' @export
 #'
-compute_precision_recall <- function(ground_truth, predictions, threshold = 0.5, summarize = T) {
+compute_precision_recall <- function(ground_truth, predictions, threshold = 0.5, summarize = TRUE) {
 
   # check for
   if (!"crown_id" %in% colnames(predictions@data)) {
@@ -19,8 +19,8 @@ compute_precision_recall <- function(ground_truth, predictions, threshold = 0.5,
 
   if (summarize) {
     true_positives <- statdf$IoU > threshold
-    recall <- round(sum(true_positives, na.rm = T) / nrow(ground_truth), 3)
-    precision <- round(sum(true_positives, na.rm = T) / nrow(predictions), 3)
+    recall <- round(sum(true_positives, na.rm = TRUE) / nrow(ground_truth), 3)
+    precision <- round(sum(true_positives, na.rm = TRUE) / nrow(predictions), 3)
     return(data.frame(recall, precision))
   } else {
     # append total ground truth and prediction for images to take cumulative sum

@@ -19,6 +19,6 @@ Parse crown annotations from an Pascal VOC XML file
 This utility function creates a dataframe from xml annotations from RectLabel or Labelme exported as the standard pascal voc format for object detection. This function is used for the evaluation of the image annotations and is not often called by users.
 }
 \examples{
-xml<-get_data("SJER_052","annotations")
+xml <- get_data("SJER_052", "annotations")
 xml_parse(xml)
 }

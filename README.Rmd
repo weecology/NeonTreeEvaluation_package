@@ -20,11 +20,15 @@ knitr::opts_chunk$set(
 
 # A multi-sensor benchmark dataset for detecting individual trees in airborne RGB, Hyperspectral and LIDAR point clouds
 
-Mantainer: Ben Weinstein - University of Florida.
+Maintainer: Ben Weinstein - University of Florida.
 
-Individual tree detection is a central task in forestry and ecology. Few papers analyze proposed methods across a wide geographic area. This limits the utility of tools and inhibits comparisons across methods. This benchmark dataset is the first dataset to have consistant annotation approach across a variety of ecosystems. 
+This benchmark dataset is the first dataset to have consistent annotation approach across a variety of ecosystems. This repo is the R package for reproducible evaluation against the dataset. The package contains a static version of the annotations used for evaluation. There are two types of annotated data. 
 
-This repo is the accomponaying R package for reproducible evaluation against the dataset. The package contains a static version of the annotations used for evaluation. 
+## Image-annotated Crowns
+The main data source are image-annotated crowns, in which a single observer annotated visible trees in 200 40m x 40m images from across the United States. 
+
+## Field annotation crowns
+The second data source is a small number of field-deliniated crowns from a single geographic site. These crowns were drawn on a tablet while physically standing in the field, thereby reducing the uncertainty in crown segmentation.
 
 # Installation
 
@@ -118,7 +122,7 @@ We elected to keep all points, regardless of whether they correspond to tree ann
 
 ## Hyperspectral 
 
-Hyperspectral surface reflectance (NEON ID: DP1.30006.001) is a 426 band raster covering visible and near infared spectrum.
+Hyperspectral surface reflectance (NEON ID: DP1.30006.001) is a 426 band raster covering visible and near infrared spectrum.
 
 ```{r}
 path<-get_data("MLBS_071",type="hyperspectral")
@@ -131,7 +135,7 @@ plotRGB(f,stretch="lin")
  
 # Submission
 
-To submit to this benchmark, please see the evaluation vignette. Please submit a pull request, or contact the mantainer if you use these data in analysis and would like the results to be shown here.
+To submit to this benchmark, please see the evaluation vignette. Please submit a pull request, or contact the maintainer if you use these data in analysis and would like the results to be shown here.
 
 ## Citation
 <sup>1</sup> Weinstein, Ben G., et al. "Individual tree-crown detection in RGB imagery using semi-supervised deep learning neural networks." Remote Sensing 11.11 (2019): 1309. https://www.mdpi.com/2072-4292/11/11/1309

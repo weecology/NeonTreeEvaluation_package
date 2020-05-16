@@ -21,3 +21,9 @@ SpatialPolygons object of annotations
 Convert xml crown annotations into projected bounding boxes.
 In order to plot the annotations, they need to be projected and overlayed on RGB boxes
 }
+\examples{
+xml<-get_data("SJER_052","annotations")
+annotations<-xml_parse(xml)
+ground_truth <- boxes_to_spatial_polygons(annotations,img)
+plot(ground_truth)
+}

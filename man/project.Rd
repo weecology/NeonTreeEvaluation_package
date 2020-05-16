@@ -2,13 +2,13 @@
 % Please edit documentation in R/project.R
 \name{project}
 \alias{project}
-\title{Project boxes from image coordinates into utmm
+\title{Project boxes from image coordinates into utm
 In order to plot the annotations, they need to be projected and overlayed on RGB boxes}
 \usage{
 project(boxes, raster_object)
 }
 \arguments{
-\item{boxes}{a boxesframe with xmin, xmax, ymin, ymax columns. Each row is a tree bounding box}
+\item{boxes}{a data frame with xmin, xmax, ymin, ymax columns. Each row is a tree bounding box}
 
 \item{raster_object}{a rgb raster::stack to overlay annotations. This needs a utm CRS}
 }
@@ -16,6 +16,6 @@ project(boxes, raster_object)
 SpatialPolygons object of annotations
 }
 \description{
-Project boxes from image coordinates into utmm
+Project boxes from image coordinates into utm
 In order to plot the annotations, they need to be projected and overlayed on RGB boxes
 }

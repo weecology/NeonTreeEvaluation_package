@@ -70,7 +70,7 @@ rgb<-get_data("SJER_052","rgb")
 img<-stack(rgb)
 ```
 
-To compare the image to the annotations, it is easier to overlay the bounding boxes in geographic coordinates. This package has a projection utility (boxes_to_spatial_polygonss) using the RGB image.
+To compare the image to the annotations, it is easier to overlay the bounding boxes in geographic coordinates. This package has a projection utility (\code{boxes_to_spatial_polygons}) using the RGB image.
 
 ```{r}
 #View one plot's annotations as polygons, project into UTM

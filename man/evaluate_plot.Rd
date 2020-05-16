@@ -4,8 +4,7 @@
 \alias{evaluate_plot}
 \title{Compute evaluation statistics for one plot}
 \usage{
-evaluate_plot(submission, show = TRUE, project_boxes = TRUE,
-  compute_PR = TRUE)
+evaluate_plot(submission, show = TRUE, project_boxes = TRUE)
 }
 \arguments{
 \item{submission}{A five column dataframe in the order plot_name, xmin, xmax, ymin, ymax. Each row is a predicted bounding box.}

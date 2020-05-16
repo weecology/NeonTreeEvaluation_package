@@ -6,7 +6,7 @@
 #' @details For each plot in the submission, this function will check if there are field collected stem data and score whether each stem is within a predicted tree bounding box
 #' @return The recall scores for each image
 
-evaluate_stem <- function(plot_prediction, stem_dat, project_boxes = FALSE, show = T) {
+evaluate_stem <- function(plot_prediction, stem_dat, project_boxes = FALSE, show = TRUE) {
 
   # point in poylgon
   plot_data <- stem_dat %>%
@@ -44,12 +44,12 @@ evaluate_stem <- function(plot_prediction, stem_dat, project_boxes = FALSE, show
 
   if (show) {
     raster::plotRGB(rgb)
-    plot(sf::st_geometry(predictions), add = T, col = NA)
+    plot(sf::st_geometry(predictions), add = TRUE, col = NA)
     plot(plot_data, add = T, cex = 1, pch = 16)
   }
 
   # select order
-  tree_in_prediction <- sf::st_within(x = plot_data, y = predictions, sparse = T)
+  tree_in_prediction <- sf::st_within(x = plot_data, y = predictions, sparse = TRUE)
 
   # only get unique matches, cannot double count.
   stem_recall <- length(unique(tree_in_prediction)) / nrow(plot_data)

@@ -7,7 +7,7 @@
 #' @return If compute_PR=T, the recall and precision scores for the plot, if False, the intersection-over-union scores for each prediction.
 #' @export
 #'
-evaluate_plot <- function(submission, show = TRUE, project_boxes = TRUE, compute_PR = TRUE) {
+evaluate_plot <- function(submission, show = TRUE, project_boxes = TRUE) {
 
   # find ground truth file
   plot_name <- unique(submission$plot_name)
@@ -32,11 +32,11 @@ evaluate_plot <- function(submission, show = TRUE, project_boxes = TRUE, compute
 
   if (show) {
     raster::plotRGB(rgb)
-    sp::plot(ground_truth, border = "black", add = T)
-    sp::plot(predictions, border = "red", add = T)
+    sp::plot(ground_truth, border = "black", add = TRUE)
+    sp::plot(predictions, border = "red", add = TRUE)
   }
 
   # Create spatial polygons objects
-  result <- compute_precision_recall(ground_truth, predictions, summarize = compute_PR)
+  result <- compute_precision_recall(ground_truth, predictions, summarize = FALSE)
   return(result)
 }

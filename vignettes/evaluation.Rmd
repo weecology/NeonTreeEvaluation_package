@@ -28,7 +28,7 @@ The format of the submission is as follows
 
 Each row contains information for one predicted bounding box.
 
-The plot column should be named the same as the files in the dataset (e.g. SJER_021)
+The plot column should be named the same as the files in the dataset (e.g. SJER_021) without file extensions.
 
 ```{r}
 library(dplyr)
@@ -48,7 +48,7 @@ head(submission)
 For each plot compute the precision and recall based on intersection-over-union of 0.5 between the ground truth bounding boxes and the predicted boxes. The loop through all matching plot_names and produce evaluation scores
 
 ```{r,eval=FALSE}
-results<-evaluate_image_crowns(submission = submission)
+results<-evaluate_image_crowns(submission = submission,project_boxes = T, show=F)
 ```
 
 There are several options that need to be considered. see ?evaluate_benchmark. For example, `project_boxes` asks whether the predicted boxes should be projected in universal-transverse mercator projection (UTM) from the image coordinate system. For example,
@@ -57,7 +57,7 @@ There are several options that need to be considered. see ?evaluate_benchmark. F
 head(submission)
 ```
 
-These boxes are in the image coorinate system. The xmin of the first box is 299.53 (pixels) from the top left. The images are projected and have units in meters. Therefore we need to transform the image coordinates to the geograpgic coordinates for the boxes to overlap. 
+These boxes are in the image coordinate system. The xmin of the first box is 299.53 (pixels) from the top left. The images are projected and have units in meters. Therefore we need to transform the image coordinates to the geographic coordinates for the boxes to overlap. 
 
 For the sake of computation in this small vignette, let's select just 5 images.
 
@@ -119,7 +119,7 @@ plot(predictions,add=T,border="red")
 
 ## Evaluate against benchmark annotations
 
-Now that we have ground truth and prediction polygon objects, what is the precision and recall for bounding boxes with interserction-over-union of freather than 0.5
+Now that we have ground truth and prediction polygon objects, what is the precision and recall for bounding boxes with intersection-over-union of greather than 0.5
 
 ```{r}
 predictions$crown_id<-predictions$treeID
