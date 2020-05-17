@@ -5,8 +5,10 @@ date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{evaluation}
-  %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r setup, include = FALSE}
@@ -36,11 +38,9 @@ library(NeonTreeEvaluation)
 library(reshape2)
 library(ggplot2)
 library(lidR)
-```
 
-```{r}
+#Load sample submission
 data("submission")
-head(submission)
 ```
 
 # Evaluation
@@ -48,7 +48,7 @@ head(submission)
 For each plot compute the precision and recall based on intersection-over-union of 0.5 between the ground truth bounding boxes and the predicted boxes. The loop through all matching plot_names and produce evaluation scores
 
 ```{r,eval=FALSE}
-results<-evaluate_image_crowns(submission = submission,project_boxes = T, show=F)
+results<-evaluate_image_crowns(submission = submission,project_boxes = T, show=F, summarize = T)
 ```
 
 There are several options that need to be considered. see ?evaluate_benchmark. For example, `project_boxes` asks whether the predicted boxes should be projected in universal-transverse mercator projection (UTM) from the image coordinate system. For example,
@@ -62,12 +62,30 @@ These boxes are in the image coordinate system. The xmin of the first box is 299
 For the sake of computation in this small vignette, let's select just 5 images.
 
 ```{r,include=FALSE}
-results<-submission %>% filter(plot_name %in% sample(plot_name,5)) %>% group_by(plot_name) %>% do(evaluate_plot(.,project_boxes = T))
+results<-submission %>% filter(plot_name %in% sample(plot_name,5)) %>% evaluate_image_crowns(.,project_boxes = T,show=T,summarize = T)
 ```
 
+### Overall Performance
 ```{r}
-df<-melt(results)
+results[["overall"]]
+```
+
+### By Site
+
+Precision and recall for each NEON site.
+
+```{r}
+df<-melt(results[["by_site"]])
 ggplot(df,aes(y=value,x=variable)) + geom_boxplot()
+```
+
+### Plot Level
+
+Number of predicted trees versus number of image-annotated trees for each plot. A good model will fall on the 1:1 line.
+
+```{r}
+df<-results[["plot_level"]]
+ggplot(df,aes(y=submission,x=ground_truth)) + geom_point() + geom_abline(linetype="dashed") + coord_equal()
 ```
 
 # Worked example
