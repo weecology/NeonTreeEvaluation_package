@@ -17,6 +17,9 @@
 
 evaluate_field_stems<-function(submission,project=TRUE){
 
+  #Check for data
+  check_download()
+
   #Load data from package
   data(field)
   rgb_images<-list_rgb()

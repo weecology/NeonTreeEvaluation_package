@@ -12,6 +12,8 @@
 
 evaluate_field_crowns <- function(submission) {
 
+  check_download()
+
   #field_crown_plots <- list_field_crown_plots()
 
   #submission %>% field_crown_plots

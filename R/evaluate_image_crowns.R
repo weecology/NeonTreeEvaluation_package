@@ -10,6 +10,10 @@
 #'
 
 evaluate_image_crowns <- function(submission, project_boxes = FALSE, show = TRUE, summarize=F) {
+
+  #Check for data
+  check_download()
+
   results <- submission %>%
     group_by(plot_name) %>%
     do(evaluate_plot(., project_boxes = project_boxes, show = show))
