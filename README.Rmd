@@ -37,6 +37,13 @@ library(devtools)
 install_github("https://github.com/weecology/NeonTreeEvaluation_package.git")
 ```
 
+# Download sensor data
+
+```{r}
+library(NeonTreeEvaluation)
+download()
+```
+
 # Getting Started
 
 The package contains two vignettes. The 'Data' vignette describes each datatype and how to interact with it in R. The 'Evaluation' vignette shows how to submit predictions to the benchmark.  

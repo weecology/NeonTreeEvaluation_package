@@ -43,7 +43,7 @@ library(lidR)
 data("submission")
 ```
 
-# Evaluation
+# Image-annotated Crowns Evaluation
 
 For each plot compute the precision and recall based on intersection-over-union of 0.5 between the ground truth bounding boxes and the predicted boxes. The loop through all matching plot_names and produce evaluation scores
 
@@ -87,6 +87,13 @@ Number of predicted trees versus number of image-annotated trees for each plot. 
 df<-results[["plot_level"]]
 ggplot(df,aes(y=submission,x=ground_truth)) + geom_point() + geom_abline(linetype="dashed") + coord_equal()
 ```
+
+# Field stem evaluation
+
+```{r}
+stem_result<-evaluate_field_stems(submission =submission,project=T)
+```
+
 
 # Worked example
 

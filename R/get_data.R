@@ -9,6 +9,10 @@
 #' @export
 
 get_data <- function(plot_name, type) {
+
+  #Check if data has been downloaded
+  check_download()
+
   if (!type %in% c("rgb", "lidar","chm", "hyperspectral", "annotations")) {
     stop(paste("No type option", type, "Available type arguments:'rgb','lidar','hyperspectral','annotations'"))
   }
@@ -32,26 +36,26 @@ get_data <- function(plot_name, type) {
 }
 
 get_rgb <- function(plot_name) {
-  path <- paste(system.file("extdata", "evaluation/RGB/", package = "NeonTreeEvaluation"), "/", plot_name, ".tif", sep = "")
+  path <- paste(system.file("extdata", "NeonTreeEvaluation/evaluation/RGB/", package = "NeonTreeEvaluation"), "/", plot_name, ".tif", sep = "")
   return(path)
 }
 
 get_lidar <- function(plot_name) {
-  path <- paste(system.file("extdata", "evaluation/LiDAR/", package = "NeonTreeEvaluation"), "/", plot_name, ".laz", sep = "")
+  path <- paste(system.file("extdata", "NeonTreeEvaluation/evaluation/LiDAR/", package = "NeonTreeEvaluation"), "/", plot_name, ".laz", sep = "")
   return(path)
 }
 
 get_hyperspectral <- function(plot_name) {
-  path <- paste(system.file("extdata", "evaluation/Hyperspectral/", package = "NeonTreeEvaluation"), "/", plot_name, "_hyperspectral.tif", sep = "")
+  path <- paste(system.file("extdata", "NeonTreeEvaluation/evaluation/Hyperspectral/", package = "NeonTreeEvaluation"), "/", plot_name, "_hyperspectral.tif", sep = "")
   return(path)
 }
 
 get_chm <- function(plot_name) {
-  path <- paste(system.file("extdata", "evaluation/CHM/", package = "NeonTreeEvaluation"), "/", plot_name, "_CHM.tif", sep = "")
+  path <- paste(system.file("extdata", "NeonTreeEvaluation/evaluation/CHM/", package = "NeonTreeEvaluation"), "/", plot_name, "_CHM.tif", sep = "")
   return(path)
 }
 
 get_annotations <- function(plot_name) {
-  path <- paste(system.file("extdata", "annotations/", package = "NeonTreeEvaluation"), "/", plot_name, ".xml", sep = "")
+  path <- paste(system.file("extdata", "NeonTreeEvaluation/annotations/", package = "NeonTreeEvaluation"), "/", plot_name, ".xml", sep = "")
   return(path)
 }

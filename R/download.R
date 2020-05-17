@@ -1,8 +1,10 @@
 #' @title Download sensor and annotation data for the NeonTreeEvaluation Benchmark
 #' @param training Download training data? See details
-#' @author The core zenodo download was written by Juniper Simonis in Weecology/portalcasting (Simonis and White 2019). Adapted by Ben Weinstein.
+#' @param savedir Optional directory to save data in a new location. Defaults to package contents. Warning: Functions are designed for this location, only use this argument if you do not intend to run evaluation data.
+#' @author The core zenodo download function was written by Juniper Simonis in Weecology/portalcasting (Simonis and White 2019). Adapted by Ben Weinstein.
 #' @references
 #' Juniper Simonis, & Ethan White. (2019, July 11). weecology/portalcasting: hookup to zenodo (Version v0.8.0-1). Zenodo. http://doi.org/10.5281/zenodo.3332974
+#'
 #' Weinstein, Ben G., et al. "Cross-site learning in deep learning RGB tree crown detection." Ecological Informatics 56 (2020): 101061.
 #' @details
 #' The NeonTreeEvaluation benchmark consists of two parts, 1) package code to run evaluation workflows, 2) evaluation data. Evaluation data is ~ 2GB in size and will be downloaded to package contents. See
@@ -12,97 +14,56 @@
 #'  download()
 #'  path<-paste(system.file(package = "NeonTreeEvaluation"),"/extdata/",sep="")
 #'  list_rgb()
-download<-function(training=FALSE, destination=NULL){
+#'  }
+#' @export
+download<-function(training=FALSE, savedir=NULL,force=F){
 
-  if(is.null(destination)){
-    destination<-paste(system.file(package = "NeonTreeEvaluation"),"/extdata/",sep="")
+  if(is.null(savedir)){
+    destination<-paste(system.file(package = "NeonTreeEvaluation"),"/extdata/NeonTreeEvaluation.zip",sep="")
+    dirname <-paste(system.file(package = "NeonTreeEvaluation"),"/extdata/NeonTreeEvaluation/",sep="")
+  } else{
+    destination<-file.path(savedir,"NeonTreeEvaluation.zip")
+    dirname<-file.path(savedir,"NeonTreeEvaluation/")
+  }
+
+  #check if already exists.
+  if(dir.exists(dirname)){
+    if(!force){
+      stop(paste("Data has already been downloaded to",dirname,", use force=T to overwrite"))
+    }
   }
 
   #Evaluation data
   eval_url<-zenodo_url(concept_rec_id=3723356)
+  message(paste("Downloading file to",destination))
   download.file(eval_url,destination, mode = "wb")
+  unzip_download(destination)
 
   #Optional Training Data
   if(training){
     url<-zenodo_url(concept_rec_id=3459802)
     destination<-paste(system.file(package = "NeonTreeEvaluation"),"/extdata/",sep="")
     download.file(eval_url,destination, mode = "wb")
+    unzip_download(destination)
   }
 }
 
-#' @title Obtain the URL for a Zenodo record to be downloaded
-#'
-#' @description \code{zenodo_url} obtains the URL for a given Zenodo record,
-#'  identified either by the concept record identifier (\code{concept_rec_id})
-#'  and version (\code{rec_version}) or record identifier (\code{rec_id}).
-#'  (\strong{Note}: if \code{rec_id} is used, it overrides
-#'  \code{concept_rec_id}). \cr \cr
-#'  \code{zenodo_versions}: determines the available version numbers and the
-#'  corresponding record identifier for each version available for a given
-#'  Zenodo concept (group of records).
-#'
-#' @param concept_rec_id Concept record identifier, a \code{character} value
-#'  corresponding to the Zenodo concept.
-#'
-#' @param rec_version \code{character} value of the version number or
-#'   \code{"latest"} (default) for the data to be download.
-#'
-#' @param rec_id Optional input record identifier, a \code{character} value
-#'  corresponding to the Zenodo record.
-#'
-#'
-#' @return \code{zenodo_url}: \code{character} value of the URL for the zip
-#'  to be downloaded. \cr \cr
-#'  \code{zenodo_versions}: a \code{data.frame} of version number and record
-#'  identifier for each version available.
-#'
-#' @examples
-#'  \donttest{
-#'    zenodo_versions("3770410")
-#'    zenodo_url("3770410", "latest")
-#'    zenodo_url("3770410", "1.1.0")
-#'  }
+#' @rdname download
 #'
 #' @export
 #'
-zenodo_url <- function(concept_rec_id = 3723356, rec_version = "latest",
-                       rec_id = NULL){
-  if(is.null(rec_id)){
-    avail_versions <- zenodo_versions(concept_rec_id = concept_rec_id)
-    if(rec_version == "latest"){
-      rec_id <- concept_rec_id
-    } else{
-      spot <- which(avail_versions$version == rec_version)
-      if(length(spot) == 0){
-        stop(paste0("version ", rec_version, " not available"), call. = FALSE)
-      }
-      rec_id <- avail_versions$rec_id[spot]
-    }
-  } else if (!is.null(concept_rec_id)){
-    warning("both concept_rec_id and rec_id input. rec_id takes precedence")
-  }
+unzip_download <- function(destination){
+  #location of unzip
+  base_dir<-dirname(destination)
 
-  url <- paste0("https://zenodo.org/api/records/", rec_id)
-  res <- httr::GET(url)
-  stop_for_status(res)
-  content(res)$files[[1]]$links$download
+  #get file names
+  unzip_folder<-unzip(destination, list = TRUE)$Name[1]
+  unzipped_folder<-file.path(base_dir,unzip_folder)
+
+  unzip(destination,exdir=base_dir)
+  final_name<-file.path(base_dir,"NeonTreeEvaluation/")
+  file.rename(unzipped_folder,final_name)
+
+  #Remove zipped files
+  unlink(destination)
 }
-
-
-zenodo_versions <- function(concept_rec_id, arg_checks = TRUE){
-  url <- paste0("https://zenodo.org/api/records/?size=9999&",
-                "q=conceptrecid:", concept_rec_id, "&all_versions=True")
-  res <- GET(url)
-  stop_for_status(res)
-  cont <- content(res)
-  nv <- length(cont)
-  vers <- rep(NA, nv)
-  recid <- rep(NA, nv)
-  for(i in 1:nv){
-    vers[i] <- cont[[i]]$metadata$version
-    recid[i] <- cont[[i]]$record_id
-  }
-  data.frame(version = vers, rec_id = recid)
-}
-
-
