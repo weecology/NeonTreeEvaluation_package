@@ -4,23 +4,3 @@ language: r
 sudo: false
 
 warnings_are_errors: false
-
-addons:
-  apt:
-    packages:
-      - gdal-bin
-      - proj-bin
-      - libgdal-dev
-      - libgdal1-dev
-      - libproj-dev
-      - libgeos-dev
-      - r-cran-ncdf4
-      - r-cran-rgl
-      - libv8-3.14-dev
-      - libprotobuf-dev
-      - protobuf-compiler
-      - libudunits2-dev
-      - libnetcdf-dev
-      - libjq-dev
-      - libcgal-dev
-      - libglu1-mesa-dev
