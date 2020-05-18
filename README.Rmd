@@ -22,13 +22,16 @@ knitr::opts_chunk$set(
 
 Maintainer: Ben Weinstein - University of Florida.
 
-This benchmark dataset is the first dataset to have consistent annotation approach across a variety of ecosystems. This repo is the R package for reproducible evaluation against the dataset. The package contains a static version of the annotations used for evaluation. There are two types of annotated data. 
+This benchmark dataset is the first dataset to have consistent annotation approach across a variety of ecosystems. This repo is the R package for reproducible evaluation against the dataset. There are three types of annotated data. 
 
 ## Image-annotated Crowns
 The main data source are image-annotated crowns, in which a single observer annotated visible trees in 200 40m x 40m images from across the United States. 
 
-## Field annotation crowns
-The second data source is a small number of field-deliniated crowns from a single geographic site. These crowns were drawn on a tablet while physically standing in the field, thereby reducing the uncertainty in crown segmentation.
+## Field-annotated Crowns
+The second data source is a small number of field-deliniated crowns from three geographic sites. These crowns were drawn on a tablet while physically standing in the field, thereby reducing the uncertainty in crown segmentation.
+
+## Field Stems
+The third data source is the NEON Woody Vegetation Structure Dataset. Each tree stem is represented by a single point. This data has been filtered to represent overstory trees visible in the remote sensing imagery.
 
 # Installation
 
@@ -39,6 +42,7 @@ install_github("https://github.com/weecology/NeonTreeEvaluation_package.git")
 
 # Download sensor data
 
+To download evaluation data from the Zenodo archive (1GB), use the download() function to place the data in the correct package location. Download the much larger training data, set training=TRUE. 
 ```{r}
 library(NeonTreeEvaluation)
 download()

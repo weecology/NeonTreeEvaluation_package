@@ -16,11 +16,11 @@ stem_plot<-function(df,field, projectbox=T){
   spdf<-boxes_to_spatial_polygons(df,r,project_boxes = projectbox)
 
   #load field data
-  field_data<-field %>% droplevels() %>% filter(plotID == plot_name) %>% sf::st_as_sf(.,coords=c("itcEasting","itcNorthing"),crs=projection(spdf))
+  field_data<-field %>% droplevels() %>% filter(plotID == plot_name) %>% sf::st_as_sf(.,coords=c("itcEasting","itcNorthing"),crs=raster::projection(spdf))
 
   #Was the plot completely sampled?
-  plotType<-unique(projected_field$plotType)
-  subplots<-na.omit(unique(projected_field$subplotID))
+  plotType<-unique(field_data$plotType)
+  subplots<-na.omit(unique(field_data$subplotID))
 
   #If there are non-contigious plots compute subplots seperately
   if(plotType=="distributed" & sum(subplots %in% c(41,31,40,32))==4){

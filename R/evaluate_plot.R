@@ -23,7 +23,7 @@ evaluate_plot <- function(submission, show = TRUE, project_boxes = TRUE) {
   # Read RGB image as projected raster
   siteID <- stringr::str_match(plot_name, "(\\w+)_")[, 2]
 
-  path_to_rgb <- paste(system.file("extdata", "evaluation/RGB/", package = "NeonTreeEvaluation"), "/", plot_name, ".tif", sep = "")
+  path_to_rgb <-get_data(plot_name, "rgb")
   print(plot_name)
   rgb <- raster::stack(path_to_rgb)
 

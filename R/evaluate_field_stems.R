@@ -12,6 +12,7 @@
 #' @param submission
 #' @return A data frame with the crown ID matched to the prediction ID.
 #' @examples
+#' @import dplyr ggplot2
 #' @md
 #' @export
 

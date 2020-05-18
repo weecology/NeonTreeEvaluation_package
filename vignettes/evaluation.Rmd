@@ -91,9 +91,8 @@ ggplot(df,aes(y=submission,x=ground_truth)) + geom_point() + geom_abline(linetyp
 # Field stem evaluation
 
 ```{r}
-stem_result<-evaluate_field_stems(submission =submission,project=T)
+stem_result<-evaluate_field_stems(submission=submission,project=T)
 ```
-
 
 # Worked example
 

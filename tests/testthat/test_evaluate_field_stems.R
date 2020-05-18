@@ -1,5 +1,4 @@
 library(dplyr)
-
 context("Check wrapper of unprojected submission against field stems ")
 test_that("evaluate_field_stems", {
   data("submission")

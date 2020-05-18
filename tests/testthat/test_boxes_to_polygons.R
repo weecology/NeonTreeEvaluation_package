@@ -1,10 +1,11 @@
 context("Check conversion of submission dataframe to polygon objects")
 test_that("dataframe to polygons", {
-  xml_path <- system.file("extdata", "annotations/SJER_052.xml", package = "NeonTreeEvaluation")
+
+  xml_path <-get_data("SJER_052","annotations")
   df <- xml_parse(xml_path)
 
   # load rgb data
-  rgb <- raster::stack(system.file("extdata", "evaluation/RGB/SJER_052.tif", package = "NeonTreeEvaluation"))
+  rgb <- raster::stack(get_data("SJER_052","rgb"))
 
   # Check raster
   expect_s4_class(rgb, "RasterStack")

@@ -11,7 +11,8 @@ load_ground_truth <- function(plot_name, show = TRUE) {
   # Load xml of annotations
   siteID <- stringr::str_match(plot_name, "(\\w+)_")[, 2]
 
-  path_to_xml <- paste(system.file("extdata", "annotations", package = "NeonTreeEvaluation"), "/", plot_name, ".xml", sep = "")
+  path_to_xml <- get_data(plot_name,"annotations")
+
   if (!file.exists(path_to_xml)) {
     message(paste("There are no annotations for file", path_to_xml, "skipping..."))
     return(NULL)
@@ -19,7 +20,7 @@ load_ground_truth <- function(plot_name, show = TRUE) {
   xmls <- xml_parse(path_to_xml)
 
   # load rgb
-  path_to_rgb <- paste(system.file("extdata", "evaluation/RGB", package = "NeonTreeEvaluation"), "/", plot_name, ".tif", sep = "")
+  path_to_rgb <- get_data(plot_name,"rgb")
 
   if (file.exists(path_to_rgb)) {
     rgb <- raster::stack(path_to_rgb)

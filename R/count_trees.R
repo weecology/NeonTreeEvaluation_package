@@ -41,7 +41,7 @@ count_trees<-function(field_data,spdf,show=F){
     rgb_images<-list_rgb()
     rgb_path<-rgb_images[stringr::str_detect(rgb_images,as.character(plot_name))]
     r<-raster::stack(rgb_path)
-    plotRGB(r)
+    raster::plotRGB(r)
     plot(sf::st_geometry(field_data_filter),add=T,col=field_data$subplotID,pch=16,cex=1)
     plot(sf::st_geometry(cropped_prediction),add=T)
   }
