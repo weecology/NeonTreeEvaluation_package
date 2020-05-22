@@ -93,7 +93,13 @@ df<-results[["plot_level"]]
 ggplot(df,aes(y=submission,x=ground_truth)) + geom_point() + geom_abline(linetype="dashed") + coord_equal() + labs(x="Ground Truth Crowns",y="Predicted Crowns")
 ```
 
+# Field-annotated crown evaluation
+
+The second data source is a small number of field-deliniated crowns from three geographic sites. These crowns were drawn on a tablet while physically standing in the field, thereby reducing the uncertainty in crown segmentation.
+
+
 # Field stem evaluation
+
 The third data source is the NEON Woody Vegetation Structure Dataset. Each tree stem is represented by a single point. This data has been filtered to represent overstory trees visible in the remote sensing imagery.
 
 ```{r}
