@@ -51,14 +51,13 @@ head(submission)
 
 # Image-annotated Crowns Evaluation
 
-For each plot compute the precision and recall based on intersection-over-union of 0.5 between the ground truth bounding boxes and the predicted boxes. The loop through all matching plot_names and produce evaluation scores
+The main data source are image-annotated crowns, in which a single observer annotated visible trees in 200 40m x 40m images from across the United States. For each plot compute the precision and recall based on intersection-over-union of 0.5 between the ground truth bounding boxes and the predicted boxes. Then loop through all matching plot_names and produce evaluation scores.
 
 ```{r,eval=FALSE}
 results<-evaluate_image_crowns(submission = submission,project_boxes = T, show=F, summarize = T)
 ```
 
 There are several options that need to be considered. see ?evaluate_benchmark. For example, `project_boxes` asks whether the predicted boxes should be projected in universal-transverse mercator projection (UTM) from the image coordinate system. For example,
-
 
 These boxes are in the image coordinate system. The xmin of the first box is 299.53 (pixels) from the top left. The images are projected and have units in meters. Therefore we need to transform the image coordinates to the geographic coordinates for the boxes to overlap. 
 
@@ -70,17 +69,19 @@ results<-submission %>% filter(plot_name %in% sample(plot_name,15)) %>% evaluate
 
 ### Overall Performance
 
+What is the average bounding box recall and precision across all images?
+
 ```{r}
 results[["overall"]]
 ```
 
 ### By Site
 
-Precision and recall for each NEON site.
+Report the average statistics for each NEON site from across the United States. For a list of site abbreviations and locations see https://www.neonscience.org/field-sites/field-sites-map. 
 
 ```{r}
 df<-melt(results[["by_site"]])
-ggplot(df,aes(y=value,x=variable)) + geom_boxplot()
+ggplot(df,aes(y=value,x=Site)) + geom_point()  + facet_wrap(~variable) + coord_flip()
 ```
 
 ### Plot Level Crown Counts
@@ -93,64 +94,9 @@ ggplot(df,aes(y=submission,x=ground_truth)) + geom_point() + geom_abline(linetyp
 ```
 
 # Field stem evaluation
+The third data source is the NEON Woody Vegetation Structure Dataset. Each tree stem is represented by a single point. This data has been filtered to represent overstory trees visible in the remote sensing imagery.
 
 ```{r}
 stem_results<-submission %>% filter(plot_name %in% sample(plot_name,10)) %>% evaluate_field_stems(.,project = T)
 ggplot(stem_results,aes(x=field,y=submission)) + geom_point() + geom_abline() + coord_fixed() + ggtitle("Number of overstory trees") + labs(x="NEON Field Stems",y="Predicted Crowns")
-```
-
-# Worked example
-
-Using the tree deliniation tools in the liDR package, let's produce a prediction and test it against the benchmark. See the data vignette for more information.
-
-```{r}
-#Load RGB information
-rgb<-get_data("SJER_052","rgb")
-img<-stack(rgb)
-
-#Load annotations
-xml<-get_data("SJER_052","annotations")
-annotations<-xml_parse(xml)
-ground_truth <- boxes_to_spatial_polygons(annotations,img)
-
-#Load LiDAR data
-point_cloud_path<-get_data("SJER_052","lidar")
-point_cloud<-readLAS(point_cloud_path)
-```
-
-## Compute Height Model
-
-The liDR R package provides some nice tools for look at the point cloud as a raster grid.
-```{r,fig.height=5,fig.width=7}
-chm <- lidR::grid_canopy(point_cloud, res = 0.5, lidR::pitfree(c(0,2,5,10,15), c(0, 1.5)))
-plot(chm)
-```
-
-## Predict trees
-
-Using the lidR R package, we can perform individual tree prediction. Below we demonstrate how to predict trees and format the data for evaluation against the benchmark annotations. 
-
-```{r}
-ttops <- tree_detection(chm, lmf(4, 2))
-point_cloud   <- lastrees(point_cloud, silva2016(chm, ttops,max_cr_factor = 0.5,exclusion = 0.3))
-```
-
-The lidR package adds predicted labels into the treeID column
-```{r}
-plot(point_cloud,color="treeID")
-```
-
-```{r}
-predictions<-tree_hulls(point_cloud,"bbox")
-plotRGB(img)
-plot(predictions,add=T,border="red")
-```
-
-## Evaluate against benchmark annotations
-
-Now that we have ground truth and prediction polygon objects, what is the precision and recall for bounding boxes with intersection-over-union of greather than 0.5
-
-```{r}
-predictions$crown_id<-predictions$treeID
-compute_precision_recall(ground_truth,predictions,threshold = 0.5)
 ```
