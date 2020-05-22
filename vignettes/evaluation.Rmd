@@ -90,7 +90,7 @@ Number of predicted trees versus number of image-annotated trees for each plot. 
 
 ```{r}
 df<-results[["plot_level"]]
-ggplot(df,aes(y=submission,x=ground_truth)) + geom_point() + geom_abline(linetype="dashed") + coord_equal()
+ggplot(df,aes(y=submission,x=ground_truth)) + geom_point() + geom_abline(linetype="dashed") + coord_equal() + labs(x="Ground Truth Crowns",y="Predicted Crowns")
 ```
 
 # Field stem evaluation

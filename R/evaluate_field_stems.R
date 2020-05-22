@@ -15,7 +15,7 @@
 #' @md
 #' @export
 
-evaluate_field_stems<-function(submission,project=TRUE){
+evaluate_field_stems<-function(submission,project=TRUE, show=T){
 
   #Check for data
   check_download()
@@ -36,11 +36,14 @@ evaluate_field_stems<-function(submission,project=TRUE){
   ### Stem count ###
   #Which plots to evaluate
   plots_to_evaluate<-unique(as.character(submission$plot_name[submission$plot_name %in% field$plotID]))
-  stem_count<-submission %>% filter(plot_name %in% plots_to_evaluate) %>% group_by(plot_name) %>% do(stem_plot(df=.,field=field,projectbox = project))%>%
+
+  stem_count<-submission %>% filter(plot_name %in% plots_to_evaluate) %>% group_by(plot_name) %>% do(stem_plot(df=.,field=field,projectbox = project,show=show))%>%
     dplyr::ungroup() %>% dplyr::select(plot_name,rs,field) %>% dplyr::rename("submission"="rs")
 
-  p<-ggplot(stem_count,aes(x=field,y=submission)) + geom_point() + stat_smooth(method="lm") + geom_abline(linetype="dashed") + labs(x="NEON Field Stems",y="Predicted Crowns")
-  print(p)
+  if(show){
+    p<-ggplot(stem_count,aes(x=field,y=submission)) + geom_point() + stat_smooth(method="lm") + geom_abline(linetype="dashed") + labs(x="NEON Field Stems",y="Predicted Crowns")
+    print(p)
+  }
 
   return(stem_count)
 }

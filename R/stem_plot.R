@@ -1,6 +1,6 @@
 #' Internal function for evaluate_field_stems
 #' @noRd
-stem_plot<-function(df,field, projectbox=T){
+stem_plot<-function(df,field, projectbox=T, show=T){
   #Find plot
   plot_name <- as.character(unique(df$plot_name))
   print(plot_name)
@@ -24,12 +24,12 @@ stem_plot<-function(df,field, projectbox=T){
 
   #If there are non-contigious plots compute subplots seperately
   if(plotType=="distributed" & sum(subplots %in% c(41,31,40,32))==4){
-    plot_result<- count_trees(field_data,spdf,show=T) %>% mutate(plotID=plot_name)
+    plot_result<- count_trees(field_data,spdf,show=show) %>% mutate(plotID=plot_name)
   } else{
     plot_result<-list()
     for(subplot in subplots){
       projected_subplot<-field_data %>% filter(subplotID==subplot)
-      plot_result[[subplot]]<-count_trees(field_data,spdf,show=T) %>% mutate(plotID=plot_name,subplot=subplot)
+      plot_result[[subplot]]<-count_trees(field_data,spdf,show=show) %>% mutate(plotID=plot_name,subplot=subplot)
     }
     plot_result<-bind_rows(plot_result)
   }
