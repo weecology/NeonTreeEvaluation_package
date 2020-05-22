@@ -61,7 +61,7 @@ These boxes are in the image coordinate system. The xmin of the first box is 299
 For the sake of computation in this small vignette, let's select just 10 images.
 
 ```{r,include=FALSE}
-results<-submission %>% filter(plot_name %in% sample(plot_name,10)) %>% evaluate_image_crowns(.,project = T,show=T,summarize = T)
+results<-submission %>% filter(plot_name %in% sample(plot_name,15)) %>% evaluate_image_crowns(.,project = T,show=T,summarize = T)
 ```
 
 ### Overall Performance

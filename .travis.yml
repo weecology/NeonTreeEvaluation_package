@@ -7,3 +7,9 @@ warnings_are_errors: false
 
 before_install:
   - R -e 'install.packages("rgdal", repos="http://R-Forge.R-project.org")'
+
+packages:
+  - libproj-dev
+  - libgeos-dev
+  - libspatialite-dev
+  - libgdal-dev
