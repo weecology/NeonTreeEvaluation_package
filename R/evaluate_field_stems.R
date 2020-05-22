@@ -10,8 +10,7 @@
 #' * A minimum height of 3m to match the threshold in the remote sensing workflow.
 #' * Be at least within 5m of the canopy as measured by the LiDAR height model extracted at the stem location. The was used to prevent matching with understory trees in the event that overstory trees were eliminated due to failing in one of the above conditions, or not sampled by NEON.
 #' @param submission
-#' @return A data frame with the crown ID matched to the prediction ID.
-#' @examples
+#' @return A data frame with the number of crown predictions in the sumbitted predictions and the field sampled plots.
 #' @import dplyr ggplot2
 #' @md
 #' @export
@@ -35,7 +34,6 @@ evaluate_field_stems<-function(submission,project=TRUE){
   field<-field %>% filter(!(plotID %in% poor_quality$plotID & subplotID %in% poor_quality$subplot))
 
   ### Stem count ###
-
   #Which plots to evaluate
   plots_to_evaluate<-unique(as.character(submission$plot_name[submission$plot_name %in% field$plotID]))
   stem_count<-submission %>% filter(plot_name %in% plots_to_evaluate) %>% group_by(plot_name) %>% do(stem_plot(df=.,field=field,projectbox = project))%>%
@@ -44,11 +42,5 @@ evaluate_field_stems<-function(submission,project=TRUE){
   p<-ggplot(stem_count,aes(x=field,y=submission)) + geom_point() + stat_smooth(method="lm") + geom_abline(linetype="dashed") + labs(x="NEON Field Stems",y="Predicted Crowns")
   print(p)
 
-  results[["count"]]<-stem_count
-
-  ## Stem Recall ##
-
-
-  results[["recall"]]<-stem_recall
-  return(results)
+  return(stem_count)
 }

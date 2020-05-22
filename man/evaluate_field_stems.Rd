@@ -7,7 +7,7 @@
 evaluate_field_stems(submission, project = TRUE)
 }
 \value{
-A data frame with the crown ID matched to the prediction ID.
+A data frame with the number of crown predictions in the sumbitted predictions and the field sampled plots.
 }
 \description{
 \code{evaluate_field_stems} implements the matching and scoring algorithm on field stems that were collected by the NEON Woody Vegetation structure data.
