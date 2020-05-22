@@ -21,6 +21,8 @@ evaluate_field_stems<-function(submission,project=TRUE){
   #Check for data
   check_download()
 
+  result<-list()
+
   #Load data from package
   data(field)
   rgb_images<-list_rgb()
@@ -32,13 +34,21 @@ evaluate_field_stems<-function(submission,project=TRUE){
   poor_quality<-data.frame(plotID=c("LENO_069","LENO_062","BART_032"),subplot=c(23,40,23))
   field<-field %>% filter(!(plotID %in% poor_quality$plotID & subplotID %in% poor_quality$subplot))
 
+  ### Stem count ###
+
   #Which plots to evaluate
   plots_to_evaluate<-unique(as.character(submission$plot_name[submission$plot_name %in% field$plotID]))
-  results<-submission %>% filter(plot_name %in% plots_to_evaluate) %>% group_by(plot_name) %>% do(stem_plot(df=.,field=field,projectbox = project))%>%
+  stem_count<-submission %>% filter(plot_name %in% plots_to_evaluate) %>% group_by(plot_name) %>% do(stem_plot(df=.,field=field,projectbox = project))%>%
     dplyr::ungroup() %>% dplyr::select(plot_name,rs,field) %>% dplyr::rename("submission"="rs")
 
-  p<-ggplot(results,aes(x=field,y=submission)) + geom_point() + stat_smooth(method="lm") + geom_abline(linetype="dashed") + labs(x="Field Stems",y="Remotely Sensed Crowns")
+  p<-ggplot(stem_count,aes(x=field,y=submission)) + geom_point() + stat_smooth(method="lm") + geom_abline(linetype="dashed") + labs(x="NEON Field Stems",y="Predicted Crowns")
   print(p)
 
+  results[["count"]]<-stem_count
+
+  ## Stem Recall ##
+
+
+  results[["recall"]]<-stem_recall
   return(results)
 }

@@ -4,3 +4,6 @@ language: r
 sudo: false
 
 warnings_are_errors: false
+
+before_install:
+  - R -e 'install.packages("rgdal", repos="http://R-Forge.R-project.org")'

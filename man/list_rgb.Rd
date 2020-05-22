@@ -2,7 +2,7 @@
 % Please edit documentation in R/list_rgb.R
 \name{list_rgb}
 \alias{list_rgb}
-\title{Utility functions for listing plots and location of data}
+\title{List paths to RGB files}
 \usage{
 list_rgb()
 }

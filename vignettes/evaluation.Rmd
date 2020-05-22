@@ -12,7 +12,6 @@ editor_options:
 ---
 
 ```{r setup, include = FALSE}
-
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
@@ -59,10 +58,10 @@ head(submission)
 
 These boxes are in the image coordinate system. The xmin of the first box is 299.53 (pixels) from the top left. The images are projected and have units in meters. Therefore we need to transform the image coordinates to the geographic coordinates for the boxes to overlap. 
 
-For the sake of computation in this small vignette, let's select just 5 images.
+For the sake of computation in this small vignette, let's select just 10 images.
 
 ```{r,include=FALSE}
-results<-submission %>% filter(plot_name %in% sample(plot_name,5)) %>% evaluate_image_crowns(.,project_boxes = T,show=T,summarize = T)
+results<-submission %>% filter(plot_name %in% sample(plot_name,10)) %>% evaluate_image_crowns(.,project = T,show=T,summarize = T)
 ```
 
 ### Overall Performance
@@ -91,7 +90,8 @@ ggplot(df,aes(y=submission,x=ground_truth)) + geom_point() + geom_abline(linetyp
 # Field stem evaluation
 
 ```{r}
-stem_result<-evaluate_field_stems(submission=submission,project=T)
+stem_results<-submission %>% filter(plot_name %in% sample(plot_name,10)) %>% evaluate_field_stems(.,project = T)
+ggplot(stem_results,aes(x=field,y=submission)) + geom_point() + geom_abline() + coord_fixed() + ggtitle("Number of overstory trees") + labs(x="NEON Field Stems",y="Predicted Crowns")
 ```
 
 # Worked example

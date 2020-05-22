@@ -5,13 +5,11 @@
 \title{Compute evaluation metrics for the hand-annotated images
 This is the main function in the package. Submit a set of predictions to be evaluated against the image-annotated ground truth.}
 \usage{
-evaluate_image_crowns(submission, project_boxes = FALSE, show = TRUE,
+evaluate_image_crowns(submission, project = FALSE, show = TRUE,
   summarize = F)
 }
 \arguments{
 \item{submission}{A five column dataframe in the order plot_name, xmin, xmax, ymin, ymax. Each row is a predicted bounding box.}
-
-\item{project_boxes}{Logical. Should the boxes be projected into utm coordinates? This is needed if the box coordinates are given from the image origin (top left is 0,0)}
 
 \item{show}{Logical. Plot the overlayed annotations for each plot?}
 
