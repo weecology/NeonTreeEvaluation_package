@@ -13,7 +13,7 @@ Suggests: knitr,
     rmarkdown,
     testthat
 VignetteBuilder: knitr
-Imports: lidR,
+Imports: ggplot2, lidR,
     raster,
     sp,
     dplyr,

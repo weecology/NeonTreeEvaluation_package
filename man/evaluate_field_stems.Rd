@@ -4,7 +4,7 @@
 \alias{evaluate_field_stems}
 \title{Compute evaluation scores from the field collected stem data}
 \usage{
-evaluate_field_stems(submission, project = TRUE)
+evaluate_field_stems(submission, project = TRUE, show = T)
 }
 \value{
 A data frame with the number of crown predictions in the sumbitted predictions and the field sampled plots.
