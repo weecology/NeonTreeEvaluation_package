@@ -23,6 +23,14 @@ knitr::opts_chunk$set(
 )
 ```
 
+# Download data
+
+The evaluation data is archived seperately from the R package. To download the data use download()
+```{r}
+download()
+```
+
+
 # Submission Format
 
 The format of the submission is as follows
@@ -46,6 +54,7 @@ data("submission")
 ```
 
 ```{r}
+
 head(submission)
 ```
 

@@ -29,7 +29,8 @@ download<-function(training=FALSE, savedir=NULL,force=F){
   #check if already exists.
   if(dir.exists(dirname)){
     if(!force){
-      stop(paste("Data has already been downloaded to",dirname,", use force=T to overwrite"))
+      warning(paste("Data has already been downloaded to",dirname,", use force=T to overwrite"))
+      return(NULL)
     }
   }
 

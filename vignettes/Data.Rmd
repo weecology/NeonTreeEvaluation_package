@@ -30,6 +30,9 @@ library(raster)
 library(dplyr)
 library(lidR)
 library(NeonTreeEvaluation)
+
+#Check if the data has been downloaded
+download()
 ```
 
 The NEON airborne observatory platform uses fixed-wing aircraft to survey sites during leaf-on-conditions from May-October. Aircraft are flown around 1000m above ground. Data chosen for this benchmark were collected during flights from 2018 and 2019. The current dataset includes at least two 40m x 40m evaluation plots for 22 sites with every visible tree annotated with a bounding box (n = 6,619 trees, n = 202 images).
