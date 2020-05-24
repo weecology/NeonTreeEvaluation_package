@@ -23,13 +23,6 @@ knitr::opts_chunk$set(
 )
 ```
 
-# Download data
-
-The evaluation data is archived seperately from the R package. To download the data use download()
-```{r}
-download()
-```
-
 
 # Submission Format
 
@@ -53,8 +46,14 @@ library(lidR)
 data("submission")
 ```
 
-```{r}
+# Download sensor data and annotations
 
+The evaluation data is archived seperately from the R package. To download the data use download().
+```{r}
+download()
+```
+
+```{r}
 head(submission)
 ```
 
