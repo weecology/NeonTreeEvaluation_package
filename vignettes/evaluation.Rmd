@@ -23,7 +23,6 @@ knitr::opts_chunk$set(
 )
 ```
 
-
 # Submission Format
 
 The format of the submission is as follows
@@ -104,7 +103,6 @@ ggplot(df,aes(y=submission,x=ground_truth)) + geom_point() + geom_abline(linetyp
 # Field-annotated crown evaluation
 
 The second data source is a small number of field-deliniated crowns from three geographic sites. These crowns were drawn on a tablet while physically standing in the field, thereby reducing the uncertainty in crown segmentation.
-
 
 # Field stem evaluation
 

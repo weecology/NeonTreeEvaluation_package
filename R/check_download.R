@@ -1,5 +1,4 @@
 #' Check if data has been downloaded
-#' @examples
 #' @return a set of file paths
 #' @export
 

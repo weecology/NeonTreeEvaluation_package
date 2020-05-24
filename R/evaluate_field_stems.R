@@ -23,7 +23,6 @@ evaluate_field_stems<-function(submission,project=TRUE, show=T){
   result<-list()
 
   #Load data from package
-  data(field)
   rgb_images<-list_rgb()
 
   #get most recent date for each data point.

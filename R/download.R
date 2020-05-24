@@ -12,7 +12,6 @@
 #' @examples
 #'  \donttest{
 #'  download()
-#'  path<-paste(system.file(package = "NeonTreeEvaluation"),"/extdata/",sep="")
 #'  list_rgb()
 #'  }
 #' @export

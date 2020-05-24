@@ -21,7 +21,7 @@ count_trees<-function(field_data,spdf,show=F){
 
   #Get prediction centroid
   spdf<-sf::st_as_sf(spdf)
-  prediction_centroids<-sf::st_centroid(spdf)
+  prediction_centroids<-sf::st_centroid(sf::st_geometry(spdf))
 
   e<-raster::extent(field_data_filter)
 

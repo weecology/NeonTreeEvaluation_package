@@ -4,7 +4,7 @@ library(dplyr)
 test_that("Image crown summaries", {
   data("submission")
   results <- submission %>%
-    filter(plot_name %in% sample(plot_name, 1)) %>% evaluate_image_crowns(.,summarize = T,project = T)
+    filter(plot_name %in% "HARV_040") %>% evaluate_image_crowns(.,summarize = T,project = T)
 
   #Overall
   expect_equal(dim(results[["overall"]]),c(1,2))

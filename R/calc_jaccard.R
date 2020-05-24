@@ -25,7 +25,6 @@ calc_jaccard <- function(assignment, ground_truth, predictions) {
       jaccard_stat[[i]] <- d
     }
   }
-
-  statdf <- dplyr::bind_rows(jaccard_stat)
+  statdf <- suppressWarnings(dplyr::bind_rows(jaccard_stat))
   return(statdf)
 }

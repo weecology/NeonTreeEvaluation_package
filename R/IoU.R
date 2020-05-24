@@ -8,9 +8,8 @@
 IoU <- function(x, y) {
 
   # find area of overlap
-  intersection <- raster::intersect(x, y)
+  suppressWarnings(intersection <- raster::intersect(x, y))
   if (is.null(intersection)) {
-    warning("No intersection, returning zero overlap\n")
     return(0)
   }
   area_intersection <- sum(sapply(intersection@polygons, function(x) {
