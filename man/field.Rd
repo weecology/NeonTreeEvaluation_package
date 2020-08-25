@@ -5,6 +5,9 @@
 \alias{field}
 \title{NEON Woody Vegetation Structure}
 \format{An object of class \code{data.frame} with 37776 rows and 67 columns.}
+\usage{
+field
+}
 \description{
 From https://data.neonscience.org/data-products/DP1.10098.001
 }

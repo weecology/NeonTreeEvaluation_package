@@ -12,6 +12,8 @@ grand_summary(results, threshold = 0.5)
 \item{threshold}{Float. Intersection-over-union threshold to consider a prediction a true positive.}
 
 \item{by_site}{Logical. Should average recall and precision be calculated for each geographic site separately? Defaults to FALSE, such that a single summary is returned for all sites.}
+
+\item{calc_plot_level}{Calculate plot-level statistic comparing the total predictions to the total crowns. This only makes sense for the image-annotated crowns, and not the field-annotated crowns.}
 }
 \value{
 A names list of overall mean precision and recall, by site, and plot level summary

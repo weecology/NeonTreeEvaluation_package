@@ -21,7 +21,6 @@ The training data is a large set of training tiles (>5GB). Training tiles are ge
 \examples{
  \donttest{
  download()
- path<-paste(system.file(package = "NeonTreeEvaluation"),"/extdata/",sep="")
  list_rgb()
  }
 }

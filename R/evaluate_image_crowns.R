@@ -10,7 +10,6 @@
 #'
 
 evaluate_image_crowns <- function(submission, project = FALSE, show = TRUE, summarize=F) {
-
   #Check for data
   check_download()
 

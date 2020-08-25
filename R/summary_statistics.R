@@ -4,6 +4,7 @@
 #' @param results A data frame of matched predictions and ground truth returned from \code{evaluate_plot}
 #' @param by_site Logical. Should average recall and precision be calculated for each geographic site separately? Defaults to FALSE, such that a single summary is returned for all sites.
 #' @param threshold Float. Intersection-over-union threshold to consider a prediction a true positive.
+#' @param calc_plot_level Calculate plot-level statistic comparing the total predictions to the total crowns. This only makes sense for the image-annotated crowns, and not the field-annotated crowns.
 #' @return A names list of overall mean precision and recall, by site, and plot level summary
 #' @export
 
@@ -20,6 +21,9 @@ grand_summary <-function(results, threshold = 0.5){
   return(statistic)
 }
 
+#' @title Site summary table for image-evaluated crowns
+#' @rdname site_summary
+#' @export
 site_summary<-function(results, threshold = 0.5){
   # Infer site
   results <- results %>% mutate(Site = stringr::str_match(plot_name, "(\\w+)_")[, 2])
@@ -42,12 +46,15 @@ plot_level<-function(results,threshold){
   return(r)
   }
 
-summary_statistics <- function(results, threshold = 0.5) {
+summary_statistics <- function(results, threshold = 0.5, calc_plot_level=T) {
   df<-list()
 
   df[["overall"]]<-grand_summary(results, threshold)
   df[["by_site"]]<-site_summary(results,threshold)
-  df[["plot_level"]]<-plot_level(results,threshold)
+
+  if(calc_plot_level){
+    df[["plot_level"]]<-plot_level(results,threshold)
+  }
 
   return(df)
 }

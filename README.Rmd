@@ -74,21 +74,20 @@ data("submission")
 head(submission)
 ```
 
-## Precision and recall scores for a single image-annotated plot
+## Precision and recall scores for an image-annotated plot
 
-This submission has bounding boxes in image coordinates. 
+This submission has bounding boxes in image coordinates. To get the benchmark score image-annotated ground truth data.
+
 ```{r}
-df<-submission %>% filter(plot_name=="SJER_052")
-evaluate_plot(df,show = T,project_boxes = T)
+#Get a three sample plots to run quickly, ignore to run the entire dataset
+df<-submission %>% filter(plot_name %in% c("SJER_052","TEAK_061","TEAK_057"))
+
+#Compute total recall and precision for the overlap data
+results<-evaluate_image_crowns(submission = df,project = T, show=F, summarize = T)
+results
 ```
 
 If you would prefer not to clone this repo, a static version of the benchmark is here: https://zenodo.org/record/3723357#.XqT_HlNKjOQ
-
-### For the entire image-annotated benchmark
-
-```{r,eval=F}
-evaluate_image_crowns(submission,project_boxes = T)
-```
 
 # Sensor Data
 

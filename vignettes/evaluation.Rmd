@@ -61,7 +61,7 @@ head(submission)
 The main data source are image-annotated crowns, in which a single observer annotated visible trees in 200 40m x 40m images from across the United States. For each plot compute the precision and recall based on intersection-over-union of 0.5 between the ground truth bounding boxes and the predicted boxes. Then loop through all matching plot_names and produce evaluation scores.
 
 ```{r,eval=FALSE}
-results<-evaluate_image_crowns(submission = submission,project_boxes = T, show=F, summarize = T)
+results<-evaluate_image_crowns(submission = submission,project = T, show=F, summarize = T)
 ```
 
 There are several options that need to be considered. see ?evaluate_benchmark. For example, `project_boxes` asks whether the predicted boxes should be projected in universal-transverse mercator projection (UTM) from the image coordinate system. For example,

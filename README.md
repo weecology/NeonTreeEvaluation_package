@@ -4,17 +4,35 @@ Status](https://travis-ci.org/Weecology/NeonTreeEvaluation_package.svg?branch=ma
 A multi-sensor benchmark dataset for detecting individual trees in airborne RGB, Hyperspectral and LIDAR point clouds
 =====================================================================================================================
 
-Mantainer: Ben Weinstein - University of Florida.
+Maintainer: Ben Weinstein - University of Florida.
 
-Individual tree detection is a central task in forestry and ecology. Few
-papers analyze proposed methods across a wide geographic area. This
-limits the utility of tools and inhibits comparisons across methods.
-This benchmark dataset is the first dataset to have consistant
-annotation approach across a variety of ecosystems. For the purposes of this benchmark, a 'tree' is a vertical vegetiation that has height of more than 3m.
+This benchmark dataset is the first dataset to have consistent
+annotation approach across a variety of ecosystems. This repo is the R
+package for reproducible evaluation against the dataset. There are three
+types of annotated data.
 
-This repo is the accomponaying R package for reproducible evaluation
-against the dataset. The package contains a static version of the
-annotations used for evaluation.
+Image-annotated Crowns
+----------------------
+
+The main data source are image-annotated crowns, in which a single
+observer annotated visible trees in 200 40m x 40m images from across the
+United States.
+
+Field-annotated Crowns
+----------------------
+
+The second data source is a small number of field-deliniated crowns from
+three geographic sites. These crowns were drawn on a tablet while
+physically standing in the field, thereby reducing the uncertainty in
+crown segmentation.
+
+Field Stems
+-----------
+
+The third data source is the NEON Woody Vegetation Structure Dataset.
+Each tree stem is represented by a single point. This data has been
+filtered to represent overstory trees visible in the remote sensing
+imagery.
 
 Installation
 ============
@@ -22,6 +40,19 @@ Installation
 ``` r
 library(devtools)
 install_github("https://github.com/weecology/NeonTreeEvaluation_package.git")
+```
+
+Download sensor data
+====================
+
+To download evaluation data from the Zenodo archive (1GB), use the
+download() function to place the data in the correct package location.
+Download the much larger training data, set training=TRUE.
+
+``` r
+library(NeonTreeEvaluation)
+download()
+#> NULL
 ```
 
 Getting Started
@@ -64,32 +95,52 @@ head(submission)
 #> 6  BLAN_005 173.360230 341.138150 255.3800 400.00000
 ```
 
-Precision and recall scores for a single image-annotated plot
--------------------------------------------------------------
+Precision and recall scores for an image-annotated plot
+-------------------------------------------------------
 
-This submission has bounding boxes in image coordinates.
+This submission has bounding boxes in image coordinates. To get the
+benchmark score image-annotated ground truth data.
 
 ``` r
-df<-submission %>% filter(plot_name=="SJER_052")
-evaluate_plot(df,show = T,project_boxes = T)
+#Get a three sample plots to run quickly, ignore to run the entire dataset
+df<-submission %>% filter(plot_name %in% c("SJER_052","TEAK_061","TEAK_057"))
+
+#Compute total recall and precision for the overlap data
+results<-evaluate_image_crowns(submission = df,project = T, show=F, summarize = T)
 #> [1] SJER_052
 #> 181 Levels: 2018_SJER_3_252000_4104000_image_628 ...
+#> [1] TEAK_057
+#> 181 Levels: 2018_SJER_3_252000_4104000_image_628 ...
+#> [1] TEAK_061
+#> 181 Levels: 2018_SJER_3_252000_4104000_image_628 ...
+results
+#> $overall
+#> # A tibble: 1 x 2
+#>   precision recall
+#>       <dbl>  <dbl>
+#> 1     0.765  0.780
+#> 
+#> $by_site
+#> # A tibble: 2 x 3
+#> # Groups:   Site [2]
+#>   Site  recall precision
+#>   <chr>  <dbl>     <dbl>
+#> 1 SJER   1         1    
+#> 2 TEAK   0.676     0.657
+#> 
+#> $plot_level
+#> # A tibble: 3 x 3
+#> # Groups:   plot_name [3]
+#>   plot_name submission ground_truth
+#>   <fct>          <int>        <int>
+#> 1 SJER_052           9            9
+#> 2 TEAK_057          61           61
+#> 3 TEAK_061          44           41
 ```
-
-![](www/README-unnamed-chunk-4-1.png)
-
-    #>   recall precision
-    #> 1      1         1
 
 If you would prefer not to clone this repo, a static version of the
 benchmark is here:
 <a href="https://zenodo.org/record/3723357#.XqT_HlNKjOQ" class="uri">https://zenodo.org/record/3723357#.XqT_HlNKjOQ</a>
-
-### For the entire image-annotated benchmark
-
-``` r
-evaluate_image_crowns(submission,project_boxes = T)
-```
 
 Sensor Data
 ===========
@@ -150,7 +201,7 @@ Hyperspectral
 -------------
 
 Hyperspectral surface reflectance (NEON ID: DP1.30006.001) is a 426 band
-raster covering visible and near infared spectrum.
+raster covering visible and near infrared spectrum.
 
 ``` r
 path<-get_data("MLBS_071",type="hyperspectral")
@@ -168,8 +219,8 @@ Submission
 ==========
 
 To submit to this benchmark, please see the evaluation vignette. Please
-submit a pull request, or contact the mantainer if you use these data in
-analysis and would like the results to be shown here.
+submit a pull request, or contact the maintainer if you use these data
+in analysis and would like the results to be shown here.
 
 Citation
 --------
