@@ -7,8 +7,7 @@
 #' @return If compute_PR=T, the recall and precision scores for the plot, if False, the intersection-over-union scores for each prediction.
 #' @export
 #'
-evaluate_plot <- function(submission, show = TRUE, project_boxes = TRUE) {
-
+image_crowns <- function(submission, show = TRUE, project_boxes = TRUE) {
   # find ground truth file
   plot_name <- unique(submission$plot_name)
   if (!length(plot_name) == 1) {

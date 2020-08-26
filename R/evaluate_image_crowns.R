@@ -15,7 +15,7 @@ evaluate_image_crowns <- function(submission, project = FALSE, show = TRUE, summ
 
   results <- submission %>%
     group_by(plot_name) %>%
-    do(evaluate_plot(., project_boxes = project, show = show))
+    do(image_crowns(., project_boxes = project, show = show))
 
   if(summarize){
     return(summary_statistics(results))

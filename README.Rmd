@@ -61,11 +61,12 @@ The format of the submission is as follows
 
 Each row contains information for one predicted bounding box.
 
-The plot column should be named the same as the files in the dataset (e.g. SJER_021), not the path to the file.
+The plot column should be named the same as the files in the dataset (e.g. SJER_021), not the path to the file. Not all evaluation data are available for all plots. Functions like evaluate_field_crowns and evaluate_image_crowns will look for matching plot name and ignore other plots.Depending on the speed of the algorithm, the simplest thing to do is predict all images in the RGB folder (see list_rgb()) and the package will handle matching images with the correct data to the correct evaluation procedure.
 
 # Example
 
 The package contains a sample submission file. 
+
 ```{r}
 library(raster)
 library(dplyr)
@@ -74,7 +75,7 @@ data("submission")
 head(submission)
 ```
 
-## Precision and recall scores for an image-annotated plot
+## Scores for an image-annotated crowns
 
 This submission has bounding boxes in image coordinates. To get the benchmark score image-annotated ground truth data.
 
@@ -86,6 +87,22 @@ df<-submission %>% filter(plot_name %in% c("SJER_052","TEAK_061","TEAK_057"))
 results<-evaluate_image_crowns(submission = df,project = T, show=F, summarize = T)
 results
 ```
+
+## Scores for an field-collected stems
+
+```{r}
+results<-evaluate_field_stems(submission = df,project = F, show=T, summarize = T)
+results
+```
+
+## Scores for an field-collected crowns
+
+```{r}
+df <- submission %>% filter(plot_name=="OSBS_95_competition")
+results<-evaluate_field_crowns(submission = df,project = T)
+results
+```
+
 
 If you would prefer not to clone this repo, a static version of the benchmark is here: https://zenodo.org/record/3723357#.XqT_HlNKjOQ
 

@@ -21,7 +21,8 @@ count_trees<-function(field_data,spdf,show=F){
 
   #Get prediction centroid
   spdf<-sf::st_as_sf(spdf)
-  prediction_centroids<-sf::st_centroid(sf::st_geometry(spdf))
+  sf::st_agr(spdf) = "constant"
+  prediction_centroids<-sf::st_centroid(spdf)
 
   e<-raster::extent(field_data_filter)
 
@@ -33,8 +34,13 @@ count_trees<-function(field_data,spdf,show=F){
 
   #Crop
   centroids_to_include = sf::st_crop(prediction_centroids,e)
+
+  if(nrow(centroids_to_include) == 0){
+    warning("No overlapping points between predictions and field stems, check project argument to ensure spatial data is being correctly interpreted.")
+    return(NULL)
+  }
   cropped_prediction<-spdf[spdf$crown_id %in% centroids_to_include$crown_id,]
-  if(length(cropped_prediction)==0){return(NULL)}
+  if(nrow(cropped_prediction)==0){return(NULL)}
 
   #View
   if(show){

@@ -1,37 +1,12 @@
 #' Utility functions for listing plots and location of data
 #' @return a set of file paths from the downloaded sensor data
-#' @export
-
 #' @title List paths to RGB files
+#' @rdname list_rgb
+#' @export
 list_rgb<-function(){
   check_download()
   RGB_DIR <- paste(system.file("extdata", "NeonTreeEvaluation/evaluation/RGB/", package = "NeonTreeEvaluation"))
   rgb_images<-list.files(RGB_DIR,".tif",full.names = T)
   rgb_images<-rgb_images[!stringr::str_detect(rgb_images,".xml")]
-  return(rgb_images)
-}
-
-#' @title List paths to canopy height files
-#' @export
-list_chm<-function(){
-  check_download()
-  CHM_DIR <- paste(system.file("extdata", "NeonTreeEvaluation/evaluation/CHM/", package = "NeonTreeEvaluation"))
-  CHM_images<-list.files(CHM_DIR,".tif",full.names = T)
-  CHM_images<-CHM_images[!stringr::str_detect(CHM_images,".xml")]
-  return(CHM_images)
-}
-
-#' @title List paths to annotations
-#' @export
-list_annotations<-function(){
-  f<-list.files(system.file("extdata", "NeonTreeEvaluation/annotations/", package = "NeonTreeEvaluation"))
-  stringr::str_match(f,"(\\w+).xml")[,2]
-}
-
-#'@ title List images that overlap with field-annotation crowns
-#' @export
-list_field_crowns<-function(){
-  RGB_DIR <- paste(system.file("extdata", "NeonTreeEvaluation/evaluation/RGB/", package = "NeonTreeEvaluation"))
-  rgb_images<-list.files(RGB_DIR,"competition",full.names = T)
   return(rgb_images)
 }
