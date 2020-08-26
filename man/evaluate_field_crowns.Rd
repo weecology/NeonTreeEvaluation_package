@@ -6,9 +6,6 @@
 \usage{
 evaluate_field_crowns(submission, summarize = T, project = FALSE)
 }
-\arguments{
-\item{submission}{A five column dataframe in the order plot_name, xmin, xmax, ymin, ymax. Each row is a predicted bounding box.}
-}
 \value{
 A data frame with the crown ID matched to the prediction ID.
 }

@@ -50,7 +50,7 @@ download()
 
 # Getting Started
 
-The package contains two vignettes. The 'Data' vignette describes each datatype and how to interact with it in R. The 'Evaluation' vignette shows how to submit predictions to the benchmark.  
+The package contains two vignettes. The 'Data' vignette describes each datatype and how to interact with it in R. The 'Evaluation' vignette shows how to submit predictions to the benchmark.
 
 # Submission Format
 
@@ -102,7 +102,6 @@ df <- submission %>% filter(plot_name=="OSBS_95_competition")
 results<-evaluate_field_crowns(submission = df,project = T)
 results
 ```
-
 
 If you would prefer not to clone this repo, a static version of the benchmark is here: https://zenodo.org/record/3723357#.XqT_HlNKjOQ
 

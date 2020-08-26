@@ -73,7 +73,13 @@ The format of the submission is as follows
 Each row contains information for one predicted bounding box.
 
 The plot column should be named the same as the files in the dataset
-(e.g. SJER\_021), not the path to the file.
+(e.g. SJER\_021), not the path to the file. Not all evaluation data are
+available for all plots. Functions like evaluate\_field\_crowns and
+evaluate\_image\_crowns will look for matching plot name and ignore
+other plots.Depending on the speed of the algorithm, the simplest thing
+to do is predict all images in the RGB folder (see list\_rgb()) and the
+package will handle matching images with the correct data to the correct
+evaluation procedure.
 
 Example
 =======
@@ -86,17 +92,17 @@ library(dplyr)
 library(NeonTreeEvaluation)
 data("submission")
 head(submission)
-#>   plot_name       xmin       ymin     xmax      ymax
-#> 1  BLAN_005 299.532560  13.216835 396.9573 123.17089
-#> 2  BLAN_005   6.189451 217.012850 113.7897 325.25092
-#> 3  BLAN_005 255.822100 181.132950 309.3961 245.84946
-#> 4  BLAN_005 256.380600 283.993260 334.1573 376.96796
-#> 5  BLAN_005 107.644630   5.248255 177.9518  85.23382
-#> 6  BLAN_005 173.360230 341.138150 255.3800 400.00000
+#>   xmin ymin xmax ymax     score label                            plot_name
+#> 1  207  144  330  260 0.7038414  Tree 2018_SJER_3_253000_4104000_image_637
+#> 2   42  230  118  307 0.6070638  Tree 2018_SJER_3_253000_4104000_image_637
+#> 3  143  276  244  387 0.5886331  Tree 2018_SJER_3_253000_4104000_image_637
+#> 4  232    0  356  103 0.4402600  Tree 2018_SJER_3_253000_4104000_image_637
+#> 5  150   12  258  122 0.7261893  Tree                             TEAK_010
+#> 6  157  236  200  289 0.6950720  Tree                             TEAK_010
 ```
 
-Precision and recall scores for an image-annotated plot
--------------------------------------------------------
+Scores for an image-annotated crowns
+------------------------------------
 
 This submission has bounding boxes in image coordinates. To get the
 benchmark score image-annotated ground truth data.
@@ -108,34 +114,94 @@ df<-submission %>% filter(plot_name %in% c("SJER_052","TEAK_061","TEAK_057"))
 #Compute total recall and precision for the overlap data
 results<-evaluate_image_crowns(submission = df,project = T, show=F, summarize = T)
 #> [1] SJER_052
-#> 181 Levels: 2018_SJER_3_252000_4104000_image_628 ...
+#> 1266 Levels: 2018_SJER_3_252000_4104000_image_628 ...
 #> [1] TEAK_057
-#> 181 Levels: 2018_SJER_3_252000_4104000_image_628 ...
+#> 1266 Levels: 2018_SJER_3_252000_4104000_image_628 ...
 #> [1] TEAK_061
-#> 181 Levels: 2018_SJER_3_252000_4104000_image_628 ...
+#> 1266 Levels: 2018_SJER_3_252000_4104000_image_628 ...
 results
 #> $overall
 #> # A tibble: 1 x 2
 #>   precision recall
 #>       <dbl>  <dbl>
-#> 1     0.765  0.780
+#> 1     0.758  0.761
 #> 
 #> $by_site
 #> # A tibble: 2 x 3
 #> # Groups:   Site [2]
 #>   Site  recall precision
 #>   <chr>  <dbl>     <dbl>
-#> 1 SJER   1         1    
-#> 2 TEAK   0.676     0.657
+#> 1 SJER   0.667     0.857
+#> 2 TEAK   0.824     0.712
 #> 
 #> $plot_level
 #> # A tibble: 3 x 3
 #> # Groups:   plot_name [3]
 #>   plot_name submission ground_truth
 #>   <fct>          <int>        <int>
-#> 1 SJER_052           9            9
-#> 2 TEAK_057          61           61
-#> 3 TEAK_061          44           41
+#> 1 SJER_052           7            9
+#> 2 TEAK_057          75           61
+#> 3 TEAK_061          43           41
+```
+
+Scores for an field-collected stems
+-----------------------------------
+
+``` r
+results<-evaluate_field_stems(submission = df,project = F, show=T, summarize = T)
+#> [1] "SJER_052"
+```
+
+![](www/README-unnamed-chunk-6-1.png)
+
+``` r
+results
+#> $overall
+#>   recall
+#> 1      1
+#> 
+#> $by_site
+#> # A tibble: 1 x 2
+#>   Site  recall
+#>   <fct>  <dbl>
+#> 1 SJER       1
+#> 
+#> $plot_level
+#>   siteID plot_name recall
+#> 1   SJER  SJER_052      1
+```
+
+Scores for an field-collected crowns
+------------------------------------
+
+``` r
+df <- submission %>% filter(plot_name=="OSBS_95_competition")
+results<-evaluate_field_crowns(submission = df,project = T)
+```
+
+![](www/README-unnamed-chunk-7-1.png)
+
+``` r
+results
+#> $overall
+#> # A tibble: 1 x 2
+#>   precision recall
+#>       <dbl>  <dbl>
+#> 1         0      0
+#> 
+#> $by_site
+#> # A tibble: 1 x 3
+#> # Groups:   Site [1]
+#>   Site    recall precision
+#>   <chr>    <dbl>     <dbl>
+#> 1 OSBS_95      0         0
+#> 
+#> $plot_level
+#> # A tibble: 1 x 3
+#> # Groups:   plot_name [1]
+#>   plot_name           submission ground_truth
+#>   <fct>                    <int>        <int>
+#> 1 OSBS_95_competition          3            1
 ```
 
 If you would prefer not to clone this repo, a static version of the
@@ -175,7 +241,7 @@ plotRGB(rgb)
 plot(xml_polygons,add=T)
 ```
 
-![](www/README-unnamed-chunk-6-1.png)
+![](www/README-unnamed-chunk-8-1.png)
 
 Lidar
 -----
@@ -213,7 +279,7 @@ f<-g[[c(52,88,117)]]
 plotRGB(f,stretch="lin")
 ```
 
-![](www/README-unnamed-chunk-8-1.png)
+![](www/README-unnamed-chunk-10-1.png)
 
 Submission
 ==========

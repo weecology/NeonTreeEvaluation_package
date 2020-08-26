@@ -7,7 +7,7 @@
 list_rgb()
 }
 \value{
-a set of file paths
+a set of file paths from the downloaded sensor data
 }
 \description{
 Utility functions for listing plots and location of data

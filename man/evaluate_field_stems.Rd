@@ -4,10 +4,13 @@
 \alias{evaluate_field_stems}
 \title{Compute evaluation scores from the field collected stem data}
 \usage{
-evaluate_field_stems(submission, project = TRUE, show = T)
+evaluate_field_stems(submission, project = TRUE, show = T, summarize = T)
+}
+\arguments{
+\item{summarize}{logical If True, report the root mean squared error (RMSE) between the number of field crowns and predicted crowns. If false, return the list of crowns per plot.}
 }
 \value{
-A data frame with the number of crown predictions in the sumbitted predictions and the field sampled plots.
+If summarize is True, the RMSE of the linear model between predicted and observed crowns. If false, a data frame with the number of crown predictions in the sumbitted predictions and the field sampled plots.
 }
 \description{
 \code{evaluate_field_stems} implements the matching and scoring algorithm on field stems that were collected by the NEON Woody Vegetation structure data.
