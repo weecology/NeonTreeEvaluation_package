@@ -12,9 +12,11 @@ vignette: >
 The goal of this vignette is to provide a small demonstration of how to work with the annotated data and visualize each sensor type. For an example of evaluating a novel submission to the benchmark see the Evaluation vignette. 
 
 ```{r setup, include = FALSE}
+TRAVIS <- !identical(tolower(Sys.getenv("TRAVIS")), "true")
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  purl = TRAVIS
 )
 ```
 

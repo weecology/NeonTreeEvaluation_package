@@ -12,11 +12,13 @@ editor_options:
 ---
 
 ```{r, echo = FALSE}
+TRAVIS <- !identical(tolower(Sys.getenv("TRAVIS")), "true")
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
   fig.path = "www/README-",
   warning = FALSE,
+  purl = TRAVIS,
   message = FALSE
 )
 ```
