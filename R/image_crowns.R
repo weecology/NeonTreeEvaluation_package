@@ -1,6 +1,9 @@
 #' Compute evaluation statistics for one plot of image-annotated crowns
 #'
-#' @param submission A five column dataframe in the order plot_name, xmin, xmax, ymin, ymax. Each row is a predicted bounding box.
+#' @param submission
+#' The format of the submission is a csv with 5 columns: plot_name, xmin, ymin, xmax, ymax  follows
+#' Each row contains information for one predicted bounding box.
+#' The plot column should be named the same as the files in the dataset (e.g. SJER_021), not the path to the file.
 #' @param show Logical. Plot the overlayed annotations for each plot?
 #' @param project_boxes Logical. Should the boxes be projected into utm coordinates? This is needed if the box coordinates are given from the image origin (top left is 0,0)
 #' @param compute_PR Logical. Should the average precision and recall be computed?

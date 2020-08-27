@@ -1,12 +1,16 @@
-#' Compute intersection-over-union scores from the field collected crowns
+#' Compute evaluation metrics for the field-collected crowns
 #'
 #' \code{evaluate_field_crowns} implements the matching and scoring algorithm on crowns that were drawn on a tablet while physically standing in the field.
 #' @details For details on the protocol for field-based crown delineation see Graves et al. (2018). see \code{field_crowns}
+#' Not all evaluation data are available for all plots. This function will look for matching plot name and ignore other plots.
 #' @references Graves S, Gearhart J, Caughlin TT, Bohlman S. 2018. A digital mapping method for linking high-resolution remote sensing images to individual tree crowns. PeerJ Preprints 6:e27182v1 https://doi.org/10.7287/peerj.preprints.27182v1
-#' @inheritParams evaluate_plot
-#' @return A data frame with the crown ID matched to the prediction ID.
+#' @inheritParams field_crowns
+#' @return If summarize is True, a set of summary measures from \code{summary_statistics} for the overall score, the entire site score, and the per-plot score.
+#' If False, a dataframe with the intersection-over-union scores for each prediction.
 #' @examples
-#'
+#' data("submission")
+#' df <- submission %>% filter(plot_name=="OSBS_95_competition")
+#' results <- evaluate_field_crowns(submission = df,project = F, show=T, summarize = T)
 #' @export
 
 evaluate_field_crowns <- function(submission,summarize=T,project = FALSE){

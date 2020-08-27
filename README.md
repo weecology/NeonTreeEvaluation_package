@@ -52,7 +52,6 @@ Download the much larger training data, set training=TRUE.
 ``` r
 library(NeonTreeEvaluation)
 download()
-#> NULL
 ```
 
 Getting Started
@@ -73,8 +72,9 @@ The format of the submission is as follows
 Each row contains information for one predicted bounding box.
 
 The plot column should be named the same as the files in the dataset
-(e.g. SJER\_021), not the path to the file. Not all evaluation data are
-available for all plots. Functions like evaluate\_field\_crowns and
+without extension (e.g. SJER\_021 not SJER\_021.tif) and not the full
+path to the file on disk. Not all evaluation data are available for all
+plots. Functions like evaluate\_field\_crowns and
 evaluate\_image\_crowns will look for matching plot name and ignore
 other plots.Depending on the speed of the algorithm, the simplest thing
 to do is predict all images in the RGB folder (see list\_rgb()) and the
@@ -144,6 +144,9 @@ results
 #> 3 TEAK_061          43           41
 ```
 
+For a list of NEON site abbreviations:
+<a href="https://www.neonscience.org/field-sites/field-sites-map" class="uri">https://www.neonscience.org/field-sites/field-sites-map</a>
+
 Scores for an field-collected stems
 -----------------------------------
 
@@ -211,16 +214,8 @@ benchmark is here:
 Sensor Data
 ===========
 
-The NeonTreeEvaluation dataset is a set of bounding boxes drawn on RGB
-imagery from the National Ecological Observation Network (NEON). NEON is
-a set of 45 sites
-(e.g. [TEAK](https://www.neonscience.org/field-sites/field-sites-map/TEAK))
-that cover the dominant ecosystems in the US.
-
-For more complete information see the data vignette.
-
-RGB
----
+RGB Camera
+----------
 
 ``` r
 library(raster)

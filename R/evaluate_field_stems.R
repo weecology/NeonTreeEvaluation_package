@@ -1,4 +1,4 @@
-#' Compute evaluation scores from the field collected stem data
+#' Compute evaluation scores for the field collected stem data
 #'
 #' \code{evaluate_field_stems} implements the matching and scoring algorithm on field stems that were collected by the NEON Woody Vegetation structure data.
 #' @details
@@ -10,8 +10,17 @@
 #' * A minimum height of 3m to match the threshold in the remote sensing workflow.
 #' * Be at least within 5m of the canopy as measured by the LiDAR height model extracted at the stem location. The was used to prevent matching with understory trees in the event that overstory trees were eliminated due to failing in one of the above conditions, or not sampled by NEON.
 #' @param submission
+#' The format of the submission is a csv with 5 columns: plot_name, xmin, ymin, xmax, ymax  follows
+#' Each row contains information for one predicted bounding box.
+#' The plot column should be named the same as the files in the dataset (e.g. SJER_021), not the path to the file.
+#' Not all evaluation data are available for all plots. This function will look for matching plot name and ignore other plots.
 #' @param summarize logical If True, report the root mean squared error (RMSE) between the number of field crowns and predicted crowns. If false, return the list of crowns per plot.
-#' @return If summarize is True, the RMSE of the linear model between predicted and observed crowns. If false, a data frame with the number of crown predictions in the sumbitted predictions and the field sampled plots.
+#' @return If summarize is True, a set of summary measures from \code{summary_statistics} for the overall score, the entire site score, and the per-plot score.
+#' If False, a dataframe with the intersection-over-union scores for each prediction.
+#' @examples
+#' data("submission")
+#' df<-submission %>% filter(plot_name %in% c("SJER_052"))
+#' results<-evaluate_field_stems(submission = df,project = F, show=T, summarize = T)
 #' @import dplyr ggplot2
 #' @md
 #' @export

@@ -2,23 +2,31 @@
 % Please edit documentation in R/evaluate_image_crowns.R
 \name{evaluate_image_crowns}
 \alias{evaluate_image_crowns}
-\title{Compute evaluation metrics for the hand-annotated images
-This is the main function in the package. Submit a set of predictions to be evaluated against the image-annotated ground truth.}
+\title{Compute evaluation metrics for the hand-annotated images}
 \usage{
 evaluate_image_crowns(submission, project = FALSE, show = TRUE,
   summarize = F)
 }
 \arguments{
+\item{submission}{A five column dataframe in the order plot_name, xmin, xmax, ymin, ymax. Each row is a predicted bounding box.}
+
+\item{show}{Logical. Plot the overlayed annotations for each plot?}
+
 \item{summarize}{Whether to compute summary statistics (TRUE) or return raw matching data (False), see \code{summary_statistics}}
 }
 \value{
-If summarize is True, a set of summary measures from \code{summary_statistics} If False, a dataframe with the intersection-over-union scores for each prediction.
+If summarize is True, a set of summary measures from \code{summary_statistics} for the overall score, the entire site score, and the per-plot score.
+If False, a dataframe with the intersection-over-union scores for each prediction.
 }
 \description{
-Compute evaluation metrics for the hand-annotated images
-This is the main function in the package. Submit a set of predictions to be evaluated against the image-annotated ground truth.
+Submit a set of predictions to be evaluated against individual tree crowns annotated by an observer looking at the imagery.
 }
 \details{
 The NeonTreeEvaluation benchmark contains evaluation data from 22 sites from the National Ecological Observation Network. Crowns were annotated by looking at a combination of the RGB image, a LiDAR-derived canopy height model, hyperspectral reflectance and, where available, field collected data on stem location. For evaluation of the field-collected crowns for 2 sites, see \code{evaluate_field_crowns}. The field-collected crowns were drawn by a tablet into the field, while the image crowns were drawn by looking at multiple sensor data on a screen.
 This function is a wrapper for \code{evaluate_plot}. It first looks which plot_names match the benchmark dataset. Plots with no predictions, or which are not included, are ignored.
+}
+\examples{
+#' data("submission")
+df<-submission \%>\% filter(plot_name \%in\% c("SJER_052","TEAK_061","TEAK_057"))
+results<-evaluate_image_crowns(submission = df,project = F, show=T, summarize = T)
 }

@@ -2,15 +2,21 @@
 % Please edit documentation in R/evaluate_field_stems.R
 \name{evaluate_field_stems}
 \alias{evaluate_field_stems}
-\title{Compute evaluation scores from the field collected stem data}
+\title{Compute evaluation scores for the field collected stem data}
 \usage{
 evaluate_field_stems(submission, project = TRUE, show = T, summarize = T)
 }
 \arguments{
+\item{submission}{The format of the submission is a csv with 5 columns: plot_name, xmin, ymin, xmax, ymax  follows
+Each row contains information for one predicted bounding box.
+The plot column should be named the same as the files in the dataset (e.g. SJER_021), not the path to the file.
+Not all evaluation data are available for all plots. This function will look for matching plot name and ignore other plots.}
+
 \item{summarize}{logical If True, report the root mean squared error (RMSE) between the number of field crowns and predicted crowns. If false, return the list of crowns per plot.}
 }
 \value{
-If summarize is True, the RMSE of the linear model between predicted and observed crowns. If false, a data frame with the number of crown predictions in the sumbitted predictions and the field sampled plots.
+If summarize is True, a set of summary measures from \code{summary_statistics} for the overall score, the entire site score, and the per-plot score.
+If False, a dataframe with the intersection-over-union scores for each prediction.
 }
 \description{
 \code{evaluate_field_stems} implements the matching and scoring algorithm on field stems that were collected by the NEON Woody Vegetation structure data.
@@ -25,4 +31,9 @@ The following filters were applied to the raw NEON field data (ID) after downloa
 \item A minimum height of 3m to match the threshold in the remote sensing workflow.
 \item Be at least within 5m of the canopy as measured by the LiDAR height model extracted at the stem location. The was used to prevent matching with understory trees in the event that overstory trees were eliminated due to failing in one of the above conditions, or not sampled by NEON.
 }
+}
+\examples{
+data("submission")
+df<-submission \%>\% filter(plot_name \%in\% c("SJER_052"))
+results<-evaluate_field_stems(submission = df,project = F, show=T, summarize = T)
 }
