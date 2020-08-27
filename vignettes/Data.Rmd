@@ -39,7 +39,7 @@ download()
 
 The NEON airborne observatory platform uses fixed-wing aircraft to survey sites during leaf-on-conditions from May-October. Aircraft are flown around 1000m above ground. Data chosen for this benchmark were collected during flights from 2018 and 2019. The current dataset includes at least two 40m x 40m evaluation plots for 22 sites with every visible tree annotated with a bounding box (n = 6,619 trees, n = 202 images).
 
-## Find data
+## Find data within the package
 
 The get_data function allows users to find the sensor or annotation data for a particular plot in the dataset without having to know where the package is installed on a users computer.
 
@@ -50,6 +50,20 @@ rgb_path<-get_data("SJER_052","rgb")
 rgb_path
 lidar_path<-get_data("SJER_052","lidar")
 ```
+## Which data go with which evaluation metrics?
+
+This package provides access to image-annotated crowns, field-annotated crowns and field surveyed tree stems as evaluation data. Not all images have all types of evaluation data. In general, it is recommended to just predict all data in the rgb images and let the functions decide which data to use.
+
+```{r}
+rgb_images<-list_rgb()
+head(rgb_images)
+```
+However, for greater control there are helper functions to see which data fits for which evaluation routine. For example for field crowns:
+
+```{r}
+head(list_field_crowns())
+```
+
 ## Annotations
 
 For each training and evaluation site, we manually hand-annotated images using the program RectLabel. For each visible tree, we created a bounding box (xmin, ymin, xmax, ymax) that covered the tree crown. The coordinates of this box are relative to the top left corner of each image. 
