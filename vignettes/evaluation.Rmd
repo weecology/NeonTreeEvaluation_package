@@ -11,17 +11,51 @@ editor_options:
   chunk_output_type: console
 ---
 
-```{r setup, include = FALSE}
+```{r, echo = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
+  fig.path = "www/README-",
   warning = FALSE,
-  message = FALSE,
-  fig.align = 'center',
-  fig.height = 4,
-  fig.width = 6
+  message = FALSE
 )
 ```
+
+[![Travis-CI Build Status](https://travis-ci.org/Weecology/NeonTreeEvaluation_package.svg?branch=master)](https://travis-ci.org/Weecology/NeonTreeEvaluation_package)
+
+# A multi-sensor benchmark dataset for detecting individual trees in airborne RGB, Hyperspectral and LIDAR point clouds
+
+Maintainer: Ben Weinstein - University of Florida.
+
+This benchmark dataset is the first dataset to have consistent annotation approach across a variety of ecosystems. This repo is the R package for reproducible evaluation against the dataset. There are three types of annotated data. 
+
+## Image-annotated Crowns
+The main data source are image-annotated crowns, in which a single observer annotated visible trees in 200 40m x 40m images from across the United States. 
+
+## Field-annotated Crowns
+The second data source is a small number of field-deliniated crowns from three geographic sites. These crowns were drawn on a tablet while physically standing in the field, thereby reducing the uncertainty in crown segmentation.
+
+## Field Stems
+The third data source is the NEON Woody Vegetation Structure Dataset. Each tree stem is represented by a single point. This data has been filtered to represent overstory trees visible in the remote sensing imagery.
+
+# Installation
+
+```{r,eval=F}
+library(devtools)
+install_github("https://github.com/weecology/NeonTreeEvaluation_package.git")
+```
+
+# Download sensor data
+
+To download evaluation data from the Zenodo archive (1GB), use the download() function to place the data in the correct package location. Download the much larger training data, set training=TRUE. 
+```{r, eval=FALSE}
+library(NeonTreeEvaluation)
+download()
+```
+
+# Getting Started
+
+The package contains two vignettes. The 'Data' vignette describes each datatype and how to interact with it in R. The 'Evaluation' vignette shows how to submit predictions to the benchmark.
 
 # Submission Format
 
@@ -32,83 +66,102 @@ The format of the submission is as follows
 
 Each row contains information for one predicted bounding box.
 
-The plot column should be named the same as the files in the dataset (e.g. SJER_021) without file extensions.
+The plot column should be named the same as the files in the dataset without extension (e.g. SJER_021 not SJER_021.tif) and not the full path to the file on disk. Not all evaluation data are available for all plots. Functions like evaluate_field_crowns and evaluate_image_crowns will look for matching plot name and ignore other plots.Depending on the speed of the algorithm, the simplest thing to do is predict all images in the RGB folder (see list_rgb()) and the package will handle matching images with the correct data to the correct evaluation procedure.
+
+# Example
+
+The package contains a sample submission file. 
 
 ```{r}
+library(raster)
 library(dplyr)
 library(NeonTreeEvaluation)
-library(reshape2)
-library(ggplot2)
-library(lidR)
-
-#Load sample submission
 data("submission")
-```
-
-# Download sensor data and annotations
-
-The evaluation data is archived seperately from the R package. To download the data use download().
-```{r}
-download()
-```
-
-```{r}
 head(submission)
 ```
 
-# Image-annotated Crowns Evaluation
+## Scores for an image-annotated crowns
 
-The main data source are image-annotated crowns, in which a single observer annotated visible trees in 200 40m x 40m images from across the United States. For each plot compute the precision and recall based on intersection-over-union of 0.5 between the ground truth bounding boxes and the predicted boxes. Then loop through all matching plot_names and produce evaluation scores.
-
-```{r,eval=FALSE}
-results<-evaluate_image_crowns(submission = submission,project = T, show=F, summarize = T)
-```
-
-There are several options that need to be considered. see ?evaluate_benchmark. For example, `project_boxes` asks whether the predicted boxes should be projected in universal-transverse mercator projection (UTM) from the image coordinate system. For example,
-
-These boxes are in the image coordinate system. The xmin of the first box is 299.53 (pixels) from the top left. The images are projected and have units in meters. Therefore we need to transform the image coordinates to the geographic coordinates for the boxes to overlap. 
-
-For the sake of computation in this small vignette, let's select just 10 images.
+This submission has bounding boxes in image coordinates. To get the benchmark score image-annotated ground truth data.
 
 ```{r}
-results<-submission %>% filter(plot_name %in% sample(plot_name,15)) %>% evaluate_image_crowns(.,project = T,show=T,summarize = T)
+#Get a three sample plots to run quickly, ignore to run the entire dataset
+df<-submission %>% filter(plot_name %in% c("SJER_052","TEAK_061","TEAK_057"))
+
+#Compute total recall and precision for the overlap data
+results<-evaluate_image_crowns(submission = df,project = T, show=F, summarize = T)
+results
 ```
 
-### Overall Performance
+For a list of NEON site abbreviations: https://www.neonscience.org/field-sites/field-sites-map
 
-What is the average bounding box recall and precision across all images?
+## Scores for an field-collected stems
 
 ```{r}
-results[["overall"]]
+results<-evaluate_field_stems(submission = df,project = F, show=T, summarize = T)
+results
 ```
 
-### By Site
-
-Report the average statistics for each NEON site from across the United States. For a list of site abbreviations and locations see https://www.neonscience.org/field-sites/field-sites-map. 
+## Scores for an field-collected crowns
 
 ```{r}
-df<-melt(results[["by_site"]])
-ggplot(df,aes(y=value,x=Site)) + geom_point()  + facet_wrap(~variable) + coord_flip()
+df <- submission %>% filter(plot_name=="OSBS_95_competition")
+results<-evaluate_field_crowns(submission = df,project = T)
+results
 ```
 
-### Plot Level Crown Counts
+If you would prefer not to clone this repo, a static version of the benchmark is here: https://zenodo.org/record/3723357#.XqT_HlNKjOQ
 
-Number of predicted trees versus number of image-annotated trees for each plot. A good model will fall on the 1:1 line.
+# Sensor Data
+
+## RGB Camera
 
 ```{r}
-df<-results[["plot_level"]]
-ggplot(df,aes(y=submission,x=ground_truth)) + geom_point() + geom_abline(linetype="dashed") + coord_equal() + labs(x="Ground Truth Crowns",y="Predicted Crowns")
+library(raster)
+library(NeonTreeEvaluation)
+
+#Read RGB image as projected raster
+rgb_path<-get_data(plot_name = "SJER_021",type="rgb")
+rgb<-stack(rgb_path)
+
+#Find path and parse
+xmls<-get_data("SJER_021",type="annotations")
+annotations<-xml_parse(xmls)
+#View one plot's annotations as polygons, project into UTM
+#copy project utm zone (epsg), xml has no native projection metadata
+xml_polygons <- boxes_to_spatial_polygons(annotations,rgb)
+
+plotRGB(rgb)
+plot(xml_polygons,add=T)
 ```
 
-# Field-annotated crown evaluation
+## Lidar
 
-The second data source is a small number of field-deliniated crowns from three geographic sites. These crowns were drawn on a tablet while physically standing in the field, thereby reducing the uncertainty in crown segmentation.
-
-# Field stem evaluation
-
-The third data source is the NEON Woody Vegetation Structure Dataset. Each tree stem is represented by a single point. This data has been filtered to represent overstory trees visible in the remote sensing imagery.
+To access the draped lidar hand annotations, use the "label" column. Each tree has a unique integer.
 
 ```{r}
-stem_results<-submission %>% filter(plot_name %in% sample(plot_name,10)) %>% evaluate_field_stems(.,project = T)
-ggplot(stem_results,aes(x=field,y=submission)) + geom_point() + geom_abline() + coord_fixed() + ggtitle("Number of overstory trees") + labs(x="NEON Field Stems",y="Predicted Crowns")
+library(lidR)
+path<-get_data("TEAK_052",type="lidar")
+r<-readLAS(path)
+trees<-lasfilter(r,!label==0)
+plot(trees,color="label")
 ```
+
+We elected to keep all points, regardless of whether they correspond to tree annotation. Non-tree points have value 0. We highly recommend removing these points before predicting the point cloud. Since the annotations were made in the RGB and then draped on to the point cloud, there will naturally be some erroneous points at the borders of trees.
+
+## Hyperspectral 
+
+Hyperspectral surface reflectance (NEON ID: DP1.30006.001) is a 426 band raster covering visible and near infrared spectrum.
+
+```{r}
+path<-get_data("MLBS_071",type="hyperspectral")
+g<-stack(path)
+nlayers(g)
+#Grab a three band combination to view as false color
+f<-g[[c(52,88,117)]]
+plotRGB(f,stretch="lin")
+```
+ 
+# Submission
+
+To submit to this benchmark, please see the evaluation vignette. Please submit a pull request, or contact the maintainer if you use these data in analysis and would like the results to be shown here.
