@@ -10,5 +10,5 @@ expect_true(file.exists(get_data("SJER_052", "annotations")))
 expect_error(get_data("SJER_052", "RGB"))
 
 #Make sure annotations are list
-expect_equal(length(list_annotations()), 212)
+expect_equal(length(list_annotations()), 229)
 

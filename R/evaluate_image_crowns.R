@@ -20,6 +20,11 @@ evaluate_image_crowns <- function(submission, project = FALSE, show = TRUE, summ
   #Check for data
   check_download()
 
+  #check submission
+  if(!"plot_name" %in% colnames(submission)){
+    stop("column named 'plot_name' is required (.e.g 'MLBS_052') to match images to annotation)")
+  }
+
   results <- submission %>%
     group_by(plot_name) %>%
     do(image_crowns(., project_boxes = project, show = show))

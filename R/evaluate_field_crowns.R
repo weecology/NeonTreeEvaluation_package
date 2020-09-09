@@ -15,17 +15,23 @@
 
 evaluate_field_crowns <- function(submission,summarize=T,project = FALSE){
 
+  #check submission
+  if(!"plot_name" %in% colnames(submission)){
+    stop("column named 'plot_name' is required (.e.g 'MLBS_052') to match images to annotation)")
+  }
+
   #Make sure data has been downloaded
   check_download()
 
+
   field_crown_plots <- list_field_crowns()
-  plotnames<-stringr::str_match(field_crown_plots,"RGB/(\\w+).tif")[,2]
-  ssubmission<-submission %>% filter(plot_name %in% plotnames)
+  plotnames<-stringr::str_match(field_crown_plots,"(\\w+).tif")[,2]
+  submission<-submission %>% filter(plot_name %in% plotnames)
 
   if(nrow(submission)==0){
     stop("No plot names matching the field crown data, see list_field_crowns for paths to RGB field crown imagery.")
   }
-  results <- submission%>% group_by(plot_name) %>% do(field_crowns(., project_boxes=project))
+  results <- submission %>% group_by(plot_name) %>% do(field_crowns(., project_boxes=project))
 
   if(summarize){
     return(summary_statistics(results,calc_plot_level=T))

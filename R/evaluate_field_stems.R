@@ -26,6 +26,11 @@
 #' @export
 
 evaluate_field_stems<-function(submission,project=TRUE, show=T, summarize=T){
+
+  if(!"plot_name" %in% colnames(submission)){
+    stop("column named 'plot_name' is required (.e.g 'MLBS_052') to match images to annotation)")
+  }
+
   #Check for data
   check_download()
   field = clean_field_data(field)
@@ -102,21 +107,25 @@ process_plot<-function(x, show){
 
   #Min height based on the predictions
   #field_points<-field_points[field_points$height > quantile(spatial_boxes$height,0.01),]
+  unique_locations<-field_points %>%
+    distinct(individualID,.keep_all = T)
+
+  joined <- sf::st_join(unique_locations, spatial_boxes)
+  joined <- joined %>% filter(!is.na(crown_id)) %>%
+    group_by(crown_id) %>% slice(1)
+
+  missing <- unique_locations %>% filter(!uid %in% joined$uid)
 
   if(show){
     raster::plotRGB(r)
     plot(sf::st_geometry(spatial_boxes),add=T)
-    plot(sf::st_geometry(field_points),add=T,col="red",pch=20)
+    plot(sf::st_geometry(joined),add=T,col="red",pch=20)
 
     #Missing
-    missing<-field_points[!lengths(sf::st_intersects(field_points, spatial_boxes)), ]
     plot(sf::st_geometry(missing),add=T,col="blue",pch=20)
   }
 
   #Stem recall rate
-  unique_locations<-field_points %>%
-    distinct(individualID,.keep_all = T)
-
   tree_in_prediction <-unique_locations  %>%
     sf::st_intersects(x=.,y=spatial_boxes)
 

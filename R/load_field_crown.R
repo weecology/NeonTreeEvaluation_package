@@ -20,6 +20,7 @@ load_field_crown <- function(plot_name, show = TRUE) {
   crowns <- crowns %>% filter(plotID == plot_name)
   crowns <- sf:::as_Spatial(crowns)
   if (show) {
+    rgb <- raster::stack(path_to_rgb)
     raster::plotRGB(rgb)
     raster::plot(crowns, add = TRUE)
   }

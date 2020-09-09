@@ -107,7 +107,7 @@ results
 ## Scores for an field-collected crowns
 
 ```{r}
-df <- submission %>% filter(plot_name=="OSBS_95_competition")
+df <- submission %>% filter(plot_name=="MLBS_53_competition")
 results<-evaluate_field_crowns(submission = df,project = T)
 results
 ```
