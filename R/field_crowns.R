@@ -13,6 +13,7 @@
 field_crowns <- function(submission, show = TRUE, project_boxes = TRUE) {
   # find ground truth file
   plot_name <- unique(submission$plot_name)
+  print(plot_name)
 
   if (!length(plot_name) == 1) {
     stop(paste("There are", length(plot_name), "plot names. Please submit a single plot of annotations to this function, to run all plots in a submission see evaluate_field_crowns."))
@@ -36,6 +37,6 @@ field_crowns <- function(submission, show = TRUE, project_boxes = TRUE) {
   }
 
   # Create spatial polygons objects
-  result <- compute_precision_recall(ground_truth, predictions, summarize = FALSE)
+  result <- compute_precision_recall(ground_truth, predictions, summarize = FALSE,threshold = 0.4)
   return(result)
 }

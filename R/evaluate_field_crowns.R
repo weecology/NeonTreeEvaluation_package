@@ -23,7 +23,6 @@ evaluate_field_crowns <- function(submission,summarize=T,project = FALSE){
   #Make sure data has been downloaded
   check_download()
 
-
   field_crown_plots <- list_field_crowns()
   plotnames<-stringr::str_match(field_crown_plots,"(\\w+).tif")[,2]
   submission<-submission %>% filter(plot_name %in% plotnames)

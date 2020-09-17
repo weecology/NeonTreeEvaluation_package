@@ -118,11 +118,11 @@ process_plot<-function(x, show){
 
   if(show){
     raster::plotRGB(r)
-    plot(sf::st_geometry(spatial_boxes),add=T)
-    plot(sf::st_geometry(joined),add=T,col="red",pch=20)
+    plot(sf::st_geometry(spatial_boxes),add=T, border="red", lwd=3)
+    plot(sf::st_geometry(joined),add=T,col="yellow",pch=20, cex=2)
 
     #Missing
-    plot(sf::st_geometry(missing),add=T,col="blue",pch=20)
+    plot(sf::st_geometry(missing),add=T,col="blue",pch=20, cex=2)
   }
 
   #Stem recall rate

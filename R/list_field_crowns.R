@@ -2,8 +2,11 @@
 #' @rdname list_field_crowns
 #' @export
 list_field_crowns<-function(){
-  plot_names<-c(unique(MLBS$plotID),unique(OSBS$plotID))
-  plot_names<-stringr::str_replace(plot_names,".tif","_competition")
+  plot_names<-unique(crowns$plotID)
+  plot_names<-paste(plot_names,"_competition",sep="")
   rgb_images<-get_data(plot_names,"rgb")
+
+  #Ensure all exists
+  rgb_images<-rgb_images[sapply(rgb_images, file.exists)]
   return(rgb_images)
 }

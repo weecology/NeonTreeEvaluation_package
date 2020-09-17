@@ -8,15 +8,11 @@
 #'
 load_field_crown <- function(plot_name, show = TRUE) {
 
-  # Load shp of field annotations
-  siteID <- stringr::str_match(plot_name, "(\\w+)_\\d+_")[, 2]
-  crowns <- eval(as.symbol(siteID))
   # load rgb
   path_to_rgb <- get_data(plot_name,"rgb")
 
   #filter polygons
   plot_name<-stringr::str_remove(plot_name,"_competition")
-  plot_name<-paste(plot_name,".tif",sep="")
   crowns <- crowns %>% filter(plotID == plot_name)
   crowns <- sf:::as_Spatial(crowns)
   if (show) {

@@ -11,8 +11,6 @@
 get_data <- function(plot_name, type) {
 
   #Check if data has been downloaded
-  check_download()
-
   if (!type %in% c("rgb", "lidar","chm", "hyperspectral", "annotations")) {
     stop(paste("No type option", type, "Available type arguments:'rgb','lidar','hyperspectral','annotations'"))
   }
