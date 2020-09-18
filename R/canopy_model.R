@@ -2,6 +2,7 @@
 #'
 #' \code{canopy_model} returns a canopy height raster from a lidR point cloud
 #' @param las A lidar cloud read in by lidR package
+#' @param res Cell resolution in meters
 #' @return A raster with the canopy height estimated for each grid cell.
 #' @examples
 #' path <- get_data("SJER_052", "lidar")

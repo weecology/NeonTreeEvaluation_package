@@ -8,6 +8,8 @@ canopy_model(las, res = 0.5)
 }
 \arguments{
 \item{las}{A lidar cloud read in by lidR package}
+
+\item{res}{Cell resolution in meters}
 }
 \value{
 A raster with the canopy height estimated for each grid cell.

@@ -10,6 +10,8 @@ evaluate_image_crowns(submission, project = FALSE, show = TRUE,
 \arguments{
 \item{submission}{A five column dataframe in the order plot_name, xmin, xmax, ymin, ymax. Each row is a predicted bounding box.}
 
+\item{project}{Whether to submission coordinates need to be projected in UTM geographic coordinates}
+
 \item{show}{Logical. Plot the overlayed annotations for each plot?}
 
 \item{summarize}{Whether to compute summary statistics (TRUE) or return raw matching data (False), see \code{summary_statistics}}

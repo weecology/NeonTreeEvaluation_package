@@ -15,6 +15,8 @@
 #' The plot column should be named the same as the files in the dataset (e.g. SJER_021), not the path to the file.
 #' Not all evaluation data are available for all plots. This function will look for matching plot name and ignore other plots.
 #' @param summarize logical If True, report the root mean squared error (RMSE) between the number of field crowns and predicted crowns. If false, return the list of crowns per plot.
+#' @param project Whether to project the supplied bounding box coordinates from image coordinates into geographic coordinates (utm QGS84). This is needed for computing recall scores.
+#' @param show Whether to show figures during evaluation.
 #' @return If summarize is True, a set of summary measures from \code{summary_statistics} for the overall score, the entire site score, and the per-plot score.
 #' If False, a dataframe with the intersection-over-union scores for each prediction.
 #' @examples

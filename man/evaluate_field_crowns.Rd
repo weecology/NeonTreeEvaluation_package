@@ -10,6 +10,10 @@ evaluate_field_crowns(submission, summarize = T, project = FALSE)
 \item{submission}{The format of the submission is a csv with 5 columns: plot_name, xmin, ymin, xmax, ymax  follows
 Each row contains information for one predicted bounding box.
 The plot column should be named the same as the files in the dataset (e.g. SJER_021), not the path to the file.}
+
+\item{summarize}{Compute summary statistics for crown recall}
+
+\item{project}{Whether to project the supplied bounding box coordinates from image coordinates into geographic coordinates (utm QGS84). This is needed for computing recall scores.}
 }
 \value{
 If summarize is True, a set of summary measures from \code{summary_statistics} for the overall score, the entire site score, and the per-plot score.

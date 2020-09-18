@@ -11,7 +11,7 @@ calc_jaccard(assignment, ground_truth, predictions)
 
 \item{ground_truth}{A SpatialPolygonDataFrame of ground truth polygons}
 
-\item{prediction}{A SpatialPolygonDataFrame of ground truth polygons}
+\item{predictions}{A SpatialPolygonDataFrame of ground truth polygons}
 }
 \value{
 dataframe of the jaccard overlap among polygon pairs

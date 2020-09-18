@@ -9,7 +9,7 @@ assign_trees(ground_truth, predictions)
 \arguments{
 \item{ground_truth}{A ground truth polygon in SpatialPolygonsDataFrame}
 
-\item{prediction}{prediction polygons in SpatialPolygonsDataFrame}
+\item{predictions}{prediction polygons in SpatialPolygonsDataFrame}
 }
 \value{
 A data frame with the crown ID matched to the prediction ID.

@@ -5,10 +5,12 @@
 #' @param raster_object A RGB raster to overlay annotations
 #' @param project_boxes inherited from \code{\link{evaluate_plot}}, whether boxes need to be projected to utm from image coordinates (origin 0,0 top left)
 #' @examples
+#' \dontrun{
 #' xml<-get_data("SJER_052","annotations")
 #' annotations<-xml_parse(xml)
 #' ground_truth <- boxes_to_spatial_polygons(annotations,img)
 #' plot(ground_truth)
+#' }
 #' @return SpatialPolygons object of annotations
 #' @export
 
