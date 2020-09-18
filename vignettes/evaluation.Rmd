@@ -29,16 +29,7 @@ knitr::opts_chunk$set(
 
 Maintainer: Ben Weinstein - University of Florida.
 
-This benchmark dataset contains a consistent annotation approach across a variety of ecosystems. There are three types of annotated data: 
-
-## Image-annotated Crowns
-The main data source are image-annotated crowns, in which a single observer annotated visible trees in 200 40m x 40m images from across the United States. 
-
-## Field-annotated Crowns
-The second data source is a small number of field-deliniated crowns from three geographic sites. These crowns were drawn on a tablet while physically standing in the field, thereby reducing the uncertainty in crown segmentation.
-
-## Field Stems
-The third data source is the NEON Woody Vegetation Structure Dataset. Each tree stem is represented by a single point. This data has been filtered to represent overstory trees visible in the remote sensing imagery.
+This benchmark dataset contains a consistent annotation approach across a variety of ecosystems.
 
 # Installation
 
@@ -85,7 +76,7 @@ head(submission)
 
 ## Scores for an image-annotated crowns
 
-This submission has bounding boxes in image coordinates. To get the benchmark score image-annotated ground truth data.
+The main data source are image-annotated crowns, in which a single observer annotated visible trees in 200 40m x 40m images from across the United States. This submission has bounding boxes in image coordinates. To get the benchmark score image-annotated ground truth data.
 
 ```{r}
 #Get a three sample plots to run quickly, ignore to run the entire dataset
@@ -98,20 +89,29 @@ results
 
 This returns the proportion of the recall and precision for boxes with intersection-over-union scores of greater than 0.4. It also returns the count error, defined as the difference between total number of trees in a plot and the predicted number of trees in a plot, divided by the total. 
 
-## Scores for an field-collected stems
-
-```{r}
-results<-evaluate_field_stems(submission = df,project = F, show=T, summarize = T)
-results
-```
-
 ## Scores for an field-collected crowns
+
+The second data source is a small number of field-deliniated crowns from three geographic sites. These crowns were drawn on a tablet while physically standing in the field, thereby reducing the uncertainty in crown segmentation.
 
 ```{r}
 df <- submission %>% filter(plot_name=="MLBS_12_competition")
 results<-evaluate_field_crowns(submission = df,project = T)
 results
 ```
+
+The field-annotated crowns are spread out over the site. There are often only one or two in a single image. This is why algorithms are only scored on recall, the proportion of crowns correctly predicted, and not precision, since there are hundreds of predictions, most of them valid, that do not match any ground truth data.
+
+## Scores for an field-collected stems
+
+The third data source is the NEON Woody Vegetation Structure Dataset. Each tree stem is represented by a single point. This data has been filtered to represent overstory trees visible in the remote sensing imagery.
+
+```{r}
+df<-submission %>% filter(plot_name %in% c("JERC_049"))
+results<-evaluate_field_stems(submission = df,project = T, show=T, summarize = T)
+results
+```
+
+Predicted crowns in red are compared to field stems marking individual trees. Matching stems are in yellow, missing stems are in blue. Recall is the proportion of field collected stems correctly predicted. Not all trees in an image are field mapped.
 
 If you would prefer not to clone this repo, a static version of the benchmark is here: https://zenodo.org/record/3723357#.XqT_HlNKjOQ
 

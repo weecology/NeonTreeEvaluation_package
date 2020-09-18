@@ -59,7 +59,6 @@ count_plot<-function(results){
     mutate(error=abs(total_prediction-total_ground)) %>%
     ggplot(.,aes(x=Site,y=error)) + geom_boxplot() + labs(y="|Predicted - Observed Tree Count|") +
     coord_flip()
-  print(p)
   return(p)
 }
 

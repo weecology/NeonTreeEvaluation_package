@@ -13,6 +13,7 @@ Suggests: knitr,
     rmarkdown,
     testthat
 VignetteBuilder: knitr
+Depends: sf
 Imports: ggplot2, reshape2, lidR,
     raster,
     sp,
@@ -20,5 +21,4 @@ Imports: ggplot2, reshape2, lidR,
     xml2,
     clue,
     httr,
-    sf,
     stringr
