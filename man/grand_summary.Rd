@@ -4,7 +4,7 @@
 \alias{grand_summary}
 \title{Summary statistics for evaluated crowns}
 \usage{
-grand_summary(results, threshold = 0.5)
+grand_summary(results, threshold = 0.4)
 }
 \arguments{
 \item{results}{A data frame of matched predictions and ground truth returned from \code{evaluate_plot}}

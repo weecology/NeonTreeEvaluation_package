@@ -4,5 +4,5 @@
 \alias{site_summary}
 \title{Site summary table for image-evaluated crowns}
 \usage{
-site_summary(results, threshold = 0.5)
+site_summary(results, threshold = 0.4)
 }

@@ -30,7 +30,7 @@ evaluate_image_crowns <- function(submission, project = FALSE, show = TRUE, summ
     do(image_crowns(., project_boxes = project, show = show))
 
   if(summarize){
-    return(summary_statistics(results))
+    return(summary_statistics(results,calc_count_error = T))
   } else{
     return(results)
   }

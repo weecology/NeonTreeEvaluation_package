@@ -29,7 +29,7 @@ knitr::opts_chunk$set(
 
 Maintainer: Ben Weinstein - University of Florida.
 
-This benchmark dataset is the first dataset to have consistent annotation approach across a variety of ecosystems. This repo is the R package for reproducible evaluation against the dataset. There are three types of annotated data. 
+This benchmark dataset contains a consistent annotation approach across a variety of ecosystems. There are three types of annotated data: 
 
 ## Image-annotated Crowns
 The main data source are image-annotated crowns, in which a single observer annotated visible trees in 200 40m x 40m images from across the United States. 
@@ -70,6 +70,8 @@ Each row contains information for one predicted bounding box.
 
 The plot column should be named the same as the files in the dataset without extension (e.g. SJER_021 not SJER_021.tif) and not the full path to the file on disk. Not all evaluation data are available for all plots. Functions like evaluate_field_crowns and evaluate_image_crowns will look for matching plot name and ignore other plots.Depending on the speed of the algorithm, the simplest thing to do is predict all images in the RGB folder (see list_rgb()) and the package will handle matching images with the correct data to the correct evaluation procedure.
 
+For a list of NEON site abbreviations: https://www.neonscience.org/field-sites/field-sites-map
+
 # Example
 
 The package contains a sample submission file. 
@@ -78,7 +80,6 @@ The package contains a sample submission file.
 library(raster)
 library(dplyr)
 library(NeonTreeEvaluation)
-data("submission")
 head(submission)
 ```
 
@@ -95,7 +96,7 @@ results<-evaluate_image_crowns(submission = df,project = T, show=F, summarize = 
 results
 ```
 
-For a list of NEON site abbreviations: https://www.neonscience.org/field-sites/field-sites-map
+This returns the proportion of the recall and precision for boxes with intersection-over-union scores of greater than 0.4. It also returns the count error, defined as the difference between total number of trees in a plot and the predicted number of trees in a plot, divided by the total. 
 
 ## Scores for an field-collected stems
 
@@ -107,7 +108,7 @@ results
 ## Scores for an field-collected crowns
 
 ```{r}
-df <- submission %>% filter(plot_name=="MLBS_53_competition")
+df <- submission %>% filter(plot_name=="MLBS_12_competition")
 results<-evaluate_field_crowns(submission = df,project = T)
 results
 ```

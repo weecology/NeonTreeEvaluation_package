@@ -7,7 +7,7 @@
 #' @return The recall and precision scores for the plot.
 #' @export
 #'
-compute_precision_recall <- function(ground_truth, predictions, threshold = 0.5, summarize = TRUE) {
+compute_precision_recall <- function(ground_truth, predictions, threshold = 0.4, summarize = TRUE) {
 
   # check for
   if (!"crown_id" %in% colnames(predictions@data)) {

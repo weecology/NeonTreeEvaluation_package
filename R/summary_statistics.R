@@ -8,7 +8,7 @@
 #' @return A names list of overall mean precision and recall, by site, and plot level summary
 #' @export
 
-grand_summary <-function(results, threshold = 0.5){
+grand_summary <-function(results, threshold = 0.4){
   # Summary precision and recalls across all images
   true_positives <- results$IoU > threshold
 
@@ -24,7 +24,7 @@ grand_summary <-function(results, threshold = 0.5){
 #' @title Site summary table for image-evaluated crowns
 #' @rdname site_summary
 #' @export
-site_summary<-function(results, threshold = 0.5){
+site_summary<-function(results, threshold = 0.4){
   # Infer site
   results <- results %>% mutate(Site = stringr::str_match(plot_name, "(\\w+)_")[, 2])
 
@@ -46,7 +46,24 @@ plot_level<-function(results,threshold){
   return(r)
   }
 
-summary_statistics <- function(results, threshold = 0.5, calc_plot_level=T) {
+count_plot<-function(results){
+  # Infer site
+  results <- results %>% mutate(Site = stringr::str_match(plot_name, "(\\w+)_")[, 2])
+
+  # Two awkward sites do to naming structure.
+  results[stringr::str_detect(results$plot_name, "2018_SJER"), "Site"] <- "SJER"
+  results[stringr::str_detect(results$plot_name, "2018_TEAK"), "Site"] <- "TEAK"
+
+  p<-results %>% group_by(plot_name) %>%
+    slice(1) %>%
+    mutate(error=abs(total_prediction-total_ground)) %>%
+    ggplot(.,aes(x=Site,y=error)) + geom_boxplot() + labs(y="|Predicted - Observed Tree Count|") +
+    coord_flip()
+  print(p)
+  return(p)
+}
+
+summary_statistics <- function(results, threshold = 0.4, calc_plot_level=T, calc_count_error=F) {
   df<-list()
 
   df[["overall"]]<-grand_summary(results, threshold)
@@ -54,6 +71,9 @@ summary_statistics <- function(results, threshold = 0.5, calc_plot_level=T) {
 
   if(calc_plot_level){
     df[["plot_level"]]<-plot_level(results,threshold)
+  }
+  if(calc_count_error){
+    df[["count_error"]] <- count_plot(results)
   }
 
   return(df)

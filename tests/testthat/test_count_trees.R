@@ -3,7 +3,6 @@ library(dplyr)
 library(raster)
 context("Projected polygons and field stems produces predictions")
 test_that("count_trees produces valid RS predictions", {
-  data("submission")
   field<-field %>% group_by(individualID) %>% arrange(desc(eventID)) %>% slice(1) %>% filter(plotID=="TEAK_057")
   plots_to_evaluate<-unique(as.character(submission$plot_name[submission$plot_name %in% field$plotID]))
   predictions = submission %>% filter(plot_name %in% plots_to_evaluate)

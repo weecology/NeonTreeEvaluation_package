@@ -33,7 +33,7 @@ evaluate_field_crowns <- function(submission,summarize=T,project = FALSE){
   results <- submission %>% group_by(plot_name) %>% do(field_crowns(., project_boxes=project))
 
   if(summarize){
-    return(summary_statistics(results,calc_plot_level=T))
+    return(summary_statistics(results,calc_count_error=F))
   } else{
     return(results)
   }

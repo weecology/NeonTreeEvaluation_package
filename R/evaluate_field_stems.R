@@ -147,7 +147,7 @@ process_plot<-function(x, show){
 
   if(nrow(matched_df)>0){
     siteID=unique(matched_df$siteID)
-    result<-data.frame(siteID=siteID,plot_name=x,recall=single_recall)
+    result<-data.frame(siteID=siteID,plot_name=x,recall=single_recall, n=nrow(unique_locations))
     return(result)
   } else{
     warning(paste("No matching prediction between  data found made for plot",x))

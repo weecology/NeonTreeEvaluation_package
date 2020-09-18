@@ -4,7 +4,7 @@
 \alias{compute_precision_recall}
 \title{Compute precision and recall statistics between predicted tree boxes and ground truth data}
 \usage{
-compute_precision_recall(ground_truth, predictions, threshold = 0.5,
+compute_precision_recall(ground_truth, predictions, threshold = 0.4,
   summarize = TRUE)
 }
 \arguments{
