@@ -23,8 +23,6 @@ knitr::opts_chunk$set(
 )
 ```
 
-[![Travis-CI Build Status](https://travis-ci.org/Weecology/NeonTreeEvaluation_package.svg?branch=master)](https://travis-ci.org/Weecology/NeonTreeEvaluation_package)
-
 # A multi-sensor benchmark dataset for detecting individual trees in airborne RGB, Hyperspectral and LIDAR point clouds
 
 Maintainer: Ben Weinstein - University of Florida.
@@ -35,7 +33,7 @@ This benchmark dataset contains a consistent annotation approach across a variet
 
 ```{r,eval=F}
 library(devtools)
-install_github("https://github.com/weecology/NeonTreeEvaluation_package.git")
+install_github("weecology/NeonTreeEvaluation_package")
 ```
 
 # Download sensor data

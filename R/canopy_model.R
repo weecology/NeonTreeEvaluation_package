@@ -5,6 +5,7 @@
 #' @param res Cell resolution in meters
 #' @return A raster with the canopy height estimated for each grid cell.
 #' @examples
+#' library(lidR)
 #' path <- get_data("SJER_052", "lidar")
 #' las<-readLAS(path)
 #' plot(canopy_model(las))
