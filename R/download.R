@@ -58,9 +58,11 @@ unzip_download <- function(destination){
   #get file names
   unzip_folder<-unzip(destination, list = TRUE)$Name[1]
   unzipped_folder<-file.path(base_dir,unzip_folder)
-
   unzip(destination,exdir=base_dir)
   final_name<-file.path(base_dir,"NeonTreeEvaluation/")
+
+  #Force delete of any previous folder
+  unlink(final_name,recursive = T)
   file.rename(unzipped_folder,final_name)
 
   #Remove zipped files
