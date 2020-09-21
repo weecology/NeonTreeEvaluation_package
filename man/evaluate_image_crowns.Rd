@@ -5,7 +5,7 @@
 \title{Compute evaluation metrics for the hand-annotated images}
 \usage{
 evaluate_image_crowns(submission, project = FALSE, show = TRUE,
-  summarize = F)
+  summarize = FALSE)
 }
 \arguments{
 \item{submission}{A five column dataframe in the order plot_name, xmin, xmax, ymin, ymax. Each row is a predicted bounding box.}
@@ -30,6 +30,6 @@ This function is a wrapper for \code{evaluate_plot}. It first looks which plot_n
 }
 \examples{
 #' data("submission")
-df<-submission \%>\% filter(plot_name \%in\% c("SJER_052","TEAK_061","TEAK_057"))
-results<-evaluate_image_crowns(submission = df,project = F, show=T, summarize = T)
+df<-submission \%>\% dplyr::filter(plot_name \%in\% c("SJER_052","TEAK_061","TEAK_057"))
+results<-evaluate_image_crowns(submission = df,project = FALSE, show=TRUE, summarize = TRUE)
 }

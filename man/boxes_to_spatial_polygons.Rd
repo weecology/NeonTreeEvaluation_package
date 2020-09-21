@@ -12,7 +12,7 @@ boxes_to_spatial_polygons(boxes, raster_object, project_boxes = TRUE)
 
 \item{raster_object}{A RGB raster to overlay annotations}
 
-\item{project_boxes}{inherited from \code{\link{evaluate_plot}}, whether boxes need to be projected to utm from image coordinates (origin 0,0 top left)}
+\item{project_boxes}{Whether boxes need to be projected to utm from image coordinates (origin 0,0 top left)}
 }
 \value{
 SpatialPolygons object of annotations
@@ -22,9 +22,12 @@ Convert xml crown annotations into projected bounding boxes.
 In order to plot the annotations, they need to be projected and overlayed on RGB boxes
 }
 \examples{
+\donttest{
 xml<-get_data("SJER_052","annotations")
 annotations<-xml_parse(xml)
-rgb<-get_data("SJER_052","rgb")
+rgb_path<-get_data("SJER_052","rgb")
+rgb<-raster::stack(rgb_path)
 ground_truth <- boxes_to_spatial_polygons(annotations,rgb)
 plot(ground_truth)
+}s
 }

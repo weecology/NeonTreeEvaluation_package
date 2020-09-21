@@ -2,17 +2,16 @@
 % Please edit documentation in R/download.R
 \name{download}
 \alias{download}
-\alias{unzip_download}
 \title{Download sensor and annotation data for the NeonTreeEvaluation Benchmark}
 \usage{
 download(training = FALSE, savedir = NULL, force = F)
-
-unzip_download(destination)
 }
 \arguments{
 \item{training}{Download training data? See details}
 
 \item{savedir}{Optional directory to save data in a new location. Defaults to package contents. Warning: Functions are designed for this location, only use this argument if you do not intend to run evaluation data.}
+
+\item{force}{Whether to overwrite exising data}
 }
 \description{
 The NeonTreeEvaluation benchmark consists of two parts, 1) package code to run evaluation workflows, 2) evaluation data. Evaluation data is ~ 2GB in size and will be downloaded to package contents. See

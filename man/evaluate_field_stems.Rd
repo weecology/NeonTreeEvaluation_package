@@ -27,17 +27,14 @@ If False, a dataframe with the intersection-over-union scores for each predictio
 }
 \details{
 The following filters were applied to the raw NEON field data (ID) after download. An overstory reference tree must have:
-\itemize{
-\item Valid spatial coordinates
-\item A unique height measurement per sampling period. Species double recorded but with different heights were discarded
-\item Sampled in more than one year to verify height measurement
-\item Changes in between year field heights of less than 6m
-\item A minimum height of 3m to match the threshold in the remote sensing workflow.
-\item Be at least within 5m of the canopy as measured by the LiDAR height model extracted at the stem location. The was used to prevent matching with understory trees in the event that overstory trees were eliminated due to failing in one of the above conditions, or not sampled by NEON.
-}
+* Valid spatial coordinates
+* A unique height measurement per sampling period. Species double recorded but with different heights were discarded
+* Sampled in more than one year to verify height measurement
+* Changes in between year field heights of less than 6m
+* A minimum height of 3m to match the threshold in the remote sensing workflow.
+* Be at least within 5m of the canopy as measured by the LiDAR height model extracted at the stem location. The was used to prevent matching with understory trees in the event that overstory trees were eliminated due to failing in one of the above conditions, or not sampled by NEON.
 }
 \examples{
-data("submission")
-df<-submission \%>\% filter(plot_name \%in\% c("SJER_052"))
-results<-evaluate_field_stems(submission = df,project = F, show=T, summarize = T)
+df<-submission \%>\% dplyr::filter(plot_name \%in\% c("SJER_052"))
+results<-evaluate_field_stems(submission = df,project = FALSE, show=TRUE, summarize = TRUE)
 }

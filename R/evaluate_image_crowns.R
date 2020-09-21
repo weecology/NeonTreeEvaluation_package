@@ -12,12 +12,12 @@
 #' If False, a dataframe with the intersection-over-union scores for each prediction.
 #' @examples
 #' #' data("submission")
-#' df<-submission %>% filter(plot_name %in% c("SJER_052","TEAK_061","TEAK_057"))
-#' results<-evaluate_image_crowns(submission = df,project = F, show=T, summarize = T)
+#' df<-submission %>% dplyr::filter(plot_name %in% c("SJER_052","TEAK_061","TEAK_057"))
+#' results<-evaluate_image_crowns(submission = df,project = FALSE, show=TRUE, summarize = TRUE)
 #' @export
 #'
 
-evaluate_image_crowns <- function(submission, project = FALSE, show = TRUE, summarize=F) {
+evaluate_image_crowns <- function(submission, project = FALSE, show = TRUE, summarize=FALSE) {
   #Check for data
   check_download()
 
@@ -31,7 +31,7 @@ evaluate_image_crowns <- function(submission, project = FALSE, show = TRUE, summ
     do(image_crowns(., project_boxes = project, show = show))
 
   if(summarize){
-    return(summary_statistics(results,calc_count_error = T))
+    return(summary_statistics(results,calc_count_error = TRUE))
   } else{
     return(results)
   }

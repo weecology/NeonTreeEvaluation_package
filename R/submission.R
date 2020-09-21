@@ -1,5 +1,17 @@
-#' Example NeonTreeEvaluation submission
-#'@description
+#' @title Example NeonTreeEvaluation submission
+#' @description
 #' This submission was generated using the DeepForest python package https://deepforest.readthedocs.io/.
 #' @details
 #' To reproduce this submission see https://github.com/weecology/NEON_crown_maps/blob/master/create_submission.py
+#' The bounding box coordinates in this submission are in the image-coordinate system and need project=T to be converted into geographic coordinates (utm)
+#' The score and label field are not required and are not currently used in this iteration of the benchmark.
+#' \itemize{
+#'   \item xmin left bounding box coordinate
+#'   \item ymin bottom bounding box coordinate
+#'   \item xmax right bounding box coordinate
+#'   \item ymax top bounding box coorinate
+#'   \item score confidence score given by the deep learning algorithm
+#'   \item label Currently all "tree" category
+#'   \item plot_name Name of the NEON plot, this is used to connect the prediction to the sensor data
+#' }
+"submission"

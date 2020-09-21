@@ -1,6 +1,5 @@
 #' Project boxes from image coordinates into utm
 #' In order to plot the annotations, they need to be projected and overlayed on RGB boxes
-#'
 #' @param boxes a data frame with xmin, xmax, ymin, ymax columns. Each row is a tree bounding box
 #' @param raster_object a rgb raster::stack to overlay annotations. This needs a utm CRS
 #' @return SpatialPolygons object of annotations

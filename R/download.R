@@ -1,5 +1,6 @@
 #' @title Download sensor and annotation data for the NeonTreeEvaluation Benchmark
 #' @param training Download training data? See details
+#' @param force Whether to overwrite exising data
 #' @param savedir Optional directory to save data in a new location. Defaults to package contents. Warning: Functions are designed for this location, only use this argument if you do not intend to run evaluation data.
 #' @author The core zenodo download function was written by Juniper Simonis in Weecology/portalcasting (Simonis and White 2019). Adapted by Ben Weinstein.
 #' @references
@@ -15,7 +16,7 @@
 #'  list_rgb()
 #'  }
 #' @export
-download<-function(training=FALSE, savedir=NULL,force=F){
+download<-function(training=FALSE,savedir=NULL,force=F){
 
   if(is.null(savedir)){
     destination<-paste(system.file(package = "NeonTreeEvaluation"),"/extdata/NeonTreeEvaluation.zip",sep="")
@@ -48,10 +49,6 @@ download<-function(training=FALSE, savedir=NULL,force=F){
   }
 }
 
-#' @rdname download
-#'
-#' @export
-#'
 unzip_download <- function(destination){
   #location of unzip
   base_dir<-dirname(destination)

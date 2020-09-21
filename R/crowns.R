@@ -1,4 +1,4 @@
-#' Field-annotated Crowns for
+#' @title Field-annotated Crowns
 #' @description
 #' These are ‘field-annotated crowns’ in which an observer annotates the remote-sensing image on a tablet while standing in the field.
 #' From Ordway Swisher Biological Station, Florida and Mountain Lake Biological Station
@@ -12,3 +12,4 @@
 #'   \item geometry sf geometry polygon
 #' }
 #'
+"crowns"

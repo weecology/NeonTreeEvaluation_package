@@ -8,6 +8,8 @@ PR(results, threshold)
 }
 \arguments{
 \item{results}{A dataframe returned from \code{evaluate_plot}}
+
+\item{threshold}{intersection-over-union threshold (0-1)}
 }
 \value{
 Summary recall and precision

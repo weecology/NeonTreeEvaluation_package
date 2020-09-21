@@ -20,11 +20,9 @@
 #' @return If summarize is True, a set of summary measures from \code{summary_statistics} for the overall score, the entire site score, and the per-plot score.
 #' If False, a dataframe with the intersection-over-union scores for each prediction.
 #' @examples
-#' data("submission")
-#' df<-submission %>% filter(plot_name %in% c("SJER_052"))
-#' results<-evaluate_field_stems(submission = df,project = F, show=T, summarize = T)
+#' df<-submission %>% dplyr::filter(plot_name %in% c("SJER_052"))
+#' results<-evaluate_field_stems(submission = df,project = FALSE, show=TRUE, summarize = TRUE)
 #' @import dplyr ggplot2
-#' @md
 #' @export
 
 evaluate_field_stems<-function(submission,project=TRUE, show=T, summarize=T){

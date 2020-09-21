@@ -11,12 +11,11 @@
 #' If False, a dataframe with the intersection-over-union scores for each prediction.
 #' @examples
 #' data("submission")
-#' df <- submission %>% filter(plot_name=="OSBS_95_competition")
-#' results <- evaluate_field_crowns(submission = df,project = F, show=T, summarize = T)
+#' df <- submission %>% dplyr::filter(plot_name=="OSBS_95_competition")
+#' results <- evaluate_field_crowns(submission = df,project = FALSE, summarize = TRUE)
 #' @export
 
-evaluate_field_crowns <- function(submission,summarize=T,project = FALSE){
-
+evaluate_field_crowns <- function(submission,summarize=TRUE,show=TRUE,project = FALSE){
   #check submission
   if(!"plot_name" %in% colnames(submission)){
     stop("column named 'plot_name' is required (.e.g 'MLBS_052') to match images to annotation)")
@@ -27,15 +26,15 @@ evaluate_field_crowns <- function(submission,summarize=T,project = FALSE){
 
   field_crown_plots <- list_field_crowns()
   plotnames<-stringr::str_match(field_crown_plots,"(\\w+).tif")[,2]
-  submission<-submission %>% filter(plot_name %in% plotnames)
+  submission<-submission %>% dplyr::filter(plot_name %in% plotnames)
 
   if(nrow(submission)==0){
     stop("No plot names matching the field crown data, see list_field_crowns for paths to RGB field crown imagery.")
   }
-  results <- submission %>% group_by(plot_name) %>% do(field_crowns(., project_boxes=project))
+  results <- submission %>% group_by(plot_name) %>% do(field_crowns(., project_boxes=project, show=show))
 
   if(summarize){
-    return(summary_statistics(results,calc_count_error=F))
+    return(summary_statistics(results,calc_count_error=FALSE))
   } else{
     return(results)
   }

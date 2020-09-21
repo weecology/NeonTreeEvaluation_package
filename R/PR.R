@@ -2,6 +2,7 @@
 #'
 #' \code{PR} is an internal function not called by the user for summary statistics
 #' @param results A dataframe returned from \code{evaluate_plot}
+#' @param threshold intersection-over-union threshold (0-1)
 #' @return Summary recall and precision
 
 PR <- function(results, threshold) {
