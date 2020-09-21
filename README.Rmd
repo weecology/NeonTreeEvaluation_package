@@ -1,7 +1,5 @@
 ---
-output:
-  md_document:
-    variant: markdown_github
+output: html_document
 editor_options:
   chunk_output_type: console
 ---
@@ -22,7 +20,7 @@ knitr::opts_chunk$set(
 
 Maintainer: Ben Weinstein - University of Florida.
 
-This benchmark dataset is the first dataset to have consistent annotation approach across a variety of ecosystems. This repo is the R package for reproducible evaluation against the dataset. There are three types of annotated data.
+This benchmark dataset is the first dataset to have consistent annotation approach across a variety of ecosystems. This repo is the R package for reproducible evaluation against the dataset. The benchmark dataset contains over 6,000 image-annotated crowns, 424 field-annotated crowns, and 3,777 overstory stem points from a wide range of forest types. 
 
 # Installation
 
@@ -34,6 +32,7 @@ install_github("Weecology/NeonTreeEvaluation_package")
 # Download sensor data
 
 To download evaluation data from the Zenodo archive (1GB), use the download() function to place the data in the correct package location. Download the much larger training data, set training=TRUE.
+
 ```{r, eval=FALSE}
 library(NeonTreeEvaluation)
 download()
@@ -62,45 +61,56 @@ The package contains a sample submission file.
 library(raster)
 library(dplyr)
 library(NeonTreeEvaluation)
-data("submission")
 head(submission)
 ```
 
 ## Scores for an image-annotated crowns
 
+| Author                | Precision | Recall | Cite/Code                              |
+|-----------------------|-----------|--------|------------------------------------------|
+| Weinstein et al. 2020 | 0.55 | 0.65 | https://deepforest.readthedocs.io/|
+| Silva et al. 2016     | 0.23| 0.33 |[lidR package](https://www.rdocumentation.org/packages/lidR/versions/1.6.1/topics/lastrees_silva)|
+
 The main data source are image-annotated crowns, in which a single observer annotated visible trees in 200 40m x 40m images from across the United States. This submission has bounding boxes in image coordinates. To get the benchmark score image-annotated ground truth data.
 
 ```{r}
 #Get a three sample plots to run quickly, ignore to run the entire dataset
-df<-submission %>% filter(plot_name %in% c("SJER_052","TEAK_061","TEAK_057"))
+df<-submission %>% filter(plot_name %in% c("SJER_052"))
 
 #Compute total recall and precision for the overlap data
 results<-evaluate_image_crowns(submission = df,project = T, show=F, summarize = T)
-results
+results[1:3]
 ```
 
 For a list of NEON site abbreviations: https://www.neonscience.org/field-sites/field-sites-map
 
 ## Scores for an field-annotated crowns
 
-The second data source is a small number of field-deliniated crowns from three geographic sites. These crowns were drawn on a tablet while physically standing in the field, thereby reducing the uncertainty in crown segmentation.
+| Author                | Recall | Cite/Code|
+|-----------------------|--------|----------|
+| Weinstein et al. 2020 | 0.65   |https://deepforest.readthedocs.io/ |
 
+The second data source is a small number of field-deliniated crowns from three geographic sites. These crowns were drawn on a tablet while physically standing in the field, thereby reducing the uncertainty in crown segmentation.
 
 ```{r}
 df <- submission %>% filter(plot_name=="OSBS_95_competition")
 results<-evaluate_field_crowns(submission = df,project = T)
-results
+results[1:3]
 ```
 
 ## Scores for an field-collected stems
 
+| Author                |Recall | Cite/Code                              |
+|-----------------------|--------|------------------------------------------|
+| Weinstein et al. 2020 | 0.65 | https://deepforest.readthedocs.io/|
+
 The third data source is the NEON Woody Vegetation Structure Dataset. Each tree stem is represented by a single point. This data has been filtered to represent overstory trees visible in the remote sensing imagery.
 
 ```{r}
+df <- submission %>% filter(plot_name=="JERC_049")
 results<-evaluate_field_stems(submission = df,project = F, show=T, summarize = T)
 results
 ```
-
 
 If you would prefer not to clone this repo, a static version of the benchmark is here: https://zenodo.org/record/3723357#.XqT_HlNKjOQ
 
@@ -156,7 +166,8 @@ plotRGB(f,stretch="lin")
 
 # Submission
 
-To submit to this benchmark, please see the evaluation vignette. Please submit a pull request, or contact the maintainer if you use these data in analysis and would like the results to be shown here.
+To add score to this benchmark, please submit a pull request to this README with the scores and the submission csv for confirmation.
 
 ## Citation
+This benchmark is currently in review. Either cite this repo, or the original article using these data:
 <sup>1</sup> Weinstein, Ben G., et al. "Individual tree-crown detection in RGB imagery using semi-supervised deep learning neural networks." Remote Sensing 11.11 (2019): 1309. https://www.mdpi.com/2072-4292/11/11/1309

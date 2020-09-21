@@ -8,38 +8,14 @@ Maintainer: Ben Weinstein - University of Florida.
 
 This benchmark dataset is the first dataset to have consistent
 annotation approach across a variety of ecosystems. This repo is the R
-package for reproducible evaluation against the dataset. There are three
-types of annotated data.
-
-Image-annotated Crowns
-----------------------
-
-The main data source are image-annotated crowns, in which a single
-observer annotated visible trees in 200 40m x 40m images from across the
-United States.
-
-Field-annotated Crowns
-----------------------
-
-The second data source is a small number of field-deliniated crowns from
-three geographic sites. These crowns were drawn on a tablet while
-physically standing in the field, thereby reducing the uncertainty in
-crown segmentation.
-
-Field Stems
------------
-
-The third data source is the NEON Woody Vegetation Structure Dataset.
-Each tree stem is represented by a single point. This data has been
-filtered to represent overstory trees visible in the remote sensing
-imagery.
+package for reproducible evaluation against the dataset.
 
 Installation
 ============
 
 ``` r
 library(devtools)
-install_github("https://github.com/weecology/NeonTreeEvaluation_package.git")
+install_github("Weecology/NeonTreeEvaluation_package")
 ```
 
 Download sensor data
@@ -92,20 +68,29 @@ library(dplyr)
 library(NeonTreeEvaluation)
 data("submission")
 head(submission)
-#>   xmin ymin xmax ymax     score label                            plot_name
-#> 1  207  144  330  260 0.7038414  Tree 2018_SJER_3_253000_4104000_image_637
-#> 2   42  230  118  307 0.6070638  Tree 2018_SJER_3_253000_4104000_image_637
-#> 3  143  276  244  387 0.5886331  Tree 2018_SJER_3_253000_4104000_image_637
-#> 4  232    0  356  103 0.4402600  Tree 2018_SJER_3_253000_4104000_image_637
-#> 5  150   12  258  122 0.7261893  Tree                             TEAK_010
-#> 6  157  236  200  289 0.6950720  Tree                             TEAK_010
+#>        xmin     ymin     xmax     ymax     score label plot_name
+#> 1 217.24730 265.0254 290.4331 337.5056 0.7930149  Tree  ABBY_020
+#> 2 284.37094 339.3117 338.5593 388.7977 0.7155186  Tree  ABBY_020
+#> 3 197.60432 350.3243 249.3276 400.0000 0.7128302  Tree  ABBY_020
+#> 4  25.21722 186.6763 123.3826 283.8552 0.6598154  Tree  ABBY_020
+#> 5 332.43198 293.3734 377.3869 343.7137 0.6279798  Tree  ABBY_020
+#> 6 198.98254 181.8541 266.0995 249.9332 0.5793932  Tree  ABBY_020
 ```
 
 Scores for an image-annotated crowns
 ------------------------------------
 
-This submission has bounding boxes in image coordinates. To get the
-benchmark score image-annotated ground truth data.
+| Author                | Precision | Recall | Description                       |     |
+|-----------------------|-----------|--------|-----------------------------------|-----|
+| Weinstein et al. 2020 | 0.55      | 0.65   | Semi-supervised RGB Deep Learning |     |
+| Silva et al. 2016     | 0.23      | 0.33   | Unsupervised LiDAR raster         |     |
+| Dalponte et al 2016   | 0.23      | 0.34   | Unsupervised LidAR raster         |     |
+| Li et al. 2012        | 0.06      | 0.12   | Unsupervised LiDAR point cloud    |     |
+
+The main data source are image-annotated crowns, in which a single
+observer annotated visible trees in 200 40m x 40m images from across the
+United States. This submission has bounding boxes in image coordinates.
+To get the benchmark score image-annotated ground truth data.
 
 ``` r
 #Get a three sample plots to run quickly, ignore to run the entire dataset
@@ -114,25 +99,25 @@ df<-submission %>% filter(plot_name %in% c("SJER_052","TEAK_061","TEAK_057"))
 #Compute total recall and precision for the overlap data
 results<-evaluate_image_crowns(submission = df,project = T, show=F, summarize = T)
 #> [1] SJER_052
-#> 1266 Levels: 2018_SJER_3_252000_4104000_image_628 ...
+#> 1292 Levels: 2018_SJER_3_252000_4104000_image_628 ...
 #> [1] TEAK_057
-#> 1266 Levels: 2018_SJER_3_252000_4104000_image_628 ...
+#> 1292 Levels: 2018_SJER_3_252000_4104000_image_628 ...
 #> [1] TEAK_061
-#> 1266 Levels: 2018_SJER_3_252000_4104000_image_628 ...
+#> 1292 Levels: 2018_SJER_3_252000_4104000_image_628 ...
 results
 #> $overall
 #> # A tibble: 1 x 2
 #>   precision recall
 #>       <dbl>  <dbl>
-#> 1     0.758  0.761
+#> 1     0.838  0.839
 #> 
 #> $by_site
 #> # A tibble: 2 x 3
 #> # Groups:   Site [2]
 #>   Site  recall precision
 #>   <chr>  <dbl>     <dbl>
-#> 1 SJER   0.667     0.857
-#> 2 TEAK   0.824     0.712
+#> 1 SJER   0.778     1    
+#> 2 TEAK   0.881     0.754
 #> 
 #> $plot_level
 #> # A tibble: 3 x 3
@@ -140,19 +125,37 @@ results
 #>   plot_name submission ground_truth
 #>   <fct>          <int>        <int>
 #> 1 SJER_052           7            9
-#> 2 TEAK_057          75           61
+#> 2 TEAK_057          75           60
 #> 3 TEAK_061          43           41
+#> 
+#> $count_error
 ```
+
+![](www/README-unnamed-chunk-5-1.png)
 
 For a list of NEON site abbreviations:
 <a href="https://www.neonscience.org/field-sites/field-sites-map" class="uri">https://www.neonscience.org/field-sites/field-sites-map</a>
 
-Scores for an field-collected stems
------------------------------------
+Scores for an field-annotated crowns
+------------------------------------
+
+| Author                | Precision | Recall | Description                       |     |
+|-----------------------|-----------|--------|-----------------------------------|-----|
+| Weinstein et al. 2020 | 0.55      | 0.65   | Semi-supervised RGB Deep Learning |     |
+| Silva et al. 2016     | 0.23      | 0.33   | Unsupervised LiDAR raster         |     |
+| Dalponte et al 2016   | 0.23      | 0.34   | Unsupervised LidAR raster         |     |
+| Li et al. 2012        | 0.06      | 0.12   | Unsupervised LiDAR point cloud    |     |
+
+The second data source is a small number of field-deliniated crowns from
+three geographic sites. These crowns were drawn on a tablet while
+physically standing in the field, thereby reducing the uncertainty in
+crown segmentation.
 
 ``` r
-results<-evaluate_field_stems(submission = df,project = F, show=T, summarize = T)
-#> [1] "SJER_052"
+df <- submission %>% filter(plot_name=="OSBS_95_competition")
+results<-evaluate_field_crowns(submission = df,project = T)
+#> [1] OSBS_95_competition
+#> 1292 Levels: 2018_SJER_3_252000_4104000_image_628 ...
 ```
 
 ![](www/README-unnamed-chunk-6-1.png)
@@ -160,26 +163,45 @@ results<-evaluate_field_stems(submission = df,project = F, show=T, summarize = T
 ``` r
 results
 #> $overall
-#>   recall
-#> 1      1
+#> # A tibble: 1 x 2
+#>   precision recall
+#>       <dbl>  <dbl>
+#> 1     0.029      1
 #> 
 #> $by_site
-#> # A tibble: 1 x 2
-#>   Site  recall
-#>   <fct>  <dbl>
-#> 1 SJER       1
+#> # A tibble: 1 x 3
+#> # Groups:   Site [1]
+#>   Site    recall precision
+#>   <chr>    <dbl>     <dbl>
+#> 1 OSBS_95      1     0.029
 #> 
 #> $plot_level
-#>   siteID plot_name recall
-#> 1   SJER  SJER_052      1
+#> # A tibble: 1 x 3
+#> # Groups:   plot_name [1]
+#>   plot_name           submission ground_truth
+#>   <fct>                    <int>        <int>
+#> 1 OSBS_95_competition         34            1
 ```
 
-Scores for an field-collected crowns
-------------------------------------
+Scores for an field-collected stems
+-----------------------------------
+
+| Author                | Precision | Recall | Description                       |     |
+|-----------------------|-----------|--------|-----------------------------------|-----|
+| Weinstein et al. 2020 | 0.55      | 0.65   | Semi-supervised RGB Deep Learning |     |
+| Silva et al. 2016     | 0.23      | 0.33   | Unsupervised LiDAR raster         |     |
+| Dalponte et al 2016   | 0.23      | 0.34   | Unsupervised LidAR raster         |     |
+| Li et al. 2012        | 0.06      | 0.12   | Unsupervised LiDAR point cloud    |     |
+
+The third data source is the NEON Woody Vegetation Structure Dataset.
+Each tree stem is represented by a single point. This data has been
+filtered to represent overstory trees visible in the remote sensing
+imagery.
 
 ``` r
-df <- submission %>% filter(plot_name=="OSBS_95_competition")
-results<-evaluate_field_crowns(submission = df,project = T)
+df <- submission %>% filter(plot_name=="JERC_049")
+results<-evaluate_field_stems(submission = df,project = F, show=T, summarize = T)
+#> [1] "JERC_049"
 ```
 
 ![](www/README-unnamed-chunk-7-1.png)
@@ -187,24 +209,18 @@ results<-evaluate_field_crowns(submission = df,project = T)
 ``` r
 results
 #> $overall
-#> # A tibble: 1 x 2
-#>   precision recall
-#>       <dbl>  <dbl>
-#> 1         0      0
+#>      recall
+#> 1 0.5555556
 #> 
 #> $by_site
-#> # A tibble: 1 x 3
-#> # Groups:   Site [1]
-#>   Site    recall precision
-#>   <chr>    <dbl>     <dbl>
-#> 1 OSBS_95      0         0
+#> # A tibble: 1 x 2
+#>   Site  recall
+#>   <fct>  <dbl>
+#> 1 JERC   0.556
 #> 
 #> $plot_level
-#> # A tibble: 1 x 3
-#> # Groups:   plot_name [1]
-#>   plot_name           submission ground_truth
-#>   <fct>                    <int>        <int>
-#> 1 OSBS_95_competition          3            1
+#>   siteID plot_name    recall n
+#> 1   JERC  JERC_049 0.5555556 9
 ```
 
 If you would prefer not to clone this repo, a static version of the
@@ -280,8 +296,10 @@ Submission
 ==========
 
 To submit to this benchmark, please see the evaluation vignette. Please
-submit a pull request, or contact the maintainer if you use these data
-in analysis and would like the results to be shown here.
+submit a pull request, or contact the maintainer.
+
+Current scores are shown in the data repo:
+<a href="https://github.com/weecology/NeonTreeEvaluation#performance" class="uri">https://github.com/weecology/NeonTreeEvaluation#performance</a>
 
 Citation
 --------
