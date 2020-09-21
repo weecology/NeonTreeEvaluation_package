@@ -78,8 +78,8 @@ head(submission)
 
 | Author                | Precision | Recall | Cite/Code                                                                                         |
 | --------------------- | --------- | ------ | ------------------------------------------------------------------------------------------------- |
-| Weinstein et al. 2020 | 0.55      | 0.65   | <https://deepforest.readthedocs.io/>                                                              |
-| Silva et al. 2016     | 0.23      | 0.33   | [lidR package](https://www.rdocumentation.org/packages/lidR/versions/1.6.1/topics/lastrees_silva) |
+| Weinstein et al. 2020 | 0.66      | 0.79   | <https://deepforest.readthedocs.io/>                                                              |
+| Silva et al. 2016     | 0.34      | 0.47   | [lidR package](https://www.rdocumentation.org/packages/lidR/versions/1.6.1/topics/lastrees_silva) |
 
 The main data source are image-annotated crowns, in which a single
 observer annotated visible trees in 200 40m x 40m images from across the
@@ -123,7 +123,7 @@ For a list of NEON site abbreviations:
 
 | Author                | Recall | Cite/Code                            |
 | --------------------- | ------ | ------------------------------------ |
-| Weinstein et al. 2020 | 0.65   | <https://deepforest.readthedocs.io/> |
+| Weinstein et al. 2020 | 0.61   | <https://deepforest.readthedocs.io/> |
 
 The second data source is a small number of field-deliniated crowns from
 three geographic sites. These crowns were drawn on a tablet while
@@ -166,7 +166,7 @@ results[1:3]
 
 | Author                | Recall | Cite/Code                            |
 | --------------------- | ------ | ------------------------------------ |
-| Weinstein et al. 2020 | 0.65   | <https://deepforest.readthedocs.io/> |
+| Weinstein et al. 2020 | 0.74   | <https://deepforest.readthedocs.io/> |
 
 The third data source is the NEON Woody Vegetation Structure Dataset.
 Each tree stem is represented by a single point. This data has been
