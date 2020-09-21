@@ -1,7 +1,7 @@
 library(dplyr)
-context("Check wrapper of unprojected submission against field stems produces predictions ")
-test_that("evaluate_field_stems", {
-  result<-submission %>% filter(plot_name == "MLBS_074") %>%
+context("evaluate_field_stems")
+test_that("Check wrapper of unprojected submission against field stems produces predictions ", {
+  result<-submission %>% filter(plot_name == "JERC_049") %>%
     evaluate_field_stems(.,project=T, show=F, summarize = T)
   expect_equal(length(result),3)
   })

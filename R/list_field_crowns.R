@@ -1,4 +1,5 @@
 #' @title List images that overlap with field-annotation crowns
+#' @description Use this function to determine which sensor data overlaps with field collected crown data
 #' @rdname list_field_crowns
 #' @export
 list_field_crowns<-function(){

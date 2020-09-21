@@ -6,7 +6,7 @@
 #' Juniper Simonis, & Ethan White. (2019, July 11). weecology/portalcasting: hookup to zenodo (Version v0.8.0-1). Zenodo. http://doi.org/10.5281/zenodo.3332974
 #'
 #' Weinstein, Ben G., et al. "Cross-site learning in deep learning RGB tree crown detection." Ecological Informatics 56 (2020): 101061.
-#' @details
+#' @description
 #' The NeonTreeEvaluation benchmark consists of two parts, 1) package code to run evaluation workflows, 2) evaluation data. Evaluation data is ~ 2GB in size and will be downloaded to package contents. See
 #' The training data is a large set of training tiles (>5GB). Training tiles are geographically seperate from the evaluation data.
 #' @examples

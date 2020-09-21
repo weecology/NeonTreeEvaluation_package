@@ -14,7 +14,7 @@ unzip_download(destination)
 
 \item{savedir}{Optional directory to save data in a new location. Defaults to package contents. Warning: Functions are designed for this location, only use this argument if you do not intend to run evaluation data.}
 }
-\details{
+\description{
 The NeonTreeEvaluation benchmark consists of two parts, 1) package code to run evaluation workflows, 2) evaluation data. Evaluation data is ~ 2GB in size and will be downloaded to package contents. See
 The training data is a large set of training tiles (>5GB). Training tiles are geographically seperate from the evaluation data.
 }

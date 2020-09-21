@@ -4,8 +4,12 @@
 
 check_download<-function(){
   destination<-paste(system.file(package = "NeonTreeEvaluation"),"/extdata/",sep="")
-  f<-list.files(destination)
-  if(length(f)==0){
-    stop("Data has not been downloaded to package contents. Due to data size, the package code and data live in different repositories. To download the sensor and evaluation data, use download().")
+
+  #Check if in testing env
+  if(!identical(Sys.getenv("TESTTHAT"), "true")){
+    f<-list.files(destination)
+    if(length(f) < 10){
+      stop("Data has not been downloaded to package contents. Due to data size, the package code and test data live in this package To download the full sensor and evaluation data, use download().")
+    }
   }
 }

@@ -4,8 +4,6 @@
 #' @param ground_truth A ground truth polygon in SpatialPolygonsDataFrame
 #' @param predictions prediction polygons in SpatialPolygonsDataFrame
 #' @return A data frame with the crown ID matched to the prediction ID.
-#' @examples
-#'
 assign_trees <- function(ground_truth, predictions) {
 
   # Find overlap among polygons

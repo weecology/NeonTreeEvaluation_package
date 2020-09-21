@@ -22,10 +22,9 @@ Convert xml crown annotations into projected bounding boxes.
 In order to plot the annotations, they need to be projected and overlayed on RGB boxes
 }
 \examples{
-\dontrun{
 xml<-get_data("SJER_052","annotations")
 annotations<-xml_parse(xml)
-ground_truth <- boxes_to_spatial_polygons(annotations,img)
+rgb<-get_data("SJER_052","rgb")
+ground_truth <- boxes_to_spatial_polygons(annotations,rgb)
 plot(ground_truth)
-}
 }

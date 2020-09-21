@@ -3,12 +3,12 @@ library(dplyr)
 
 test_that("Image crown summaries", {
   results <- submission %>%
-    filter(plot_name %in% "HARV_040") %>% evaluate_image_crowns(.,summarize = T,project = T)
+    filter(plot_name %in% "SJER_052") %>% evaluate_image_crowns(.,summarize = T,project = T)
   expect_equal(length(results),4)
 
   #Overall
   expect_equal(dim(results[["overall"]]),c(1,2))
-  expect_lt(results[["overall"]]$precision,1)
+  expect_equal(results[["overall"]]$precision,1)
 
   #By Site
   expect_equal(colnames(results[["by_site"]]),c("Site","recall","precision"))

@@ -6,3 +6,6 @@
 \usage{
 list_annotations()
 }
+\description{
+This function looks into package contents for ground truth annotations for the image-annotated crowns. See download() to download full set of data from zenodo.
+}

@@ -6,3 +6,6 @@
 \usage{
 list_chm()
 }
+\description{
+This function looks into package contents (system.file("extdata")). See download() to download full set of sensor data from zenodo.
+}

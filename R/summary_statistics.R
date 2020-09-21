@@ -23,7 +23,6 @@ grand_summary <-function(results, threshold = 0.4){
 
 #' @title Site summary table for image-evaluated crowns
 #' @rdname site_summary
-#' @export
 site_summary<-function(results, threshold = 0.4){
   # Infer site
   results <- results %>% mutate(Site = stringr::str_match(plot_name, "(\\w+)_")[, 2])

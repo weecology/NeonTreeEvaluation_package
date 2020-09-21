@@ -17,6 +17,3 @@ A data frame with the crown ID matched to the prediction ID.
 \description{
 \code{assign_trees} implements the hungarian algorithm in \code{\link[clue]{solve_LSAP}} to match sets of trees
 }
-\examples{
-
-}

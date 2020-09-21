@@ -2,7 +2,10 @@
 % Please edit documentation in R/list_field_stems.R
 \name{list_field_stems}
 \alias{list_field_stems}
-\title{List images that overlap with field-annotation crowns}
+\title{List images that overlap with field-collected stems}
 \usage{
 list_field_stems()
+}
+\description{
+The field collected stems are individual points for each tree. They overlap with a subset of the sensor data. Use this function to determine which plots have stem data.
 }

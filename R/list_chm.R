@@ -1,4 +1,5 @@
 #' @title List paths to canopy height files
+#' @description This function looks into package contents (system.file("extdata")). See download() to download full set of sensor data from zenodo.
 #' @rdname list_chm
 #' @export
 list_chm<-function(){

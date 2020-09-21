@@ -1,3 +1,0 @@
-#' Field-annotated Crowns for Mountain Lake Biological Station
-#' @details
-#' These are ‘field-annotated crowns’ in which an observer annotates the remote-sensing image on a tablet while standing in the field [14]. This approach combines the confidence of the field verification of the field-collected stems with the direct connection to the remote sensing of the image-annotated crowns. The main drawback is that the presence of the observer in the field means that it is difficult to get the scale required to cover broad geographic areas. Similarly, the time investment means that the landscape is often sparsely sampled, making it difficult to assess model precision.

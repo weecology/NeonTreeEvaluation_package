@@ -35,3 +35,7 @@ addons:
 
 before_install:
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get install libcgal-dev libglu1-mesa-dev mesa-common-dev; fi
+
+r_build_args: --no-build-vignettes
+r_check_args: --no-build-vignettes
+
