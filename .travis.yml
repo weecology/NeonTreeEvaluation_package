@@ -39,3 +39,5 @@ before_install:
 r_build_args: --no-build-vignettes
 r_check_args: --no-build-vignettes
 
+env:
+   - TRAVIS=true

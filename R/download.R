@@ -27,7 +27,9 @@ download<-function(training=FALSE,savedir=NULL,force=F){
   }
 
   #check if already exists.
-  if(dir.exists(dirname)){
+  RGB_DIR <- paste(system.file("extdata", "NeonTreeEvaluation/evaluation/RGB/", package = "NeonTreeEvaluation"))
+  f<-list.files(RGB_DIR)
+  if(length(f) > 10){
     if(!force){
       warning(paste("Data has already been downloaded to",dirname,", use force=T to overwrite"))
       return(NULL)
