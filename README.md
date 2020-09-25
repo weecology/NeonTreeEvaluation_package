@@ -17,7 +17,7 @@ types.
 
 ``` r
 library(devtools)
-install_github("Weecology/NeonTreeEvaluation_package")
+install_github("weecology/NeonTreeEvaluation_package")
 ```
 
 # Download sensor data
