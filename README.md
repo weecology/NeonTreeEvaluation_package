@@ -87,7 +87,7 @@ United States. This submission has bounding boxes in image coordinates.
 To get the benchmark score image-annotated ground truth data.
 
 ``` r
-#Get a three sample plots to run quickly, ignore to run the entire dataset
+#Get a sample run quickly, ignore to run the entire dataset
 df<-submission %>% filter(plot_name %in% c("SJER_052"))
 
 #Compute total recall and precision for the overlap data
