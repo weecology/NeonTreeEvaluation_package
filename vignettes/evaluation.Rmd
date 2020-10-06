@@ -74,9 +74,9 @@ library(NeonTreeEvaluation)
 head(submission)
 ```
 
-## shp Polygons
+## Shp Polygons
 
-A single unprojected shapefile with polygons in image coordinates. Polygons must be complete with no holes. Here is an example of the above csv file in polygon format.
+Instead of bounding boxes, some methods may return polygons. To submit as polygons, create a single unprojected shapefile with polygons in image coordinates. Polygons must be complete with no holes. Here is an example of the above csv file in polygon format.
 
 ```{r}
 head(submission_polygons)

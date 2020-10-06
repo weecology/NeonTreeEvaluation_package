@@ -9,7 +9,7 @@
 #' * Changes in between year field heights of less than 6m
 #' * A minimum height of 3m to match the threshold in the remote sensing workflow.
 #' * Be at least within 5m of the canopy as measured by the LiDAR height model extracted at the stem location. The was used to prevent matching with understory trees in the event that overstory trees were eliminated due to failing in one of the above conditions, or not sampled by NEON.
-#' @param submission
+#' @param predictions
 #' The format of the submission is a csv with 5 columns: plot_name, xmin, ymin, xmax, ymax  follows
 #' Each row contains information for one predicted bounding box.
 #' The plot column should be named the same as the files in the dataset (e.g. SJER_021), not the path to the file.
@@ -25,9 +25,9 @@
 #' @import dplyr ggplot2
 #' @export
 
-evaluate_field_stems<-function(submission,project=TRUE, show=T, summarize=T){
+evaluate_field_stems<-function(predictions,project=TRUE, show=T, summarize=T){
 
-  if(!"plot_name" %in% colnames(submission)){
+  if(!"plot_name" %in% colnames(predictions)){
     stop("column named 'plot_name' is required (.e.g 'MLBS_052') to match images to annotation)")
   }
 
@@ -43,14 +43,13 @@ evaluate_field_stems<-function(submission,project=TRUE, show=T, summarize=T){
 
   results<-list()
   plot_names <- unique(site_plots$plotID)
-  plots_to_run<-unique(submission$plot_name[submission$plot_name %in% plot_names])
+  plots_to_run<-unique(predictions$plot_name[predictions$plot_name %in% plot_names])
 
   if(length(plots_to_run)==0){
     stop("No submitted plot_names with matching field stem data, see list_field_stems()")
   }
-  for(x in plots_to_run){
-    print(x)
-    results[[x]]<-process_plot(x, show=show)
+  for(plot_name in plots_to_run){
+    results[[plot_name]]<-process_plot(predictions=predictions,plot_name=plot_name, show=show)
   }
   results<-results[!sapply(results,is.null)]
   results<-bind_rows(results)
@@ -66,34 +65,43 @@ evaluate_field_stems<-function(submission,project=TRUE, show=T, summarize=T){
   }
 }
 
-process_plot<-function(x, show){
+process_plot<-function(predictions, plot_name, show){
   #matching RGB tile
   rgb_images<-list_rgb()
-  rgb_path<-rgb_images[stringr::str_detect(rgb_images,x)]
+  rgb_path<-rgb_images[stringr::str_detect(rgb_images,plot_name)]
   if(length(rgb_path)==0){return(NULL)}
   r<-raster::stack(rgb_path)
 
   #Field data, min height threshold is 3.
-  field_points<-field %>% filter(plotID==x) %>% sf::st_as_sf(.,coords=c("itcEasting","itcNorthing")) %>% filter(height>3)
+  field_points<-field %>% filter(plotID==plot_name) %>%
+    sf::st_as_sf(.,coords=c("itcEasting","itcNorthing")) %>% filter(height>3)
+
   sf::st_crs(field_points)<-raster::crs(r)
 
-  predictions<-submission %>% filter(plot_name==x)
+  predictions<-predictions %>% filter(plot_name==plot_name)
   if(nrow(predictions)==0){
-    warning(paste("No predictions made for plot",x))
+    warning(paste("No predictions made for plot",plot_name))
     return(NULL)
     }
 
-  spatial_boxes<- predictions %>%
-    NeonTreeEvaluation::boxes_to_spatial_polygons(.,r) %>%
-    sf::st_as_sf() %>%
-    mutate(height=predictions$height, score=predictions$score)
+  #check sf polygon or csv file
+  is_polygons = any(class(predictions) == "sf")
+  #If is_polygons, project must be true
+  if(is_polygons){
+    spatial_boxes <- sf_to_spatial_polygons(predictions, r)
+  } else{
+    spatial_boxes<- predictions %>%
+      NeonTreeEvaluation::boxes_to_spatial_polygons(.,r) %>%
+      sf::st_as_sf() %>%
+      mutate(height=predictions$height, score=predictions$score)
+  }
 
   #Filter the field data for erroneous temporal connections, the CHM must have positive heights, see OSBS_022, can use as an example of all sorts of challenges.
   CHM_images <- list_chm()
-  CHM_path <- CHM_images[stringr::str_detect(CHM_images,x)]
+  CHM_path <- CHM_images[stringr::str_detect(CHM_images,plot_name)]
 
   if(length(CHM_path)==0){
-    warning(paste("No LiDAR data found made for plot",x))
+    warning(paste("No LiDAR data found made for plot",plot_name))
     return(NULL)}
 
   chm <- raster::raster(CHM_path)
@@ -143,14 +151,14 @@ process_plot<-function(x, show){
 
   #Create point matches between data and predictions
   matched_df<-matched_pairs(spatial_boxes, field_points) %>%
-    mutate(plot_name=x)
+    mutate(plot_name=plot_name)
 
   if(nrow(matched_df)>0){
     siteID=unique(matched_df$siteID)
-    result<-data.frame(siteID=siteID,plot_name=x,recall=single_recall, n=nrow(unique_locations))
+    result<-data.frame(siteID=siteID,plot_name=plot_name,recall=single_recall, n=nrow(unique_locations))
     return(result)
   } else{
-    warning(paste("No matching prediction between  data found made for plot",x))
+    warning(paste("No matching prediction between  data found made for plot",plot_name))
     return(NULL)
   }
 }

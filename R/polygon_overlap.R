@@ -9,8 +9,8 @@ polygon_overlap <- function(pol, predictions) {
   overlap_area <- c()
   for (x in 1:nrow(predictions)) {
     pred_poly <- predictions[x, ]
-    intersect_poly <- sf::st_intersection(pol, pred_poly)
-    if (!nrow(intersect_poly)==0) {
+    intersect_poly <- sf::st_intersection(st_geometry(pol), st_geometry(pred_poly))
+    if (!length(intersect_poly)==0) {
       overlap_area[x] <- st_area(intersect_poly)
     } else {
       overlap_area[x] <- 0

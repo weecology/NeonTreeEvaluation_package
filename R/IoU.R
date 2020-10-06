@@ -8,8 +8,8 @@
 IoU <- function(x, y) {
 
   # find area of overlap
-  suppressWarnings(intersection <- st_intersection(x, y))
-  if (nrow(intersection)==0) {
+  suppressWarnings(intersection <- st_intersection(st_geometry(x), st_geometry(y)))
+  if (length(intersection)==0) {
     return(0)
   }
   area_intersection <-  st_area(intersection)

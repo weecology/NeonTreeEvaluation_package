@@ -1,6 +1,6 @@
 #' Compute evaluation statistics for one plot of image-annotated crowns
 #'
-#' @param submission
+#' @param predictions
 #' The format of the submission is either a csv with 5 columns: plot_name, xmin, ymin, xmax, ymax or a sf polygon object with poylgons in image coordinates.
 #' Each row contains information for one predicted bounding box.
 #' The plot column should be named the same as the files in the dataset (e.g. SJER_021), not the path to the file.
@@ -10,9 +10,9 @@
 #' @return If compute_PR=T, the recall and precision scores for the plot, if False, the intersection-over-union scores for each prediction.
 #' @export
 #'
-image_crowns <- function(submission, show = TRUE, project_boxes = TRUE) {
+image_crowns <- function(predictions, show = TRUE, project_boxes = TRUE) {
   # find ground truth file
-  plot_name <- unique(submission$plot_name)
+  plot_name <- unique(predictions$plot_name)
   if (!length(plot_name) == 1) {
     stop(paste("There are", length(plot_name), "plot names. Please submit one plot of annotations to this function"))
   }
@@ -30,12 +30,12 @@ image_crowns <- function(submission, show = TRUE, project_boxes = TRUE) {
   rgb <- raster::stack(path_to_rgb)
 
   #check sf polygon or csv file
-  is_polygons = any(class(submission) == "sf")
+  is_polygons = any(class(predictions) == "sf")
   #If is_polygons, project must be true
   if(is_polygons){
-    predictions <- sf_to_spatial_polygons(submission, rgb)
+    predictions <- sf_to_spatial_polygons(predictions, rgb)
   } else{
-    predictions <- boxes_to_spatial_polygons(submission, rgb, project_boxes = project_boxes)
+    predictions <- boxes_to_spatial_polygons(predictions, rgb, project_boxes = project_boxes)
   }
 
   # project boxes
