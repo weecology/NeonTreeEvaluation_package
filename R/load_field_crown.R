@@ -14,7 +14,6 @@ load_field_crown <- function(plot_name, show = TRUE) {
   #filter polygons
   plot_name<-stringr::str_remove(plot_name,"_competition")
   plot_crowns <- crowns %>% filter(plotID == plot_name)
-  plot_crowns <- sf:::as_Spatial(plot_crowns)
   if (show) {
     rgb <- raster::stack(path_to_rgb)
     raster::plotRGB(rgb)

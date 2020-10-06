@@ -10,7 +10,7 @@
 compute_precision_recall <- function(ground_truth, predictions, threshold = 0.4, summarize = TRUE) {
 
   # check for
-  if (!"crown_id" %in% colnames(predictions@data)) {
+  if (!"crown_id" %in% colnames(predictions)) {
     stop("Crown IDs need to be stored in a numeric index named 'crown_id'")
   }
 

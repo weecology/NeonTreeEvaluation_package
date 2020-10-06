@@ -11,8 +11,6 @@ test_that("dataframe to polygons", {
   expect_s4_class(rgb, "RasterStack")
 
   ground_truth <- boxes_to_spatial_polygons(df, rgb)
-  # is s4 class
-  expect_s4_class(ground_truth, "SpatialPolygonsDataFrame")
   # correct size
   expect_equal(dim(ground_truth)[1], 9)
 })

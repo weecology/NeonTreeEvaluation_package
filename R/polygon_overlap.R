@@ -9,12 +9,12 @@ polygon_overlap <- function(pol, predictions) {
   overlap_area <- c()
   for (x in 1:nrow(predictions)) {
     pred_poly <- predictions[x, ]
-    intersect_poly <- suppressWarnings(raster::intersect(pol, pred_poly))
-    if (!is.null(intersect_poly)) {
-      overlap_area[x] <- intersect_poly@polygons[[1]]@area
+    intersect_poly <- sf::st_intersection(pol, pred_poly)
+    if (!nrow(intersect_poly)==0) {
+      overlap_area[x] <- st_area(intersect_poly)
     } else {
       overlap_area[x] <- 0
     }
   }
-  data.frame(crown_id = pol@data$crown_id, prediction_id = predictions@data$crown_id, area = overlap_area)
+  data.frame(crown_id = pol$crown_id, prediction_id = predictions$crown_id, area = overlap_area)
 }

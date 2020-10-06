@@ -41,5 +41,8 @@ boxes_to_spatial_polygons <- function(boxes, raster_object, project_boxes = TRUE
 
   projected_polygons@data$crown_id <- 1:nrow(projected_polygons)
   sp::proj4string(projected_polygons) <- raster::projection(raster_object)
+
+  #as sf objection
+  projected_polygons<-as(projected_polygons, "sf")
   return(projected_polygons)
 }

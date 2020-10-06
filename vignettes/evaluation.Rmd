@@ -50,6 +50,8 @@ The package contains two vignettes. The 'Data' vignette describes each datatype 
 
 # Submission Format
 
+## CSV bounding boxes
+
 The format of the submission is as follows
 
 * A csv file
@@ -61,7 +63,7 @@ The plot column should be named the same as the files in the dataset without ext
 
 For a list of NEON site abbreviations: https://www.neonscience.org/field-sites/field-sites-map
 
-# Example
+### Example
 
 The package contains a sample submission file. 
 
@@ -70,6 +72,14 @@ library(raster)
 library(dplyr)
 library(NeonTreeEvaluation)
 head(submission)
+```
+
+## shp Polygons
+
+A single unprojected shapefile with polygons in image coordinates. Polygons must be complete with no holes. Here is an example of the above csv file in polygon format.
+
+```{r}
+head(submission_polygons)
 ```
 
 ## Scores for an image-annotated crowns

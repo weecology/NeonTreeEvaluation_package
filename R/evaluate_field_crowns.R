@@ -10,10 +10,12 @@
 #' @return If summarize is True, a set of summary measures from \code{summary_statistics} for the overall score, the entire site score, and the per-plot score.
 #' If False, a dataframe with the intersection-over-union scores for each prediction.
 #' @examples
+#' \donttest{
 #' data("submission")
 #' df <- submission %>% dplyr::filter(plot_name=="OSBS_95_competition")
 #' results <- evaluate_field_crowns(submission = df,project = FALSE, summarize = TRUE)
-#' @export
+#' }
+#'  @export
 
 evaluate_field_crowns <- function(submission,summarize=TRUE,show=TRUE,project = FALSE){
   #check submission

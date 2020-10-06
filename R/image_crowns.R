@@ -1,7 +1,7 @@
 #' Compute evaluation statistics for one plot of image-annotated crowns
 #'
 #' @param submission
-#' The format of the submission is a csv with 5 columns: plot_name, xmin, ymin, xmax, ymax  follows
+#' The format of the submission is either a csv with 5 columns: plot_name, xmin, ymin, xmax, ymax or a sf polygon object with poylgons in image coordinates.
 #' Each row contains information for one predicted bounding box.
 #' The plot column should be named the same as the files in the dataset (e.g. SJER_021), not the path to the file.
 #' @param show Logical. Plot the overlayed annotations for each plot?
@@ -29,13 +29,21 @@ image_crowns <- function(submission, show = TRUE, project_boxes = TRUE) {
   print(plot_name)
   rgb <- raster::stack(path_to_rgb)
 
+  #check sf polygon or csv file
+  is_polygons = any(class(submission) == "sf")
+  #If is_polygons, project must be true
+  if(is_polygons){
+    predictions <- sf_to_spatial_polygons(submission, rgb)
+  } else{
+    predictions <- boxes_to_spatial_polygons(submission, rgb, project_boxes = project_boxes)
+  }
+
   # project boxes
-  predictions <- boxes_to_spatial_polygons(submission, rgb, project_boxes = project_boxes)
 
   if (show) {
     raster::plotRGB(rgb)
-    sp::plot(ground_truth, border = "black", add = TRUE)
-    sp::plot(predictions, border = "red", add = TRUE)
+    plot(st_geometry(ground_truth), border = "black", add = TRUE)
+    plot(st_geometry(predictions), border = "red", add = TRUE)
   }
 
   # Create spatial polygons objects

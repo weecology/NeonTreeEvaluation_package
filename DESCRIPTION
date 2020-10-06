@@ -14,10 +14,9 @@ Suggests: knitr,
     testthat
 VignetteBuilder: knitr
 Depends: sf
-Imports: ggplot2, reshape2, lidR,
+Imports: ggplot2,dplyr,reshape2, lidR,
     raster,
     sp,
-    dplyr,
     xml2,
     clue,
     httr,

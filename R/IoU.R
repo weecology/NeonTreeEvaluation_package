@@ -8,16 +8,14 @@
 IoU <- function(x, y) {
 
   # find area of overlap
-  suppressWarnings(intersection <- raster::intersect(x, y))
-  if (is.null(intersection)) {
+  suppressWarnings(intersection <- st_intersection(x, y))
+  if (nrow(intersection)==0) {
     return(0)
   }
-  area_intersection <- sum(sapply(intersection@polygons, function(x) {
-    x@area
-  }))
+  area_intersection <-  st_area(intersection)
 
   # find area of union
-  area_union <- (x@polygons[[1]]@area + y@polygons[[1]]@area) - area_intersection
+  area_union <- (st_area(x) + st_area(y)) - area_intersection
 
   return(area_intersection / area_union)
 }

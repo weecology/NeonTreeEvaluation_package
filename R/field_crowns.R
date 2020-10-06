@@ -32,8 +32,8 @@ field_crowns <- function(submission, show = TRUE, project_boxes = TRUE) {
 
   if(show){
     raster::plotRGB(rgb)
-    sp::plot(ground_truth, border = "black", add = TRUE)
-    sp::plot(predictions, border = "red", add = TRUE)
+    plot(st_geometry(ground_truth), border = "black", add = TRUE)
+    plot(st_geometry(predictions), border = "red", add = TRUE)
   }
 
   # Create spatial polygons objects
