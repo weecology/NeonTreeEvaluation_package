@@ -4,10 +4,10 @@
 \alias{evaluate_field_stems}
 \title{Compute evaluation scores for the field collected stem data}
 \usage{
-evaluate_field_stems(submission, project = TRUE, show = T, summarize = T)
+evaluate_field_stems(predictions, project = TRUE, show = T, summarize = T)
 }
 \arguments{
-\item{submission}{The format of the submission is a csv with 5 columns: plot_name, xmin, ymin, xmax, ymax  follows
+\item{predictions}{The format of the submission is a csv with 5 columns: plot_name, xmin, ymin, xmax, ymax  follows
 Each row contains information for one predicted bounding box.
 The plot column should be named the same as the files in the dataset (e.g. SJER_021), not the path to the file.
 Not all evaluation data are available for all plots. This function will look for matching plot name and ignore other plots.}

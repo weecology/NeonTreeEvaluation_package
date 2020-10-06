@@ -4,14 +4,10 @@
 \alias{evaluate_field_crowns}
 \title{Compute evaluation metrics for the field-collected crowns}
 \usage{
-evaluate_field_crowns(submission, summarize = TRUE, show = TRUE,
+evaluate_field_crowns(predictions, summarize = TRUE, show = TRUE,
   project = FALSE)
 }
 \arguments{
-\item{submission}{The format of the submission is a csv with 5 columns: plot_name, xmin, ymin, xmax, ymax  follows
-Each row contains information for one predicted bounding box.
-The plot column should be named the same as the files in the dataset (e.g. SJER_021), not the path to the file.}
-
 \item{summarize}{Compute summary statistics for crown recall}
 
 \item{show}{Logical. Plot the overlayed annotations for each plot?}
@@ -30,9 +26,12 @@ For details on the protocol for field-based crown delineation see Graves et al. 
 Not all evaluation data are available for all plots. This function will look for matching plot name and ignore other plots.
 }
 \examples{
+\donttest{
 data("submission")
 df <- submission \%>\% dplyr::filter(plot_name=="OSBS_95_competition")
 results <- evaluate_field_crowns(submission = df,project = FALSE, summarize = TRUE)
+}
+ @export
 }
 \references{
 Graves S, Gearhart J, Caughlin TT, Bohlman S. 2018. A digital mapping method for linking high-resolution remote sensing images to individual tree crowns. PeerJ Preprints 6:e27182v1 https://doi.org/10.7287/peerj.preprints.27182v1

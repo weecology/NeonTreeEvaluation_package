@@ -17,16 +17,16 @@
 #' @export
 #'
 
-evaluate_image_crowns <- function(submission, project = FALSE, show = TRUE, summarize=FALSE) {
+evaluate_image_crowns <- function(predictions, project = FALSE, show = TRUE, summarize=FALSE) {
   #Check for data
   check_download()
 
   #check submission type
-  if(!"plot_name" %in% colnames(submission)){
+  if(!"plot_name" %in% colnames(predictions)){
     stop("column named 'plot_name' is required (.e.g 'MLBS_052') to match images to annotation)")
   }
 
-  results <- submission %>%
+  results <- predictions %>%
     group_by(plot_name) %>%
     do(image_crowns(., project_boxes = project, show = show))
 

@@ -4,12 +4,10 @@
 \alias{field_crowns}
 \title{Compute evaluation statistics for one plot of field-annotated crowns}
 \usage{
-field_crowns(submission, show = TRUE, project_boxes = TRUE)
+field_crowns(x, show = TRUE, project_boxes = TRUE)
 }
 \arguments{
-\item{submission}{The format of the submission is a csv with 5 columns: plot_name, xmin, ymin, xmax, ymax  follows
-Each row contains information for one predicted bounding box.
-The plot column should be named the same as the files in the dataset (e.g. SJER_021), not the path to the file.}
+\item{x}{submission csv table or polygon shp file}
 
 \item{show}{Logical. Plot the overlayed annotations for each plot?}
 
@@ -22,4 +20,8 @@ If compute_PR=T, the recall and precision scores for the plot, if False, the int
 }
 \description{
 Compute evaluation statistics for one plot of field-annotated crowns
+}
+\details{
+The format of the submission is either a csv with 5 columns: plot_name, xmin, ymin, xmax, ymax with #' Each row contains information for one predicted bounding box or a shp file of unprojected polygons.
+The plot column should be named the same as the files in the dataset (e.g. SJER_021), not the path to the file (e.g. /path/to/SJER_021.tif).
 }

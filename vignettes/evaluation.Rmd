@@ -76,7 +76,7 @@ head(submission)
 
 ## Shp Polygons
 
-Instead of bounding boxes, some methods may return polygons. To submit as polygons, create a single unprojected shapefile with polygons in image coordinates. Polygons must be complete with no holes. Here is an example of the above csv file in polygon format.
+Instead of bounding boxes, some methods may return polygons. To submit as polygons, create a single unprojected shapefile with polygons in image coordinates. Polygons must be complete with no holes. Here is an example of the above csv file in polygon format. Here the xmin, xmax, etc. columns are ignored since the information is stored in the geometry data.
 
 ```{r}
 head(submission_polygons)
@@ -91,7 +91,7 @@ The main data source are image-annotated crowns, in which a single observer anno
 df<-submission %>% filter(plot_name %in% c("SJER_052","TEAK_061","TEAK_057"))
 
 #Compute total recall and precision for the overlap data
-results<-evaluate_image_crowns(submission = df,project = T, show=F, summarize = T)
+results<-evaluate_image_crowns(predictions = df,project = T, show=F, summarize = T)
 results
 ```
 
@@ -103,7 +103,7 @@ The second data source is a small number of field-deliniated crowns from three g
 
 ```{r}
 df <- submission %>% filter(plot_name=="MLBS_12_competition")
-results<-evaluate_field_crowns(submission = df,project = T)
+results<-evaluate_field_crowns(predictions = df,project = T)
 results
 ```
 
@@ -115,7 +115,7 @@ The third data source is the NEON Woody Vegetation Structure Dataset. Each tree 
 
 ```{r}
 df<-submission %>% filter(plot_name %in% c("JERC_049"))
-results<-evaluate_field_stems(submission = df,project = T, show=T, summarize = T)
+results<-evaluate_field_stems(predictions = df,project = T, show=T, summarize = T)
 results
 ```
 

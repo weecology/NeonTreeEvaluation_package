@@ -17,7 +17,7 @@ types.
 
 ``` r
 library(devtools)
-install_github("weecology/NeonTreeEvaluation_package")
+install_github("Weecology/NeonTreeEvaluation_package")
 ```
 
 # Download sensor data
@@ -39,6 +39,8 @@ shows how to submit predictions to the benchmark.
 
 # Submission Format
 
+## CSV bounding boxes
+
 The format of the submission is as follows
 
   - A csv file
@@ -56,7 +58,10 @@ to do is predict all images in the RGB folder (see list\_rgb()) and the
 package will handle matching images with the correct data to the correct
 evaluation procedure.
 
-# Example
+For a list of NEON site abbreviations:
+<https://www.neonscience.org/field-sites/field-sites-map>
+
+### Example
 
 The package contains a sample submission file.
 
@@ -74,6 +79,37 @@ head(submission)
 #> 6 198.98254 181.8541 266.0995 249.9332 0.5793932  Tree  ABBY_020
 ```
 
+## Shp Polygons
+
+Instead of bounding boxes, some methods may return polygons. To submit
+as polygons, create a single unprojected shapefile with polygons in
+image coordinates. Polygons must be complete with no holes. Here is an
+example of the above csv file in polygon format.
+
+``` r
+head(submission_polygons)
+#> Simple feature collection with 6 features and 7 fields
+#> geometry type:  POLYGON
+#> dimension:      XY
+#> bbox:           xmin: 25.21722 ymin: 181.8541 xmax: 377.3869 ymax: 400
+#> epsg (SRID):    NA
+#> proj4string:    NA
+#>        xmin     ymin     xmax     ymax     score label plot_name
+#> 1 217.24730 265.0254 290.4331 337.5056 0.7930149  Tree  ABBY_020
+#> 2 284.37094 339.3117 338.5593 388.7977 0.7155186  Tree  ABBY_020
+#> 3 197.60432 350.3243 249.3276 400.0000 0.7128302  Tree  ABBY_020
+#> 4  25.21722 186.6763 123.3826 283.8552 0.6598154  Tree  ABBY_020
+#> 5 332.43198 293.3734 377.3869 343.7137 0.6279798  Tree  ABBY_020
+#> 6 198.98254 181.8541 266.0995 249.9332 0.5793932  Tree  ABBY_020
+#>                      st_sfc.lst.
+#> 1 POLYGON ((217.2473 265.0254...
+#> 2 POLYGON ((284.3709 339.3117...
+#> 3 POLYGON ((197.6043 350.3243...
+#> 4 POLYGON ((25.21722 186.6763...
+#> 5 POLYGON ((332.432 293.3734,...
+#> 6 POLYGON ((198.9825 181.8541...
+```
+
 ## Scores for an image-annotated crowns
 
 | Author                | Precision | Recall | Cite/Code                                                                                         |
@@ -87,11 +123,11 @@ United States. This submission has bounding boxes in image coordinates.
 To get the benchmark score image-annotated ground truth data.
 
 ``` r
-#Get a sample run quickly, ignore to run the entire dataset
+#Get a three sample plots to run quickly, ignore to run the entire dataset
 df<-submission %>% filter(plot_name %in% c("SJER_052"))
 
 #Compute total recall and precision for the overlap data
-results<-evaluate_image_crowns(submission = df,project = T, show=F, summarize = T)
+results<-evaluate_image_crowns(predictions = df,project = T, show=F, summarize = T)
 #> [1] SJER_052
 #> 1292 Levels: 2018_SJER_3_252000_4104000_image_628 ...
 results[1:3]
@@ -132,12 +168,12 @@ crown segmentation.
 
 ``` r
 df <- submission %>% filter(plot_name=="OSBS_95_competition")
-results<-evaluate_field_crowns(submission = df,project = T)
+results<-evaluate_field_crowns(predictions = df,project = T)
 #> [1] OSBS_95_competition
 #> 1292 Levels: 2018_SJER_3_252000_4104000_image_628 ...
 ```
 
-![](www/README-unnamed-chunk-6-1.png)<!-- -->
+![](www/README-unnamed-chunk-7-1.png)<!-- -->
 
 ``` r
 results[1:3]
@@ -175,11 +211,10 @@ imagery.
 
 ``` r
 df <- submission %>% filter(plot_name=="JERC_049")
-results<-evaluate_field_stems(submission = df,project = F, show=T, summarize = T)
-#> [1] "JERC_049"
+results<-evaluate_field_stems(predictions = df,project = F, show=T, summarize = T)
 ```
 
-![](www/README-unnamed-chunk-7-1.png)<!-- -->
+![](www/README-unnamed-chunk-8-1.png)<!-- -->
 
 ``` r
 results
@@ -224,7 +259,7 @@ plotRGB(rgb)
 plot(xml_polygons,add=T)
 ```
 
-![](www/README-unnamed-chunk-8-1.png)<!-- -->
+![](www/README-unnamed-chunk-9-1.png)<!-- -->
 
 ## Lidar
 
@@ -260,9 +295,9 @@ f<-g[[c(52,88,117)]]
 plotRGB(f,stretch="lin")
 ```
 
-![](www/README-unnamed-chunk-10-1.png)<!-- -->
+![](www/README-unnamed-chunk-11-1.png)<!-- -->
 
-# Submission
+# Submission Ranks
 
 To add score to this benchmark, please submit a pull request to this
 README with the scores and the submission csv for confirmation.

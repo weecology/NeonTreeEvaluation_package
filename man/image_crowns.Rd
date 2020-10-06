@@ -5,22 +5,22 @@
 \alias{image_crowns}
 \title{Compute evaluation statistics for one plot}
 \usage{
-image_crowns(submission, show = TRUE, project_boxes = TRUE)
+image_crowns(predictions, show = TRUE, project_boxes = TRUE)
 
-image_crowns(submission, show = TRUE, project_boxes = TRUE)
+image_crowns(predictions, show = TRUE, project_boxes = TRUE)
 }
 \arguments{
-\item{submission}{A five column dataframe in the order plot_name, xmin, xmax, ymin, ymax. Each row is a predicted bounding box.}
+\item{predictions}{The format of the submission is either a csv with 5 columns: plot_name, xmin, ymin, xmax, ymax or a sf polygon object with poylgons in image coordinates.
+Each row contains information for one predicted bounding box.
+The plot column should be named the same as the files in the dataset (e.g. SJER_021), not the path to the file.}
 
 \item{show}{Logical. Plot the overlayed annotations for each plot?}
 
 \item{project_boxes}{Logical. Should the boxes be projected into utm coordinates? This is needed if the box coordinates are given from the image origin (top left is 0,0)}
 
-\item{compute_PR}{Logical. Should the average precision and recall be computed?}
+\item{submission}{A five column dataframe in the order plot_name, xmin, xmax, ymin, ymax. Each row is a predicted bounding box.}
 
-\item{submission}{The format of the submission is a csv with 5 columns: plot_name, xmin, ymin, xmax, ymax  follows
-Each row contains information for one predicted bounding box.
-The plot column should be named the same as the files in the dataset (e.g. SJER_021), not the path to the file.}
+\item{compute_PR}{Logical. Should the average precision and recall be computed?}
 
 \item{show}{Logical. Plot the overlayed annotations for each plot?}
 

@@ -44,6 +44,8 @@ The package contains two vignettes. The 'Data' vignette describes each datatype 
 
 # Submission Format
 
+## CSV bounding boxes
+
 The format of the submission is as follows
 
 * A csv file
@@ -53,15 +55,25 @@ Each row contains information for one predicted bounding box.
 
 The plot column should be named the same as the files in the dataset without extension (e.g. SJER_021 not SJER_021.tif) and not the full path to the file on disk. Not all evaluation data are available for all plots. Functions like evaluate_field_crowns and evaluate_image_crowns will look for matching plot name and ignore other plots.Depending on the speed of the algorithm, the simplest thing to do is predict all images in the RGB folder (see list_rgb()) and the package will handle matching images with the correct data to the correct evaluation procedure.
 
-# Example
+For a list of NEON site abbreviations: https://www.neonscience.org/field-sites/field-sites-map
 
-The package contains a sample submission file.
+### Example
+
+The package contains a sample submission file. 
 
 ```{r}
 library(raster)
 library(dplyr)
 library(NeonTreeEvaluation)
 head(submission)
+```
+
+## Shp Polygons
+
+Instead of bounding boxes, some methods may return polygons. To submit as polygons, create a single unprojected shapefile with polygons in image coordinates. Polygons must be complete with no holes. Here is an example of the above csv file in polygon format. Here the xmin, xmax, etc. columns are ignored since the information is stored in the geometry data.
+
+```{r}
+head(submission_polygons)
 ```
 
 ## Scores for an image-annotated crowns
@@ -78,7 +90,7 @@ The main data source are image-annotated crowns, in which a single observer anno
 df<-submission %>% filter(plot_name %in% c("SJER_052"))
 
 #Compute total recall and precision for the overlap data
-results<-evaluate_image_crowns(submission = df,project = T, show=F, summarize = T)
+results<-evaluate_image_crowns(predictions = df,project = T, show=F, summarize = T)
 results[1:3]
 ```
 
@@ -94,7 +106,7 @@ The second data source is a small number of field-deliniated crowns from three g
 
 ```{r}
 df <- submission %>% filter(plot_name=="OSBS_95_competition")
-results<-evaluate_field_crowns(submission = df,project = T)
+results<-evaluate_field_crowns(predictions = df,project = T)
 results[1:3]
 ```
 
@@ -108,7 +120,7 @@ The third data source is the NEON Woody Vegetation Structure Dataset. Each tree 
 
 ```{r}
 df <- submission %>% filter(plot_name=="JERC_049")
-results<-evaluate_field_stems(submission = df,project = F, show=T, summarize = T)
+results<-evaluate_field_stems(predictions = df,project = F, show=T, summarize = T)
 results
 ```
 
@@ -164,7 +176,7 @@ f<-g[[c(52,88,117)]]
 plotRGB(f,stretch="lin")
 ```
 
-# Submission
+# Submission Ranks
 
 To add score to this benchmark, please submit a pull request to this README with the scores and the submission csv for confirmation.
 
