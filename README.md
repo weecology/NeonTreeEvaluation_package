@@ -84,7 +84,9 @@ head(submission)
 Instead of bounding boxes, some methods may return polygons. To submit
 as polygons, create a single unprojected shapefile with polygons in
 image coordinates. Polygons must be complete with no holes. Here is an
-example of the above csv file in polygon format.
+example of the above csv file in polygon format. Here the xmin, xmax,
+etc. columns are ignored since the information is stored in the geometry
+data.
 
 ``` r
 head(submission_polygons)
@@ -161,10 +163,11 @@ For a list of NEON site abbreviations:
 | --------------------- | ------ | ------------------------------------ |
 | Weinstein et al. 2020 | 0.61   | <https://deepforest.readthedocs.io/> |
 
-The second data source is a small number of field-deliniated crowns from
-three geographic sites. These crowns were drawn on a tablet while
+The second data source is a small number of field-annotated crowns from
+two geographic sites. These crowns were drawn on a tablet while
 physically standing in the field, thereby reducing the uncertainty in
-crown segmentation.
+crown segmentation. Field-annotated crowns can either be evaluated as
+polygons or as bounding boxes using the use\_polygon argument.
 
 ``` r
 df <- submission %>% filter(plot_name=="OSBS_95_competition")
@@ -176,7 +179,39 @@ results<-evaluate_field_crowns(predictions = df,project = T)
 ![](www/README-unnamed-chunk-7-1.png)<!-- -->
 
 ``` r
-results[1:3]
+results
+#> $overall
+#> # A tibble: 1 x 2
+#>   precision recall
+#>       <dbl>  <dbl>
+#> 1     0.029      1
+#> 
+#> $by_site
+#> # A tibble: 1 x 3
+#> # Groups:   Site [1]
+#>   Site    recall precision
+#>   <chr>    <dbl>     <dbl>
+#> 1 OSBS_95      1     0.029
+#> 
+#> $plot_level
+#> # A tibble: 1 x 3
+#> # Groups:   plot_name [1]
+#>   plot_name           submission ground_truth
+#>   <fct>                    <int>        <int>
+#> 1 OSBS_95_competition         34            1
+```
+
+``` r
+df <- submission %>% filter(plot_name=="OSBS_95_competition")
+results<-evaluate_field_crowns(predictions = df,project = T, use_polygon = T)
+#> [1] OSBS_95_competition
+#> 1292 Levels: 2018_SJER_3_252000_4104000_image_628 ...
+```
+
+![](www/README-unnamed-chunk-8-1.png)<!-- -->
+
+``` r
+results
 #> $overall
 #> # A tibble: 1 x 2
 #>   precision recall
@@ -214,7 +249,7 @@ df <- submission %>% filter(plot_name=="JERC_049")
 results<-evaluate_field_stems(predictions = df,project = F, show=T, summarize = T)
 ```
 
-![](www/README-unnamed-chunk-8-1.png)<!-- -->
+![](www/README-unnamed-chunk-9-1.png)<!-- -->
 
 ``` r
 results
@@ -259,7 +294,7 @@ plotRGB(rgb)
 plot(xml_polygons,add=T)
 ```
 
-![](www/README-unnamed-chunk-9-1.png)<!-- -->
+![](www/README-unnamed-chunk-10-1.png)<!-- -->
 
 ## Lidar
 
@@ -295,7 +330,7 @@ f<-g[[c(52,88,117)]]
 plotRGB(f,stretch="lin")
 ```
 
-![](www/README-unnamed-chunk-11-1.png)<!-- -->
+![](www/README-unnamed-chunk-12-1.png)<!-- -->
 
 # Submission Ranks
 
