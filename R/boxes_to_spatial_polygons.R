@@ -14,6 +14,7 @@
 #' plot(ground_truth)
 #' }s
 #' @return SpatialPolygons object of annotations
+#' @importFrom sf as
 #' @export
 
 # boxes is a xml object returned by the parser above, raster_object is the projected RGB image

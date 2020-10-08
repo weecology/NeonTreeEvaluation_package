@@ -20,4 +20,5 @@ Imports: ggplot2,dplyr,reshape2, lidR,
     xml2,
     clue,
     httr,
-    stringr
+    stringr,
+    methods

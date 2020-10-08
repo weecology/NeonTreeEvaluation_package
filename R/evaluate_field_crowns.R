@@ -9,15 +9,15 @@
 #' @param project Whether to project the supplied bounding box coordinates from image coordinates into geographic coordinates (utm QGS84). This is needed for computing recall scores.
 #' @return If summarize is True, a set of summary measures from \code{summary_statistics} for the overall score, the entire site score, and the per-plot score.
 #' If False, a dataframe with the intersection-over-union scores for each prediction.
+#' @export
 #' @examples
 #' \donttest{
 #' data("submission")
 #' df <- submission %>% dplyr::filter(plot_name=="OSBS_95_competition")
 #' results <- evaluate_field_crowns(submission = df,project = FALSE, summarize = TRUE)
 #' }
-#'  @export
 
-evaluate_field_crowns <- function(predictions,summarize=TRUE,show=TRUE,project = FALSE){
+evaluate_field_crowns <- function(predictions,summarize=TRUE,show=TRUE,project = FALSE, use_polygon=TRUE){
   #check x
   if(!"plot_name" %in% colnames(predictions)){
     stop("column named 'plot_name' is required (.e.g 'MLBS_052') to match images to annotation)")
@@ -33,7 +33,7 @@ evaluate_field_crowns <- function(predictions,summarize=TRUE,show=TRUE,project =
   if(nrow(predictions)==0){
     stop("No plot names matching the field crown data, see list_field_crowns for paths to RGB field crown imagery.")
   }
-  results <- predictions %>% group_by(plot_name) %>% do(field_crowns(., project_boxes=project, show=show))
+  results <- predictions %>% group_by(plot_name) %>% do(field_crowns(., project_boxes=project, show=show, use_polygon=use_polygon))
 
   if(summarize){
     return(summary_statistics(results,calc_count_error=FALSE))

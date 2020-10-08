@@ -10,7 +10,7 @@
 
 grand_summary <-function(results, threshold = 0.4){
   # Summary precision and recalls across all images
-  true_positives <- results$IoU > threshold
+  true_positives <- as.numeric(results$IoU) > threshold
 
   # number of ground truth
   statistic <- results %>%

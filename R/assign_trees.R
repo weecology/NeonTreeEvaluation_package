@@ -7,11 +7,7 @@
 assign_trees <- function(ground_truth, predictions) {
 
   # Find overlap among polygons
-  overlap <- polygon_overlap_all(ground_truth, predictions)
-
-  # Create adjacency matrix, rows are ground truth, columns are predictions
-  adj_matrix_overlap <- reshape2::acast(overlap, crown_id ~ prediction_id)
-
+  adj_matrix_overlap <- polygon_overlap_all(ground_truth, predictions)
   rows <- dim(adj_matrix_overlap)[1]
   columns <- dim(adj_matrix_overlap)[2]
   if (rows < columns) {

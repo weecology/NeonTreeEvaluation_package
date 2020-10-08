@@ -97,13 +97,20 @@ results
 
 This returns the proportion of the recall and precision for boxes with intersection-over-union scores of greater than 0.4. It also returns the count error, defined as the difference between total number of trees in a plot and the predicted number of trees in a plot, divided by the total. 
 
-## Scores for an field-collected crowns
+## Scores for an field-annotated crowns
 
-The second data source is a small number of field-deliniated crowns from three geographic sites. These crowns were drawn on a tablet while physically standing in the field, thereby reducing the uncertainty in crown segmentation.
+The second data source is a small number of field-annotated crowns from two geographic sites. These crowns were drawn on a tablet while physically standing in the field, thereby reducing the uncertainty in crown segmentation. Field-annotated crowns can either be evaluated as polygons or as bounding boxes using the use_polygon argument.
 
 ```{r}
 df <- submission %>% filter(plot_name=="MLBS_12_competition")
 results<-evaluate_field_crowns(predictions = df,project = T)
+results
+```
+
+
+```{r}
+df <- submission %>% filter(plot_name=="MLBS_12_competition")
+results<-evaluate_field_crowns(predictions = df,project = T, use_polygon = T)
 results
 ```
 

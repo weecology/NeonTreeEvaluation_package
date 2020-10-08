@@ -31,7 +31,6 @@ data("submission")
 df <- submission \%>\% dplyr::filter(plot_name=="OSBS_95_competition")
 results <- evaluate_field_crowns(submission = df,project = FALSE, summarize = TRUE)
 }
- @export
 }
 \references{
 Graves S, Gearhart J, Caughlin TT, Bohlman S. 2018. A digital mapping method for linking high-resolution remote sensing images to individual tree crowns. PeerJ Preprints 6:e27182v1 https://doi.org/10.7287/peerj.preprints.27182v1
