@@ -13,7 +13,7 @@
 #' @examples
 #' #' data("submission")
 #' df<-submission %>% dplyr::filter(plot_name %in% c("SJER_052","TEAK_061","TEAK_057"))
-#' results<-evaluate_image_crowns(submission = df,project = FALSE, show=TRUE, summarize = TRUE)
+#' results<-evaluate_image_crowns(predictions = df,project = FALSE, show=TRUE, summarize = TRUE)
 #' @export
 #'
 
