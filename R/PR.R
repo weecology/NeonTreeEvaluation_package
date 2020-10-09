@@ -6,7 +6,7 @@
 #' @return Summary recall and precision
 
 PR <- function(results, threshold) {
-  true_positives <- results$IoU > threshold
+  true_positives <- as.numeric(results$IoU) > threshold
 
   n <- results %>%
     group_by(plot_name) %>%

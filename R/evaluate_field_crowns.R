@@ -14,7 +14,7 @@
 #' \donttest{
 #' data("submission")
 #' df <- submission %>% dplyr::filter(plot_name=="OSBS_95_competition")
-#' results <- evaluate_field_crowns(submission = df,project = FALSE, summarize = TRUE)
+#' results <- evaluate_field_crowns(df,project = FALSE, summarize = TRUE)
 #' }
 
 evaluate_field_crowns <- function(predictions,summarize=TRUE,show=TRUE,project = FALSE, use_polygon=TRUE){
