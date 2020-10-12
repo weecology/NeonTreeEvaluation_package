@@ -36,5 +36,5 @@ The following filters were applied to the raw NEON field data (ID) after downloa
 }
 \examples{
 df<-submission \%>\% dplyr::filter(plot_name \%in\% c("SJER_052"))
-results<-evaluate_field_stems(submission = df,project = FALSE, show=TRUE, summarize = TRUE)
+results<-evaluate_field_stems(predictions=df,project = FALSE, show=TRUE, summarize = TRUE)
 }

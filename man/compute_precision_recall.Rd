@@ -12,7 +12,7 @@ compute_precision_recall(ground_truth, predictions, threshold = 0.4,
 
 \item{predictions}{A SpatialPolygonDataFrame of prediction polygons.}
 
-\item{threshold}{The intersection-over-union threshold for a prediction overlap with a ground truth to be considered a true positive. Default=0.5}
+\item{threshold}{The intersection-over-union threshold for a prediction overlap with a ground truth to be considered a true positive.}
 
 \item{summarize}{Logical. If true, return the precision and recall for this dataset, if false, return a data frame of matched crowns and the IoU overlap with ground truth.}
 }
@@ -23,5 +23,5 @@ The recall and precision scores for the plot.
 Compute precision and recall statistics between predicted tree boxes and ground truth data
 }
 \details{
-The numeric identity of the crown is stored in a column named crown_ID. An error will be raised if this column does not exist.
+The numeric identity of the crown is stored in a column named crown_id. An error will be raised if this column does not exist.
 }

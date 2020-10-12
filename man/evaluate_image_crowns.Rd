@@ -33,5 +33,5 @@ This function is a wrapper for \code{evaluate_plot}. It first looks which plot_n
 \examples{
 #' data("submission")
 df<-submission \%>\% dplyr::filter(plot_name \%in\% c("SJER_052","TEAK_061","TEAK_057"))
-results<-evaluate_image_crowns(submission = df,project = FALSE, show=TRUE, summarize = TRUE)
+results<-evaluate_image_crowns(predictions = df,project = FALSE, show=TRUE, summarize = TRUE)
 }

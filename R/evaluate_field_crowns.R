@@ -5,6 +5,7 @@
 #' Not all evaluation data are available for all plots. This function will look for matching plot name and ignore other plots.
 #' @references Graves S, Gearhart J, Caughlin TT, Bohlman S. 2018. A digital mapping method for linking high-resolution remote sensing images to individual tree crowns. PeerJ Preprints 6:e27182v1 https://doi.org/10.7287/peerj.preprints.27182v1
 #' @inheritParams field_crowns
+#' @param predictions a submission document
 #' @param summarize Compute summary statistics for crown recall
 #' @param project Whether to project the supplied bounding box coordinates from image coordinates into geographic coordinates (utm QGS84). This is needed for computing recall scores.
 #' @return If summarize is True, a set of summary measures from \code{summary_statistics} for the overall score, the entire site score, and the per-plot score.

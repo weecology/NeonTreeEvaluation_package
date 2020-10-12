@@ -29,7 +29,7 @@ Not all evaluation data are available for all plots. This function will look for
 \donttest{
 data("submission")
 df <- submission \%>\% dplyr::filter(plot_name=="OSBS_95_competition")
-results <- evaluate_field_crowns(submission = df,project = FALSE, summarize = TRUE)
+results <- evaluate_field_crowns(df,project = FALSE, summarize = TRUE)
 }
 }
 \references{

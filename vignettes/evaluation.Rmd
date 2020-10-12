@@ -99,18 +99,11 @@ This returns the proportion of the recall and precision for boxes with intersect
 
 ## Scores for an field-annotated crowns
 
-The second data source is a small number of field-annotated crowns from two geographic sites. These crowns were drawn on a tablet while physically standing in the field, thereby reducing the uncertainty in crown segmentation. Field-annotated crowns can either be evaluated as polygons or as bounding boxes using the use_polygon argument.
+The second data source is a small number of field-annotated crowns from two geographic sites. These crowns were drawn on a tablet while physically standing in the field, thereby reducing the uncertainty in crown segmentation.
 
 ```{r}
 df <- submission %>% filter(plot_name=="MLBS_12_competition")
 results<-evaluate_field_crowns(predictions = df,project = T)
-results
-```
-
-
-```{r}
-df <- submission %>% filter(plot_name=="MLBS_12_competition")
-results<-evaluate_field_crowns(predictions = df,project = T, use_polygon = T)
 results
 ```
 
