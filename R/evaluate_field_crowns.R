@@ -17,7 +17,7 @@
 #' results <- evaluate_field_crowns(df,project = FALSE, summarize = TRUE)
 #' }
 
-evaluate_field_crowns <- function(predictions,summarize=TRUE,show=TRUE,project = FALSE, use_polygon=TRUE){
+evaluate_field_crowns <- function(predictions,summarize=TRUE,show=TRUE,project = FALSE){
   #check x
   if(!"plot_name" %in% colnames(predictions)){
     stop("column named 'plot_name' is required (.e.g 'MLBS_052') to match images to annotation)")
@@ -33,7 +33,7 @@ evaluate_field_crowns <- function(predictions,summarize=TRUE,show=TRUE,project =
   if(nrow(predictions)==0){
     stop("No plot names matching the field crown data, see list_field_crowns for paths to RGB field crown imagery.")
   }
-  results <- predictions %>% group_by(plot_name) %>% do(field_crowns(., project_boxes=project, show=show, use_polygon=use_polygon))
+  results <- predictions %>% group_by(plot_name) %>% do(field_crowns(., project_boxes=project, show=show))
 
   if(summarize){
     return(summary_statistics(results,calc_count_error=FALSE))

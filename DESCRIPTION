@@ -14,11 +14,10 @@ Suggests: knitr,
     testthat
 VignetteBuilder: knitr
 Depends: sf
-Imports: ggplot2,dplyr,reshape2, lidR,
+Imports: ggplot2,dplyr, lidR,
     raster,
     sp,
     xml2,
     clue,
     httr,
-    stringr,
-    methods
+    stringr

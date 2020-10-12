@@ -1,17 +1,10 @@
 context("Check field crown evaluation")
 library(dplyr)
 
-test_that("Field crown summaries produce precision and recall", {
-  predictions<-submission %>%
-    filter(plot_name %in% "OSBS_95_competition")
-    results <- evaluate_field_crowns(predictions = predictions,summarize = T,project = T)
-  expect_equal(length(results),3)
-})
-
 test_that("Field crown polygon summaries produce precision and recall", {
   predictions<-submission %>%
     filter(plot_name %in% "OSBS_95_competition")
-  results <- evaluate_field_crowns(predictions = predictions,summarize = T,project = T, use_polygon = TRUE)
+  results <- evaluate_field_crowns(predictions = predictions,summarize = T,project = T)
   expect_equal(length(results),3)
 })
 
