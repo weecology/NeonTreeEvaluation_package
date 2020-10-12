@@ -3,7 +3,7 @@
 #' @rdname list_field_crowns
 #' @export
 list_field_crowns<-function(){
-  plot_names<-unique(crowns$plotID)
+  plot_names<-unique(crown_polygons$plotID)
   plot_names<-paste(plot_names,"_competition",sep="")
   rgb_images<-get_data(plot_names,"rgb")
 
