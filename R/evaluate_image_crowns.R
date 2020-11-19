@@ -2,7 +2,7 @@
 #'
 #' Submit a set of predictions to be evaluated against individual tree crowns annotated by an observer looking at the imagery.
 #' @inheritParams image_crowns
-#' @param project Whether to submission coordinates need to be projected in UTM geographic coordinates. If a polygon shp submission is provided, project will be set to True.
+#' @param project Whether submission coordinates need to be projected in UTM geographic coordinates. If a polygon shp submission is provided, project will be set to True.
 #' @param summarize Whether to compute summary statistics (TRUE) or return raw matching data (False), see \code{summary_statistics}
 #' @details
 #' The NeonTreeEvaluation benchmark contains evaluation data from 22 sites from the National Ecological Observation Network.
