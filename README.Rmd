@@ -49,11 +49,11 @@ The package contains two vignettes. The 'Data' vignette describes each datatype 
 The format of the submission is as follows
 
 * A csv file
-* 5 columns: Plot Name, xmin, ymin, xmax, ymax
+* 5 columns: plot_name, xmin, ymin, xmax, ymax
 
 Each row contains information for one predicted bounding box.
 
-The plot column should be named the same as the files in the dataset without extension (e.g. SJER_021 not SJER_021.tif) and not the full path to the file on disk. Not all evaluation data are available for all plots. Functions like evaluate_field_crowns and evaluate_image_crowns will look for matching plot name and ignore other plots.Depending on the speed of the algorithm, the simplest thing to do is predict all images in the RGB folder (see list_rgb()) and the package will handle matching images with the correct data to the correct evaluation procedure.
+The plot_name should be named the same as the files in the dataset without extension (e.g. SJER_021 not SJER_021.tif) and not the full path to the file on disk. Not all evaluation data are available for all plots. Functions like evaluate_field_crowns and evaluate_image_crowns will look for matching plot name and ignore other plots.Depending on the speed of the algorithm, the simplest thing to do is predict all images in the RGB folder (see list_rgb()) and the package will handle matching images with the correct data to the correct evaluation procedure.
 
 For a list of NEON site abbreviations: https://www.neonscience.org/field-sites/field-sites-map
 
