@@ -44,11 +44,11 @@ shows how to submit predictions to the benchmark.
 The format of the submission is as follows
 
   - A csv file
-  - 5 columns: Plot Name, xmin, ymin, xmax, ymax
+  - 5 columns: plot_name, xmin, ymin, xmax, ymax
 
 Each row contains information for one predicted bounding box.
 
-The plot column should be named the same as the files in the dataset
+The plot_name column should be named the same as the files in the dataset
 without extension (e.g. SJER\_021 not SJER\_021.tif) and not the full
 path to the file on disk. Not all evaluation data are available for all
 plots. Functions like evaluate\_field\_crowns and
