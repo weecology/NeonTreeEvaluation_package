@@ -20,7 +20,11 @@ knitr::opts_chunk$set(
 
 Maintainer: Ben Weinstein - University of Florida.
 
-This benchmark dataset is the first dataset to have consistent annotation approach across a variety of ecosystems. This repo is the R package for reproducible evaluation against the dataset. The benchmark dataset contains over 6,000 image-annotated crowns, 424 field-annotated crowns, and 3,777 overstory stem points from a wide range of forest types. 
+# Paper and Citation
+
+https://www.biorxiv.org/content/10.1101/2020.11.16.385088v1
+
+Broad scale remote sensing promises to build forest inventories at unprecedented scales. A crucial step in this process is designing individual tree segmentation algorithms to associate pixels into delineated tree crowns. While dozens of tree delineation algorithms have been proposed, their performance is typically not compared based on standard data or evaluation metrics, making it difficult to understand which algorithms perform best under what circumstances. There is a need for an open evaluation benchmark to minimize differences in reported results due to data quality, forest type and evaluation metrics, and to support evaluation of algorithms across a broad range of forest types. Combining RGB, LiDAR and hyperspectral sensor data from the National Ecological Observatory Network’s Airborne Observation Platform with multiple types of evaluation data, we created a novel benchmark dataset to assess individual tree delineation methods. This benchmark dataset includes an R package to standardize evaluation metrics and simplify comparisons between methods. The benchmark dataset contains over 6,000 image-annotated crowns, 424 field-annotated crowns, and 3,777 overstory stem points from a wide range of forest types. In addition, we include over 10,000 training crowns for optional use. We discuss the different evaluation sources and assess the accuracy of the image-annotated crowns by comparing annotations among multiple annotators as well as to overlapping field-annotated crowns. We provide an example submission and score for an open-source baseline for future methods.
 
 # Installation
 
