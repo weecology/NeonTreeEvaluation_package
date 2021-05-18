@@ -33,7 +33,7 @@ evaluate_field_stems<-function(predictions,project=TRUE, show=T, summarize=T){
 
   #Check for data
   check_download()
-  field = clean_field_data(field)
+  field = clean_field_data(NeonTreeEvaluation::field)
 
   site_plots<-field %>% group_by(plotID,individualID) %>%
     summarize(samples=length(unique(eventID))) %>%

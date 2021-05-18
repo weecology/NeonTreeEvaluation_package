@@ -23,7 +23,7 @@ evaluate_image_crowns <- function(predictions, project = FALSE, show = TRUE, sum
 
   #check submission type
   if(!"plot_name" %in% colnames(predictions)){
-    stop("column named 'plot_name' is required (.e.g 'MLBS_052') to match images to annotation)")
+    stop("column named 'plot_name' is required (.e.g 'MLBS_052_2018') to match images to annotation)")
   }
 
   results <- predictions %>%

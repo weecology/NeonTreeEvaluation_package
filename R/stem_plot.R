@@ -19,7 +19,7 @@ stem_plot<-function(df,field, projectbox=T, show=T){
   plot_name = stringr::str_match(image_name,"(\\w+)_\\d+")[,2]
 
   #load field data
-  field_data<-field %>% droplevels() %>% filter(plotID == plot_name) %>% sf::st_as_sf(.,coords=c("itcEasting","itcNorthing"),crs=raster::projection(spdf))
+  field_data<-NeonTreeEvaluation::field %>% droplevels() %>% filter(plotID == plot_name) %>% sf::st_as_sf(.,coords=c("itcEasting","itcNorthing"),crs=raster::projection(spdf))
 
   #Was the plot completely sampled?
   plotType<-unique(field_data$plotType)

@@ -13,7 +13,7 @@ load_field_crown <- function(plot_name, show = TRUE) {
 
   #filter polygons
   plot_name<-stringr::str_remove(plot_name,"_competition")
-  plot_crowns <- crown_polygons %>% filter(plotID %in% plot_name)
+  plot_crowns <- NeonTreeEvaluation::crown_polygons %>% filter(plotID %in% plot_name)
   if (show) {
     rgb <- raster::stack(path_to_rgb)
     raster::plotRGB(rgb)
