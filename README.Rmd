@@ -57,7 +57,7 @@ The format of the submission is as follows
 
 Each row contains information for one predicted bounding box.
 
-The plot_name should be named the same as the files in the dataset without extension (e.g. SJER_021 not SJER_021.tif) and not the full path to the file on disk. Not all evaluation data are available for all plots. Functions like evaluate_field_crowns and evaluate_image_crowns will look for matching plot name and ignore other plots.Depending on the speed of the algorithm, the simplest thing to do is predict all images in the RGB folder (see list_rgb()) and the package will handle matching images with the correct data to the correct evaluation procedure.
+The plot_name should be named the same as the files in the dataset without extension (e.g. SJER_021_2018 not SJER_021_2018.tif) and not the full path to the file on disk. Not all evaluation data are available for all plots. Functions like evaluate_field_crowns and evaluate_image_crowns will look for matching plot name and ignore other plots.Depending on the speed of the algorithm, the simplest thing to do is predict all images in the RGB folder (see list_rgb()) and the package will handle matching images with the correct data to the correct evaluation procedure.
 
 For a list of NEON site abbreviations: https://www.neonscience.org/field-sites/field-sites-map
 
@@ -91,7 +91,7 @@ The main data source are image-annotated crowns, in which a single observer anno
 
 ```{r}
 #Get a three sample plots to run quickly, ignore to run the entire dataset
-df<-submission %>% filter(plot_name %in% c("SJER_052"))
+df<-submission %>% filter(plot_name %in% c("SJER_052_2018"))
 
 #Compute total recall and precision for the overlap data
 results<-evaluate_image_crowns(predictions = df,project = T, show=F, summarize = T)
@@ -124,7 +124,7 @@ results
 The third data source is the NEON Woody Vegetation Structure Dataset. Each tree stem is represented by a single point. This data has been filtered to represent overstory trees visible in the remote sensing imagery.
 
 ```{r}
-df <- submission %>% filter(plot_name=="JERC_049")
+df <- submission %>% filter(plot_name=="JERC_049_2018")
 results<-evaluate_field_stems(predictions = df,project = F, show=T, summarize = T)
 results
 ```
@@ -140,11 +140,11 @@ library(raster)
 library(NeonTreeEvaluation)
 
 #Read RGB image as projected raster
-rgb_path<-get_data(plot_name = "SJER_021",type="rgb")
+rgb_path<-get_data(plot_name = "SJER_021_2018",type="rgb")
 rgb<-stack(rgb_path)
 
 #Find path and parse
-xmls<-get_data("SJER_021",type="annotations")
+xmls<-get_data("SJER_021_2018",type="annotations")
 annotations<-xml_parse(xmls)
 #View one plot's annotations as polygons, project into UTM
 #copy project utm zone (epsg), xml has no native projection metadata
@@ -160,7 +160,7 @@ To access the draped lidar hand annotations, use the "label" column. Each tree h
 
 ```{r}
 library(lidR)
-path<-get_data("TEAK_052",type="lidar")
+path<-get_data("TEAK_052_2018",type="lidar")
 r<-readLAS(path)
 trees<-lasfilter(r,!label==0)
 plot(trees,color="label")
@@ -173,7 +173,7 @@ We elected to keep all points, regardless of whether they correspond to tree ann
 Hyperspectral surface reflectance (NEON ID: DP1.30006.001) is a 426 band raster covering visible and near infrared spectrum.
 
 ```{r}
-path<-get_data("MLBS_071",type="hyperspectral")
+path<-get_data("MLBS_071_2018",type="hyperspectral")
 g<-stack(path)
 nlayers(g)
 #Grab a three band combination to view as false color

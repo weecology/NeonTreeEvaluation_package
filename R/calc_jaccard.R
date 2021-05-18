@@ -18,13 +18,16 @@ calc_jaccard <- function(assignment, ground_truth, predictions) {
       jaccard_stat[[i]] <- data.frame(crown_id = as.character(polygon_row$crown_id), prediction_id = NA, IoU = NA)
     } else {
       x <- ground_truth[ground_truth$crown_id == polygon_assignment, ]
-      # find interesection over union
+      # find intersection over union
       d<-data.frame(crown_id = polygon_assignment, prediction_id = polygon_row$crown_id, IoU = IoU(x, y))
       d$crown_id<-as.character(d$crown_id)
       d$prediction_id<-as.character(d$prediction_id)
+
+      #Confirm IoU is a numeric columns
+      d$IoU <-  as.numeric(d$IoU)
       jaccard_stat[[i]] <- d
     }
   }
-  statdf <- suppressWarnings(dplyr::bind_rows(jaccard_stat))
+  statdf <- dplyr::bind_rows(jaccard_stat)
   return(statdf)
 }

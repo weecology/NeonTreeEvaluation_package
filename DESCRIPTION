@@ -13,7 +13,9 @@ Suggests: knitr,
     rmarkdown,
     testthat
 VignetteBuilder: knitr
-Depends: sf
+Depends: 
+    sf,
+    R (>= 2.10)
 Imports: ggplot2,dplyr, lidR,
     raster,
     sp,

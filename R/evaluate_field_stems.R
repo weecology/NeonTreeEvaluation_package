@@ -28,7 +28,7 @@
 evaluate_field_stems<-function(predictions,project=TRUE, show=T, summarize=T){
 
   if(!"plot_name" %in% colnames(predictions)){
-    stop("column named 'plot_name' is required (.e.g 'MLBS_052') to match images to annotation)")
+    stop("column named 'plot_name' is required (.e.g 'MLBS_052_2018') to match images to annotation)")
   }
 
   #Check for data
@@ -43,13 +43,16 @@ evaluate_field_stems<-function(predictions,project=TRUE, show=T, summarize=T){
 
   results<-list()
   plot_names <- unique(site_plots$plotID)
-  plots_to_run<-unique(predictions$plot_name[predictions$plot_name %in% plot_names])
+  plots_to_run<-unique(predictions$plot_name[stringr::str_match(predictions$plot_name,"(\\w+)_\\d+")[,2] %in% plot_names])
 
   if(length(plots_to_run)==0){
     stop("No submitted plot_names with matching field stem data, see list_field_stems()")
   }
-  for(plot_name in plots_to_run){
-    results[[plot_name]]<-process_plot(predictions=predictions,plot_name=plot_name, show=show)
+  for(image_name in plots_to_run){
+    plot_name = stringr::str_match(image_name,"(\\w+)_\\d+")[,2]
+    print(plot_name)
+    plot_predictions <- predictions %>% filter(plot_name == image_name)
+    results[[plot_name]]<-process_plot(predictions=plot_predictions,plot_name=plot_name, show=show, image_name=image_name)
   }
   results<-results[!sapply(results,is.null)]
   results<-bind_rows(results)
@@ -65,10 +68,10 @@ evaluate_field_stems<-function(predictions,project=TRUE, show=T, summarize=T){
   }
 }
 
-process_plot<-function(predictions, plot_name, show){
+process_plot<-function(predictions, plot_name, image_name, show){
   #matching RGB tile
   rgb_images<-list_rgb()
-  rgb_path<-rgb_images[stringr::str_detect(rgb_images,plot_name)]
+  rgb_path<-rgb_images[stringr::str_detect(rgb_images,image_name)]
   if(length(rgb_path)==0){return(NULL)}
   r<-raster::stack(rgb_path)
 
@@ -78,7 +81,6 @@ process_plot<-function(predictions, plot_name, show){
 
   sf::st_crs(field_points)<-raster::crs(r)
 
-  predictions<-predictions %>% filter(plot_name==plot_name)
   if(nrow(predictions)==0){
     warning(paste("No predictions made for plot",plot_name))
     return(NULL)
@@ -98,10 +100,10 @@ process_plot<-function(predictions, plot_name, show){
 
   #Filter the field data for erroneous temporal connections, the CHM must have positive heights, see OSBS_022, can use as an example of all sorts of challenges.
   CHM_images <- list_chm()
-  CHM_path <- CHM_images[stringr::str_detect(CHM_images,plot_name)]
+  CHM_path <- CHM_images[stringr::str_detect(CHM_images,image_name)]
 
   if(length(CHM_path)==0){
-    warning(paste("No LiDAR data found made for plot",plot_name))
+    warning(paste("No LiDAR data found made for plot",image_name))
     return(NULL)}
 
   chm <- raster::raster(CHM_path)
@@ -112,6 +114,11 @@ process_plot<-function(predictions, plot_name, show){
   #Could it be seen?
   field_points<-field_points %>%
     filter(abs(CHM_height-height)<4)
+
+  #if no points left, skip plot
+  if(nrow(field_points) == 0){
+    return(NULL)
+  }
 
   #Min height based on the predictions
   #field_points<-field_points[field_points$height > quantile(spatial_boxes$height,0.01),]

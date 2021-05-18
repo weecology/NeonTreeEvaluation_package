@@ -70,9 +70,9 @@ The format of the submission is as follows
 Each row contains information for one predicted bounding box.
 
 The plot\_name should be named the same as the files in the dataset
-without extension (e.g. SJER\_021 not SJER\_021.tif) and not the full
-path to the file on disk. Not all evaluation data are available for all
-plots. Functions like evaluate\_field\_crowns and
+without extension (e.g. SJER\_021\_2018 not SJER\_021\_2018.tif) and not
+the full path to the file on disk. Not all evaluation data are available
+for all plots. Functions like evaluate\_field\_crowns and
 evaluate\_image\_crowns will look for matching plot name and ignore
 other plots.Depending on the speed of the algorithm, the simplest thing
 to do is predict all images in the RGB folder (see list\_rgb()) and the
@@ -91,13 +91,13 @@ library(raster)
 library(dplyr)
 library(NeonTreeEvaluation)
 head(submission)
-#>        xmin     ymin     xmax     ymax     score label plot_name
-#> 1 217.24730 265.0254 290.4331 337.5056 0.7930149  Tree  ABBY_020
-#> 2 284.37094 339.3117 338.5593 388.7977 0.7155186  Tree  ABBY_020
-#> 3 197.60432 350.3243 249.3276 400.0000 0.7128302  Tree  ABBY_020
-#> 4  25.21722 186.6763 123.3826 283.8552 0.6598154  Tree  ABBY_020
-#> 5 332.43198 293.3734 377.3869 343.7137 0.6279798  Tree  ABBY_020
-#> 6 198.98254 181.8541 266.0995 249.9332 0.5793932  Tree  ABBY_020
+#>        xmin     ymin      xmax     ymax     score label     plot_name
+#> 1  41.01716 230.8854 151.08607 342.6985 0.8098674  Tree DSNY_014_2019
+#> 2 357.32129 122.1164 397.57458 159.3758 0.6968824  Tree DSNY_014_2019
+#> 3  30.39723 136.9157  73.79434 184.9473 0.5713338  Tree DSNY_014_2019
+#> 4 260.65921 285.6689 299.68811 326.7933 0.5511004  Tree DSNY_014_2019
+#> 5 179.34564 371.6130 232.49385 400.0000 0.4697072  Tree DSNY_014_2019
+#> 6 316.27377 378.9802 363.67542 400.0000 0.3259409  Tree DSNY_014_2019
 ```
 
 ## Shp Polygons
@@ -114,23 +114,22 @@ head(submission_polygons)
 #> Simple feature collection with 6 features and 7 fields
 #> geometry type:  POLYGON
 #> dimension:      XY
-#> bbox:           xmin: 25.21722 ymin: 181.8541 xmax: 377.3869 ymax: 400
-#> epsg (SRID):    NA
-#> proj4string:    NA
-#>        xmin     ymin     xmax     ymax     score label plot_name
-#> 1 217.24730 265.0254 290.4331 337.5056 0.7930149  Tree  ABBY_020
-#> 2 284.37094 339.3117 338.5593 388.7977 0.7155186  Tree  ABBY_020
-#> 3 197.60432 350.3243 249.3276 400.0000 0.7128302  Tree  ABBY_020
-#> 4  25.21722 186.6763 123.3826 283.8552 0.6598154  Tree  ABBY_020
-#> 5 332.43198 293.3734 377.3869 343.7137 0.6279798  Tree  ABBY_020
-#> 6 198.98254 181.8541 266.0995 249.9332 0.5793932  Tree  ABBY_020
+#> bbox:           xmin: 30.39723 ymin: 122.1164 xmax: 397.5746 ymax: 400
+#> CRS:            NA
+#>        xmin     ymin      xmax     ymax     score label     plot_name
+#> 1  41.01716 230.8854 151.08607 342.6985 0.8098674  Tree DSNY_014_2019
+#> 2 357.32129 122.1164 397.57458 159.3758 0.6968824  Tree DSNY_014_2019
+#> 3  30.39723 136.9157  73.79434 184.9473 0.5713338  Tree DSNY_014_2019
+#> 4 260.65921 285.6689 299.68811 326.7933 0.5511004  Tree DSNY_014_2019
+#> 5 179.34564 371.6130 232.49385 400.0000 0.4697072  Tree DSNY_014_2019
+#> 6 316.27377 378.9802 363.67542 400.0000 0.3259409  Tree DSNY_014_2019
 #>                      st_sfc.lst.
-#> 1 POLYGON ((217.2473 265.0254...
-#> 2 POLYGON ((284.3709 339.3117...
-#> 3 POLYGON ((197.6043 350.3243...
-#> 4 POLYGON ((25.21722 186.6763...
-#> 5 POLYGON ((332.432 293.3734,...
-#> 6 POLYGON ((198.9825 181.8541...
+#> 1 POLYGON ((41.01716 230.8854...
+#> 2 POLYGON ((357.3213 122.1164...
+#> 3 POLYGON ((30.39723 136.9157...
+#> 4 POLYGON ((260.6592 285.6689...
+#> 5 POLYGON ((179.3456 371.613,...
+#> 6 POLYGON ((316.2738 378.9802...
 ```
 
 ## Scores for an image-annotated crowns
@@ -147,12 +146,11 @@ To get the benchmark score image-annotated ground truth data.
 
 ``` r
 #Get a three sample plots to run quickly, ignore to run the entire dataset
-df<-submission %>% filter(plot_name %in% c("SJER_052"))
+df<-submission %>% filter(plot_name %in% c("SJER_052_2018"))
 
 #Compute total recall and precision for the overlap data
 results<-evaluate_image_crowns(predictions = df,project = T, show=F, summarize = T)
-#> [1] SJER_052
-#> 1292 Levels: 2018_SJER_3_252000_4104000_image_628 ...
+#> [1] "SJER_052_2018"
 results[1:3]
 #> $overall
 #> # A tibble: 1 x 2
@@ -170,9 +168,9 @@ results[1:3]
 #> $plot_level
 #> # A tibble: 1 x 3
 #> # Groups:   plot_name [1]
-#>   plot_name submission ground_truth
-#>   <fct>          <int>        <int>
-#> 1 SJER_052           7            9
+#>   plot_name     recall precision
+#>   <chr>          <dbl>     <dbl>
+#> 1 SJER_052_2018  0.778         1
 ```
 
 For a list of NEON site abbreviations:
@@ -192,8 +190,7 @@ crown segmentation.
 ``` r
 df <- submission %>% filter(plot_name=="OSBS_95_competition")
 results<-evaluate_field_crowns(predictions = df,project = T)
-#> [1] OSBS_95_competition
-#> 1292 Levels: 2018_SJER_3_252000_4104000_image_628 ...
+#> [1] "OSBS_95_competition"
 ```
 
 ![](www/README-unnamed-chunk-7-1.png)<!-- -->
@@ -209,16 +206,16 @@ results
 #> $by_site
 #> # A tibble: 1 x 3
 #> # Groups:   Site [1]
-#>   Site    recall precision
-#>   <chr>    <dbl>     <dbl>
-#> 1 OSBS_95      1     0.029
+#>   Site  recall precision
+#>   <chr>  <dbl>     <dbl>
+#> 1 <NA>       1     0.029
 #> 
 #> $plot_level
 #> # A tibble: 1 x 3
 #> # Groups:   plot_name [1]
-#>   plot_name           submission ground_truth
-#>   <fct>                    <int>        <int>
-#> 1 OSBS_95_competition         34            1
+#>   plot_name           recall precision
+#>   <chr>                <dbl>     <dbl>
+#> 1 OSBS_95_competition      1     0.029
 ```
 
 ## Scores for an field-collected stems
@@ -233,8 +230,9 @@ filtered to represent overstory trees visible in the remote sensing
 imagery.
 
 ``` r
-df <- submission %>% filter(plot_name=="JERC_049")
+df <- submission %>% filter(plot_name=="JERC_049_2018")
 results<-evaluate_field_stems(predictions = df,project = F, show=T, summarize = T)
+#> [1] "JERC_049"
 ```
 
 ![](www/README-unnamed-chunk-8-1.png)<!-- -->
@@ -268,11 +266,11 @@ library(raster)
 library(NeonTreeEvaluation)
 
 #Read RGB image as projected raster
-rgb_path<-get_data(plot_name = "SJER_021",type="rgb")
+rgb_path<-get_data(plot_name = "SJER_021_2018",type="rgb")
 rgb<-stack(rgb_path)
 
 #Find path and parse
-xmls<-get_data("SJER_021",type="annotations")
+xmls<-get_data("SJER_021_2018",type="annotations")
 annotations<-xml_parse(xmls)
 #View one plot's annotations as polygons, project into UTM
 #copy project utm zone (epsg), xml has no native projection metadata
@@ -291,7 +289,7 @@ Each tree has a unique integer.
 
 ``` r
 library(lidR)
-path<-get_data("TEAK_052",type="lidar")
+path<-get_data("TEAK_052_2018",type="lidar")
 r<-readLAS(path)
 trees<-lasfilter(r,!label==0)
 plot(trees,color="label")
@@ -309,7 +307,7 @@ Hyperspectral surface reflectance (NEON ID: DP1.30006.001) is a 426 band
 raster covering visible and near infrared spectrum.
 
 ``` r
-path<-get_data("MLBS_071",type="hyperspectral")
+path<-get_data("MLBS_071_2018",type="hyperspectral")
 g<-stack(path)
 nlayers(g)
 #> [1] 426

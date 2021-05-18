@@ -25,7 +25,7 @@ grand_summary <-function(results, threshold = 0.4){
 #' @rdname site_summary
 site_summary<-function(results, threshold = 0.4){
   # Infer site
-  results <- results %>% mutate(Site = stringr::str_match(plot_name, "(\\w+)_")[, 2])
+  results <- results %>% mutate(Site = stringr::str_match(plot_name, "(\\w+)_\\w+_\\d+")[, 2])
 
   # Two awkward sites do to naming structure.
   results[stringr::str_detect(results$plot_name, "2018_SJER"), "Site"] <- "SJER"
@@ -40,14 +40,15 @@ site_summary<-function(results, threshold = 0.4){
 }
 
 plot_level<-function(results,threshold){
-  r<-results %>% group_by(plot_name) %>% distinct(total_ground,total_prediction) %>%
-    rename("ground_truth"="total_ground","submission"="total_prediction") %>% dplyr::select(plot_name,submission,ground_truth)
-  return(r)
+  statistic <- results %>%
+    group_by(plot_name) %>%
+    do(PR(., threshold = threshold))
+  return(statistic)
   }
 
 count_plot<-function(results){
   # Infer site
-  results <- results %>% mutate(Site = stringr::str_match(plot_name, "(\\w+)_")[, 2])
+  results <- results %>% mutate(Site = stringr::str_match(plot_name, "(\\w+)_\\w+_\\d+")[, 2])
 
   # Two awkward sites do to naming structure.
   results[stringr::str_detect(results$plot_name, "2018_SJER"), "Site"] <- "SJER"

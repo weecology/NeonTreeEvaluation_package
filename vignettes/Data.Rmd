@@ -44,9 +44,9 @@ The get_data function allows users to find the sensor or annotation data for a p
 For example, if I wanted the path to the RGB and LiDAR data for plot SJER_052.
 
 ```{r}
-rgb_path<-get_data("SJER_052","rgb")
+rgb_path<-get_data("SJER_052_2018","rgb")
 rgb_path
-lidar_path<-get_data("SJER_052","lidar")
+lidar_path<-get_data("SJER_052_2018","lidar")
 ```
 ## Which data go with which evaluation metrics?
 
@@ -69,7 +69,7 @@ For each training and evaluation site, we manually hand-annotated images using t
 Annotations are stored as xml json files
 
 ```{r}
-xml<-get_data("SJER_052","annotations")
+xml<-get_data("SJER_052_2018","annotations")
 xml
 ```
 and can be read using the xml_parse function
@@ -83,7 +83,7 @@ xml_parse(xml)
 The RGB data consist of images taken with a D8900 camera with a format of 8,984 x 6,732 pixels. Individual images are color rectified, orthorectified and mosaiced to create a single raster image with a pixel size of 0.1 m^2. Mosaic tiles are provided as 1km^2 geoTIFF files and are named based on the utm coordinate at the northwest origin. RGB data have high spatial resolution and individual trees are often visible based on the crown boundary, as well as color differences among individuals due to taxonomy and health status. 
 
 ```{r}
-rgb<-get_data("SJER_052","rgb")
+rgb<-get_data("SJER_052_2018","rgb")
 img<-stack(rgb)
 ```
 
@@ -106,7 +106,7 @@ The LiDAR data are 3D coordinates (4-6 points/m2) that provide high resolution i
 Now let's load the corresponding LiDAR point cloud for this evaluation plot.
 
 ```{r}
-point_cloud_path<-get_data("SJER_052","lidar")
+point_cloud_path<-get_data("SJER_052_2018","lidar")
 point_cloud<-readLAS(point_cloud_path)
 ```
 Tree annotations are stored in the UserData column. Each tree has a unique numeric ID
@@ -122,7 +122,7 @@ plot(tree_only,color="label")
 NEON’s pushbroom style instrument collects visible and infrared spectrum from between approximately 420-2500 nm with a spectral sampling interval of 5nm for a total of 426 bands. NEON provides the orthorectified images with a pixel size of 1 m2 in 1 km2 tiles that align with the RGB and LiDAR file naming convention. Hyperspectral data, especially in the infrared spectrum, is often used for differentiating tree species (e.g. Maschler et al. 2018). In forests with high species diversity, these data may be used to delineate crown boundaries among neighboring trees.
 
 ```{r}
-path<-get_data("MLBS_071",type="hyperspectral")
+path<-get_data("MLBS_071_2018",type="hyperspectral")
 g<-stack(path)
 nlayers(g)
 #> [1] 426

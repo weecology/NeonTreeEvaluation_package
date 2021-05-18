@@ -1,7 +1,7 @@
 #' Internal function for counting trees for evaluate_field_stems.R
 #' @noRd
 
-count_trees<-function(field_data,spdf,show=F){
+count_trees<-function(field_data,spdf,image_name, show=F){
 
   #Find canopy models
   CHM_images<-list_chm()
@@ -10,9 +10,9 @@ count_trees<-function(field_data,spdf,show=F){
   plot_name<-as.character(unique(field_data$plotID))
 
   #Does the point have positive height in the LiDAR?
-  CHM_path<-CHM_images[stringr::str_detect(CHM_images,plot_name)]
+  CHM_path<-CHM_images[stringr::str_detect(CHM_images,image_name)]
 
-  if(length(CHM_path)==0){warning(paste("No CHM image found for plot name:",plot_name))}
+  if(length(CHM_path)==0){warning(paste("No CHM image found for plot name:",image_name))}
 
   chm<-raster::raster(CHM_path)
   field_data$CHM_height<-raster::extract(chm,field_data)

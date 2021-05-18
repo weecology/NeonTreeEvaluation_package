@@ -17,7 +17,7 @@
 #' @export
 #'
 
-evaluate_image_crowns <- function(predictions, project = FALSE, show = TRUE, summarize=FALSE) {
+evaluate_image_crowns <- function(predictions, project = FALSE, show = TRUE, summarize=TRUE) {
   #Check for data
   check_download()
 
