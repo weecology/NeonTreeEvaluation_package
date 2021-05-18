@@ -18,6 +18,10 @@
 #' @export
 download<-function(training=FALSE,savedir=NULL,force=F){
 
+  #Store users timeout options
+  timeout_option_backup <- getOption("timeout")
+  options(timeout = max(3600, getOption("timeout")))
+
   if(is.null(savedir)){
     destination<-paste(system.file(package = "NeonTreeEvaluation"),"/extdata/NeonTreeEvaluation.zip",sep="")
     dirname <-paste(system.file(package = "NeonTreeEvaluation"),"/extdata/NeonTreeEvaluation/",sep="")
@@ -37,18 +41,19 @@ download<-function(training=FALSE,savedir=NULL,force=F){
   }
 
   #Evaluation data
-  eval_url<-zenodo_url(concept_rec_id=3723356)
+  eval_url<-zenodo_url(concept_rec_id=4770593)
   message(paste("Downloading file to",destination))
   download.file(eval_url,destination, mode = "wb")
   unzip_download(destination)
 
   #Optional Training Data
   if(training){
-    url<-zenodo_url(concept_rec_id=3459802)
+    url<-zenodo_url(concept_rec_id=4746605)
     destination<-paste(system.file(package = "NeonTreeEvaluation"),"/extdata/",sep="")
     download.file(eval_url,destination, mode = "wb")
     unzip_download(destination)
   }
+  options(timeout = timeout_option_backup)
 }
 
 unzip_download <- function(destination){

@@ -9,7 +9,12 @@ get_data(plot_name, type)
 \arguments{
 \item{plot_name}{A plot name.}
 
-\item{type}{Which data object should be returned: "rgb" for camera imagery,"chm" for a canopy height raster, lidar" for 3D point clouds,"hyperspectral" for 426 band raster,"annotations" for dataframe of bounding box ground truth.}
+\item{type}{Which data object should be returned:
+"rgb" for camera imagery
+"chm" for a canopy height raster
+"lidar" for 3D point clouds,
+"hyperspectral" for 426 band raster,
+"annotations" for dataframe of bounding box ground truth.}
 }
 \value{
 The filename of the object.

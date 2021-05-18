@@ -4,7 +4,9 @@
 \name{crown_polygons}
 \alias{crown_polygons}
 \title{Field-annotated Crowns}
-\format{An object of class \code{sf} (inherits from \code{tbl_df}, \code{tbl}, \code{data.frame}) with 564 rows and 7 columns.}
+\format{
+An object of class \code{sf} (inherits from \code{tbl_df}, \code{tbl}, \code{data.frame}) with 564 rows and 7 columns.
+}
 \usage{
 crown_polygons
 }

@@ -5,8 +5,7 @@
 \alias{zenodo_versions}
 \title{Obtain the URL for a Zenodo record to be downloaded}
 \usage{
-zenodo_url(concept_rec_id = 3723356, rec_version = "latest",
-  rec_id = NULL)
+zenodo_url(concept_rec_id = 3723356, rec_version = "latest", rec_id = NULL)
 
 zenodo_versions(concept_rec_id, arg_checks = TRUE)
 }

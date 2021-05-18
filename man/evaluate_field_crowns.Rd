@@ -4,10 +4,16 @@
 \alias{evaluate_field_crowns}
 \title{Compute evaluation metrics for the field-collected crowns}
 \usage{
-evaluate_field_crowns(predictions, summarize = TRUE, show = TRUE,
-  project = FALSE)
+evaluate_field_crowns(
+  predictions,
+  summarize = TRUE,
+  show = TRUE,
+  project = FALSE
+)
 }
 \arguments{
+\item{predictions}{a submission document}
+
 \item{summarize}{Compute summary statistics for crown recall}
 
 \item{show}{Logical. Plot the overlayed annotations for each plot?}

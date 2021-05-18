@@ -4,7 +4,9 @@
 \name{submission}
 \alias{submission}
 \title{Example NeonTreeEvaluation submission}
-\format{An object of class \code{data.frame} with 64911 rows and 7 columns.}
+\format{
+An object of class \code{data.frame} with 126574 rows and 7 columns.
+}
 \usage{
 submission
 }

@@ -2,7 +2,6 @@
 % Please edit documentation in R/evaluate_plot.R, R/image_crowns.R
 \name{image_crowns}
 \alias{image_crowns}
-\alias{image_crowns}
 \title{Compute evaluation statistics for one plot}
 \usage{
 image_crowns(predictions, show = TRUE, project_boxes = TRUE)
@@ -19,12 +18,6 @@ The plot column should be named the same as the files in the dataset (e.g. SJER_
 \item{project_boxes}{Logical. Should the boxes be projected into utm coordinates? This is needed if the box coordinates are given from the image origin (top left is 0,0)}
 
 \item{submission}{A five column dataframe in the order plot_name, xmin, xmax, ymin, ymax. Each row is a predicted bounding box.}
-
-\item{compute_PR}{Logical. Should the average precision and recall be computed?}
-
-\item{show}{Logical. Plot the overlayed annotations for each plot?}
-
-\item{project_boxes}{Logical. Should the boxes be projected into utm coordinates? This is needed if the box coordinates are given from the image origin (top left is 0,0)}
 
 \item{compute_PR}{Logical. Should the average precision and recall be computed?}
 }

@@ -6,3 +6,6 @@
 \usage{
 site_summary(results, threshold = 0.4)
 }
+\description{
+Site summary table for image-evaluated crowns
+}

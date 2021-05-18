@@ -4,15 +4,19 @@
 \alias{evaluate_image_crowns}
 \title{Compute evaluation metrics for the hand-annotated images}
 \usage{
-evaluate_image_crowns(predictions, project = FALSE, show = TRUE,
-  summarize = FALSE)
+evaluate_image_crowns(
+  predictions,
+  project = FALSE,
+  show = TRUE,
+  summarize = TRUE
+)
 }
 \arguments{
 \item{predictions}{The format of the submission is either a csv with 5 columns: plot_name, xmin, ymin, xmax, ymax or a sf polygon object with poylgons in image coordinates.
 Each row contains information for one predicted bounding box.
 The plot column should be named the same as the files in the dataset (e.g. SJER_021), not the path to the file.}
 
-\item{project}{Whether to submission coordinates need to be projected in UTM geographic coordinates. If a polygon shp submission is provided, project will be set to True.}
+\item{project}{Whether submission coordinates need to be projected in UTM geographic coordinates. If a polygon shp submission is provided, project will be set to True.}
 
 \item{show}{Logical. Plot the overlayed annotations for each plot?}
 
