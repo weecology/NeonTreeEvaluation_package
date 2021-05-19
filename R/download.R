@@ -41,14 +41,14 @@ download<-function(training=FALSE,savedir=NULL,force=F){
   }
 
   #Evaluation data
-  eval_url<-zenodo_url(concept_rec_id=4770593)
+  eval_url<-zenodo_url(concept_rec_id=3723356)
   message(paste("Downloading file to",destination))
   download.file(eval_url,destination, mode = "wb")
   unzip_download(destination)
 
   #Optional Training Data
   if(training){
-    url<-zenodo_url(concept_rec_id=4746605)
+    url<-zenodo_url(concept_rec_id=3459802)
     destination<-paste(system.file(package = "NeonTreeEvaluation"),"/extdata/",sep="")
     download.file(eval_url,destination, mode = "wb")
     unzip_download(destination)
